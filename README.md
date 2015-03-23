@@ -43,10 +43,3 @@ server {
         return 301 $scheme://azquestion.com$request_uri;
 }
 ```
-=======
-# az
->>>>>>> 23a2cb1e6559ea902ba62464e83cdb6584bdae79
-=======
-# azquestion
-QA Social
->>>>>>> f6a85b30ff7ac3ad03e2f52ba1a33f6f55b90020
