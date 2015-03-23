@@ -1,2 +1,0 @@
-# azquestion
-QA Social
