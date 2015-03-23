@@ -1,0 +1,20 @@
+<div class="background-main-content" ng-controller="UserController">
+<div class="row user-statistic" style="padding-top: 20px; padding-bottom: 60px;">
+   <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+      <h3 class="text-center">Nhập email tài khoản của bạn</h3>
+      <div>
+         <form class="form-horizontal" name="form" ng-submit="resetPass()" style="margin-top: 40px;">
+            <div class="control-group">
+               <label class="control-label col-sm-2 " for="inputEmail">Email</label>
+               <div class="controls col-sm-8">
+                  <input class="form-control" type="text" id="inputEmail" placeholder="Email" ng-model="userData.email">
+               </div>
+               <div class="col-sm-2"><button type="submit" class="btn btn-submit"  ng-disabled="!form.$dirty || (form.$dirty && form.$invalid)"><i class="fa fa-spinner fa-spin" ng-show="Proccess"></i> Gửi</button></div>
+            </div>
+         </form>
+      </div>
+      <hr class="visible-xs visible-sm">
+   </div>
+</div>
+<!-- END USER-STATISTIC -->
+</div>

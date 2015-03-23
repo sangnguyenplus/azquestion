@@ -1,0 +1,71 @@
+<div class="background-main-content">
+<div class="intro-content-wrapper">
+    <div class="form-signup-wrapper">
+        <div class="group-btn-intro col-md-12">
+            <a ui-sref="register" class="to_register active"> Đăng ký </a> <span>hoặc</span> <a ui-sref="login" class="to_register">Đăng nhập</a>
+        </div>
+        <div id="register" class="animate ">
+            <form class="sign-up-intro" id="sign_up" name="form" ng-submit="signup()" novalidate>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    <p class="intro-name">
+                    <span class="your-email">
+                    <input type="email" autocomplete="off" name="email" id="email" ng-model="userData.email" placeholder="Email" required>
+                    <label for="email" class="error"  ng-show="form.email.$dirty && form.email.$invalid">Email không hợp lệ.</label>
+                    <i class="fa fa-envelope-o"></i>
+                    </span>
+                    </p>
+                </div>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    <p class="intro-name">
+                    <span class="your-name">
+                    <input type="text" autocomplete="off" name="username" id="username" ng-model="userData.displayName" placeholder="Tên hiển thị" required ng-minlength="8" ng-maxlength="25">
+                    <label for="username" class="error"  ng-show="form.username.$dirty && form.username.$error.required">Tên không được rỗng.</label>
+                    <label for="username" class="error"  ng-show="form.username.$dirty && form.username.$error.minlength">Tên ít nhất 8 kí tự.</label>
+                    <label for="username" class="error"  ng-show="form.username.$dirty && form.username.$error.maxlength">Tên tối đa 25 kí tự.</label>
+                    <i class="fa fa-user"></i>
+                    </span>
+                    </p>
+                </div>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    <p class="intro-password">
+                    <span class="your-password">
+                    <input type="password" autocomplete="off"  name="password" id="password1" ng-model="userData.password" placeholder="Mật khẩu" required ng-minlength="8" ng-maxlength="25">
+                    <label for="password" class="error"  ng-show="form.password.$dirty && form.password.$error.required">Mật khẩu không được rỗng.</label>
+                    <label for="username" class="error"  ng-show="form.username.$dirty && form.password.$error.minlength">Mật khẩu ít nhất 8 kí tự.</label>
+                    <label for="username" class="error"  ng-show="form.username.$dirty && form.password.$error.maxlength">Mật khẩu tối đa 25 kí tự.</label>
+                    <i class="fa fa-key"></i>
+                    </span>
+                    </p>
+                </div>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    <p class="intro-password">
+                    <span class="your-password">
+                    <input type="password" autocomplete="off" id="re_password" name="re_password" ng-model="userData.repassword" placeholder="Xác nhận mật khẩu" password-match="userData.password">
+                    <label for="re_password" class="error"  ng-show="form.re_password.$dirty && form.re_password.$error.unique">Mật khẩu không trùng khớp.</label>
+                    <i class="fa fa-key"></i>
+                    </span>
+                    </p>
+                </div>
+                <div class="col-md-12">
+                    <p class="terms-intro">
+                    Bạn cần đọc và đồng ý với các <a target="_blank"  href="#">Chính sách và Quy định</a> của website trước khi đăng ký.
+                    </p>
+                </div>
+                <div class="col-md-12">
+                    <p class="btn-submit-intro">
+                    <span class="your-submit">
+                    <button type="submit" class="btn btn-submit" ng-disabled="!form.$dirty || (form.$dirty && form.$invalid)"><i class="fa fa-spinner fa-spin" ng-show="Proccess" ></i> Đăng ký </button>
+                    </span>
+                    </p>
+                </div>
+                <div class="social-login col-md-12">
+                    <h4>ĐĂNG NHẬP THÔNG QUA MẠNG XÃ HỘI</h4>
+                    <a href="/auth/facebook" class="btn btn-primary" target='_self'><i class="fa fa-facebook" ></i> Tài khoản Facebook</a>
+                    <a href="/auth/google" class="btn btn-danger" target='_self'><i class="fa fa-google-plus"></i> Tài khoản Google</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- END FORM -->
+</div>

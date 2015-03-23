@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="vi" ng-app="AZQuestion">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title ng-bind="pageTitle"></title>
+    <base href="/" />
+    <meta name="fragment" content="!">
+    <link rel="shortcut icon" href="images/favicon.ico">
+
+    <!-- SEO -->
+    <meta name="keywords" content="azquestion, mang xa hoi hoi dap">
+    <meta name="description" content="Là nơi trao đổi, hỏi đáp về các vấn đề khác nhau, đặc biệt là lĩnh vực lập trình - Công nghệ thông tin">
+    <meta name="author" content="Sang Nguyen" />
+
+    <!-- Facebook Open Graph -->
+    <meta property="og:site_name" content="{{pageTitle}}">
+    <meta property="og:type" content="">
+    <meta property="og:title" content="{{pageTitle}}">
+    <meta property="og:description" content="Là nơi trao đổi, hỏi đáp về các vấn đề khác nhau, đặc biệt là lĩnh vực lập trình - Công nghệ thông tin">
+    <meta property="og:url" content="/">
+    <meta property="og:image" content="images/social.png">
+
+    <!-- DEVELOPEMENT -->
+    <link rel="stylesheet" href="libs/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="libs/ng-tags-input/ng-tags-input.min.css">
+    <link rel="stylesheet" href="libs/ng-tags-input/ng-tags-input.bootstrap.min.css">
+    <link rel="stylesheet" href="libs/ngprogress/ngProgress.css">
+    <link rel="stylesheet" href="libs/highlightjs/styles/github.css">
+    <link rel="stylesheet" href="css/style.css" type="text/css" media="all">
+    <link rel="stylesheet" href="css/custom.css" type="text/css" media="all">
+
+    <!-- PRODUCTION -->
+    <!--
+    <link rel="stylesheet" href="css/library.min.css" type="text/css" media="all">
+    <link rel="stylesheet" href="css/style.min.css" type="text/css" media="all">
+    -->
+  </head>
+  <body>
+    <div class="container-fluid" ng-controller="MainController">
+      <div class="loading-bar"></div>
+      <div class="row">
+          <div ng-include src="'views/partials/header.html'"></div>
+          <div class="container" id="main">
+           <div class="row">
+              <div class="col-md-9 col-sm-12 col-xs-12 main-content">
+                <div ui-view class="ui-view-container"></div>
+            </div>
+            <!-- / main content -->
+            <div class="col-md-3 col-sm-12 col-xs-12 right-sidebar">
+                <div ng-include src="'views/partials/sidebar.html'"></div>
+            </div>
+            <!-- / sidebar -->
+           </div>
+          </div>
+          <!-- / main-->
+          <!-- / social -->
+          <div flash-alert="error" active-class="in alert-flash" class="fade">
+              <button type="button" class="close" ng-click="hide()">&times;</button>
+              <strong class="alert-heading">Thông báo!</strong>
+              <span class="alert-message">{{flash.message}}</span>
+          </div>
+
+          <div flash-alert="success" active-class="in alert-flash" class="fade ">
+              <button type="button" class="close" ng-click="hide()">&times;</button>
+              <strong class="alert-heading">Thông báo!</strong>
+              <span class="alert-message">{{flash.message}}</span>
+          </div>
+          <div class="footer">
+            <div class="container">
+              <div class="row">
+                <div ng-include src="'views/partials/footer.html'"></div>
+              </div>
+            </div>
+          </div>
+        <!-- / footer -->
+        </div>
+        <!-- / row -->
+      </div>
+      <!-- / container fluid -->
+       <div ng-include src="'views/partials/modal.html'"></div>
+      <!--[if lt IE 9]>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.js"></script>
+      <![endif]-->
+
+      <!-- DEVELOPEMENT -->
+
+      <script src="libs/angular/angular.min.js"></script>
+      <script src="libs/angular-ui-router/release/angular-ui-router.min.js"></script>
+      <script src="libs/angular-sanitize/angular-sanitize.min.js"></script>
+      <script src="libs/angular-cookies/angular-cookies.min.js"></script>
+      <script src="libs/angular-flash/dist/angular-flash.min.js"></script>
+      <script src="libs/ng-tags-input/ng-tags-input.min.js"></script>
+      <script src="libs/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+      <script src="libs/ng-file-upload/angular-file-upload.min.js"></script>
+      <script src="libs/ng-file-upload/angular-file-upload-shim.min.js"></script>
+      <script src="libs/restangular/dist/restangular.min.js"></script>
+      <script src="libs/ngprogress/build/ngProgress.min.js"></script>
+      <script src="libs/marked/lib/marked.js"></script>
+      <script src="libs/angular-marked/angular-marked.min.js"></script>
+      <script src="libs/highlightjs/highlight.pack.js"></script>
+      <script src="libs/angular-animate/angular-animate.min.js"></script>
+      <script src="libs/angular-resource/angular-resource.min.js"></script>
+      <script src="libs/angular-socket-io/socket.js"></script>
+      <script src="/socket.io/socket.io.js"></script>
+
+      <script src="js/controllers/AnswerCtrl.js"></script>
+      <script src="js/controllers/BadgeCtrl.js"></script>
+      <script src="js/controllers/Modal.js"></script>
+      <script src="js/controllers/MainCtrl.js"></script>
+      <script src="js/controllers/TagCtrl.js"></script>
+      <script src="js/controllers/QuestionCtrl.js"></script>
+      <script src="js/controllers/UserCtrl.js"></script>
+      <script src="js/controllers/SystemCtrl.js"></script>
+      <script src="js/controllers/ChatCtrl.js"></script>
+
+      <script src="js/services/TagService.js"></script>
+      <script src="js/services/BadgeService.js"></script>
+      <script src="js/services/UserService.js"></script>
+      <script src="js/services/QuestionService.js"></script>
+      <script src="js/services/AnswerService.js"></script>
+      <script src="js/services/SystemService.js"></script>
+      <script src="js/services/ChatService.js"></script>
+
+      <script src="js/app.js"></script>
+      <script src="js/appRoutes.js"></script>
+      <script src="js/directives.js"></script>
+      <script src="js/filters.js"></script>
+      <script src="js/services.js"></script>
+
+      <script src="libs/jquery/dist/jquery.min.js"></script>
+      <script src="libs/bootstrap/dist/js/bootstrap.min.js"></script>
+      <script src="libs/underscore/underscore-min.js"></script>
+      <script src="libs/jquery-waypoints/waypoints.min.js"></script>
+      <script src="libs/moment/min/moment-with-locales.js"></script>
+
+      <!-- PRODUCTION -->
+      <!--
+      <script src="js/dist/dependencies.min.js"></script>
+      <script src="js/dist/controller.min.js"></script>
+      <script src="js/dist/service.min.js"></script>
+      <script src="js/dist/app.min.js"></script>
+      <script src="js/dist/library.min.js"></script>
+      -->
+    </body>
+  </html>

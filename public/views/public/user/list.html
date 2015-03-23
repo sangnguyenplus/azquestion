@@ -1,0 +1,49 @@
+<div class="text-center" style="padding-top: 80px; min-height: 700px; background-color: #fff;" ng-show="loading">
+  <img src="images/loading.gif" alt="Đang tải dữ liệu">
+  <p>Đang tải dữ liệu</p>
+</div>
+<div class="background-main-content" ng-hide="loading">
+<div class="row select-category">
+   <div class="current-category col-md-12">
+      <div class="pull-left"><span><i class="fa fa-user"></i> Thành viên</span></div>
+      <div class="pull-right">
+        <div class="input-group pull-right">
+      <input type="text" class="form-control" ng-model="search.displayName" placeholder="Tìm kiếm">
+      <span class="input-group-btn">
+        <button class="btn btn-submit" type="button"><i class="fa fa-search"></i></button>
+      </span>
+    </div><!-- /input-group -->
+
+      </div>
+      <div class="clearfix"></div>
+   </div>
+</div>
+<div class="main-user-list">
+   <ul id="main_users_list" class="row">
+      <li class="user-item col-md-4 col-xs-6" ng-repeat="u in allUser | filter:search:strict">
+         <span class="user-avatar">
+         <img ng-src="{{u.avatar}}" class="avatar" alt="{{u.displayName}}">
+         </span>
+         <div class="left-info">
+            <a ui-sref="profile({ id:u._id, slug: (u.displayName | friendlyUrl)+'.html' })"><span class="display_name" ng-bind="u.displayName"></span></a><br>
+            <span class="location" ng-if="u.location!=null">
+            <i class="fa fa-map-marker"></i> <span ng-bind="u.location"></span></span>
+             <span class="location" ng-if="u.location==null">
+            <i class="fa fa-map-marker"></i> Chưa rõ</span>
+            <div class="question-cat">
+               <div ng-show="{{u.role!='admin'}}">
+                  <strong ng-repeat="b in listBadge | getBadge: u.reputation">
+                     <span title="{{u.reputation}}" ng-bind="b.name" class="user-badge" style="background-color:{{b.color}};"></span>
+                  </strong>
+                  <span class="points"><span ng-bind="u.reputation"></span> Điểm </span>
+               </div>
+               <div ng-show="{{u.role=='admin'}}">
+                  <span  class="user-badge" style="background-color:#CA1C23;">Administrator</span>
+                  <span class="points"><span ng-bind="u.reputation"></span> Điểm </span>
+               </div>
+            </div>
+         </div>
+      </li>
+   </ul>
+</div>
+</div>

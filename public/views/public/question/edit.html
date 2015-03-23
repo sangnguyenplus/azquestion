@@ -1,0 +1,35 @@
+<div class="row select-category">
+                  <div class="col-md-12 current-category">
+                     <span><i class="fa fa-pencil-square-o"></i> Chỉnh sửa bài viết.</span>
+                  </div>
+               </div>
+               <!-- END SELECT-CATEGORY -->
+               <div class="row user-statistic" style="padding-top: 20px; padding-bottom: 60px;">
+                     <form name="form" style="padding: 15px;">
+                  <div class="form-group">
+                     <label for="title">Tiêu đề</label>
+                     <input type="text" id="title" class="form-control" placeholder="Tiêu đề câu hỏi" required="required"  name="title" >
+                  </div>
+                  <div class="form-group">
+                     <label for="category">Danh mục</label>
+                     <select name="category" id="category" class="form-control">
+                        <option value="">Chọn danh mục</option>
+                        <option value="">Đời sống</option>
+                        <option value="">Giải trí</option>
+                     </select>
+                  </div>
+                  <div class="form-group">
+                     <textarea  ck-editor ng-model="formData.question.text"></textarea>
+                  </div>
+                  <div class="form-group">
+                     <label for="edit-tags">Tags</label>
+                     <input type="text" class="edit-tags" class="form-control"  name="edit-tags" >
+                  </div>
+                  <div class="form-group">
+                     <button type="submit" class="btn btn-submit"><i class="fa fa-edit" ></i> Submit</button>
+                     <div class="term-texts" style="margin-top: 20px;">
+                  <p>Bạn nên đọc kỹ <a href="#">chính sách và quy định</a> của website trước khi đăng bài. Bạn phải chịu hoàn toàn trách nhiệm về nội dung đăng tải trên website.</p>
+               </div>
+                  </div>
+               </form>
+               </div>

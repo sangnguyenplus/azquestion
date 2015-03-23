@@ -1,0 +1,173 @@
+<header id="header">
+          <div class="container">
+            <div class="row">
+              <a ui-sref="home" class="pull-left col-xs-4 visible-xs"><img src="images/logo_mobile.png" style="max-height: 30px; width:auto ;margin-top: 10px; margin-bottom: 5px;"></a>
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#menu-mobile">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <div class="clearfix"></div>
+              <ul id="main-nav" class="nav navbar-nav hidden-xs">
+                <li ng-class="getClass('/gioi-thieu.html')"><a ui-sref="about">Giới thiệu</a></li>
+                <li ng-class="getClass('/quy-dinh-va-noi-quy.html')"><a ui-sref="policy">Quy định &amp; Nội quy</a></li>
+                <li ng-class="getClass('/huong-dan.html')"><a ui-sref="help">Hướng dẫn</a></li>
+              </ul>
+              <!-- logo -->
+              <ul class="nav navbar-nav pull-right hidden-xs" ng-if="!currentUser">
+                  <li ng-class="getClass('/dang-nhap.html')"><a ui-sref="login">Đăng nhập</a></li>
+                  <li ng-class="getClass('/dang-ky.html')"><a ui-sref="register">Đăng ký</a></li>
+              </ul>
+              <ul class="nav navbar-nav pull-right hidden-xs" ng-controller="UserController"  ng-if="currentUser" style="max-height: 40px;">
+                  <li><a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)" >
+                          <img ng-src="{{currentUser.avatar}}" class="img-thumbnail" alt="{{currentUser.displayName}}">
+                          <span ng-bind="currentUser.displayName"></span>
+                  </a>
+                    <ul id="user-control-list" class="dropdown-menu">
+                          <li>
+                            <a id="user-profile-link" ui-sref="profile({ id:currentUser._id })"><i class="fa fa-circle status online"></i> <span id="user-header-name" ng-bind="currentUser.displayName"></span></a>
+                          </li>
+                          <li ng-show="{{currentUser.role=='admin'}}"><a ui-sref="system"><i class="fa fa-cogs"></i> Quản lý hệ thống</a></li>
+                          <li id="logout-link">
+                            <a href="javascript:void(0)" ng-click="logout()"><i class="fa fa-power-off"></i> Đăng xuất</a>
+                          </li>
+                        </ul>
+                  </li>
+              </ul>
+            </div>
+            </div>
+          </header>
+          <!-- END HEADER -->
+          <div id="main-header" class="hidden-xs">
+            <div class="container">
+                <div id="logo">
+                  <a ui-sref="home">
+                    <img src="images/logo.png" alt="Logo">
+                  </a>
+                </div>
+                <div class="header-navigation" way-points id="main-menu">
+                  <ul>
+                    <li ng-class="getClass('/')"><a ui-sref="home" ><i class="fa fa-question-circle"></i> Câu hỏi</a></li>
+                    <li ng-class="getClass('/tags.html')"><a ui-sref="tags"><i class="fa fa-tags"></i> Tags</a></li>
+                    <li ng-class="getClass('/danh-hieu.html')"><a ui-sref="badges"><i class="fa fa-trophy"></i> Danh hiệu</a></li>
+                    <li ng-class="getClass('/thanh-vien.html')"><a ui-sref="users" ><i class="fa fa-users"></i> Thành viên</a></li>
+                    <li>
+                     <a href="#" ng-click="showForm('create_question_form')">
+                     <i class="fa fa-plus"></i> Đăng câu hỏi</a>
+                    </li>
+                  </ul>
+                  <div class="clearfix"></div>
+                </div>
+                <!-- / header-navigation -->
+            </div>
+            <!-- / container -->
+          </div>
+          <!-- / Main header -->
+          <div class="container">
+            <div class="row">
+               <!-- Menu mobile -->
+            <div class="collapse navbar-collapse" id="menu-mobile" >
+              <div class="visible-xs" style="border-top: 1px solid #eee; width: 100%;">
+                  <div class="col-xs-5">
+                    <ul class="nav navbar-nav">
+                      <li><a href="javascript:void(0)" class="question-form"><i class="fa fa-plus"></i> Đăng câu hỏi</a></li>
+                      <li ng-class="getClass('/')"><a ui-sref="home"><i class="fa fa-question-circle"></i> Câu hỏi</a></li>
+                      <li ng-class="getClass('/tags.html')"><a ui-sref="tags"><i class="fa fa-tags"></i> Tags</a></li>
+                      <li ng-class="getClass('/danh-hieu.html')"><a ui-sref="badges"><i class="fa fa-trophy"></i> Danh hiệu</a></li>
+                      <li ng-class="getClass('/thanh-vien.html')"><a ui-sref="users"><i class="fa fa-users"></i> Thành viên</a></li>
+                    </ul>
+                  </div>
+                  <div class="col-xs-6 pull-right menu-xs" style="margin-top: 0">
+                    <ul class="nav navbar-nav navbar-right pull-right">
+                      <li>
+                        <form  class="navbar-form navbar-right" role="search" method="GET" action="">
+                          <div style="width: 200px;">
+                            <div class="form-group">
+                              <input type="text" class="form-control" placeholder="Tìm kiếm" name="query"><span class="search-icon" style="right:10px; top:17px;"><i class="fa fa-search"></i></span>
+                            </div>
+                          </div>
+                        </form>
+                      </li>
+                      <li ng-if="!currentUser">
+                        <a ui-sref="login" style="font-weight: bold;">
+                          <i class="fa fa-sign-in visible-xs-inline"></i>
+                          <span>Đăng nhập</span>
+                        </a>
+                      </li>
+                      <!-- <li class="notifications dropdown"  ng-if="currentUser">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)"><i class="fa fa-fw fa-bell-o"></i> Thông báo</a>
+                        <ul class="dropdown-menu">
+                          <li>
+                            <a href="javascript:void(0)"><i class="fa fa-refresh fa-spin"></i> Đang tải Thông báo</a>
+                          </li>
+                        </ul>
+                      </li>
+                      <li class="chats dropdown"  ng-if="currentUser">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)"><i class="fa fa-comment-o fa-fw" ></i> <span class="visible-xs-inline">Phần Chat</span></a>
+                        <ul class="dropdown-menu">
+                          <li>
+                            <a href="javascript:void(0)"><i class="fa fa-refresh fa-spin"></i> Đang tải phần Chat</a>
+                          </li>
+                        </ul>
+                      </li> -->
+                      <li id="user_label" class="dropdown" ng-controller="UserController"  ng-if="currentUser">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)" >
+                          <img ng-src="{{currentUser.avatar}}" alt="{{currentUser.displayName}}">
+                        </a>
+                        <ul id="user-control-list" class="dropdown-menu">
+                          <li>
+                            <a id="user-profile-link" ui-sref="profile({ id:currentUser._id })"><i class="fa fa-circle status online"></i> <span id="user-header-name" ng-bind="currentUser.displayName"></span></a>
+                          </li>
+                          <li ng-show="{{currentUser.role=='admin'}}"><a ui-sref="system"><i class="fa fa-cogs"></i> Quản lý hệ thống</a></li>
+                          <li id="logout-link">
+                            <a href="javascript:void(0)" ng-click="logout()"><i class="fa fa-power-off"></i> Đăng xuất</a>
+                          </li>
+                        </ul>
+                      </li>
+                    </ul>
+                  </div>
+              </div>
+              </div><!-- /.navbar-collapse -->
+            </div>
+        </div>
+        <!-- / Main-menu -->
+        <div class="fixed-menu">
+          <nav class="navbar navbar-inverse hidden-xs" role="navigation">
+              <div class="container">
+                  <div class="row">
+                      <ul class="nav navbar-nav left-navbar">
+                          <li ng-class="getClass('/')"><a ui-sref="home"><i class="fa fa-question-circle"></i> Câu hỏi</a></li>
+                          <li ng-class="getClass('/tags.html')"><a ui-sref="tags"><i class="fa fa-tags"></i> Tags</a></li>
+                          <li ng-class="getClass('/danh-hieu.html')"><a ui-sref="badges"><i class="fa fa-trophy"></i> Danh hiệu</a></li>
+                          <li ng-class="getClass('/thanh-vien.html')"><a ui-sref="users"><i class="fa fa-users"></i> Thành viên</a></li>
+                          <li>
+                           <a href="#" ng-click="showForm('create_question_form')">
+                           <i class="fa fa-plus"></i> Đăng câu hỏi</a>
+                          </li>
+                      </ul>
+                       <ul class="nav navbar-nav pull-right" ng-if="!currentUser">
+                          <li ng-class="getClass('/dang-nhap.html')"><a ui-sref="login">Đăng nhập</a></li>
+                          <li ng-class="getClass('/dang-ky.html')"><a ui-sref="register">Đăng ký</a></li>
+                      </ul>
+                      <ul class="nav navbar-nav pull-right hidden-xs" ng-controller="UserController"  ng-if="currentUser" style="max-height: 46px;">
+                      <li><a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)"  id="user_dropdown" style="padding: 12px 5px" >
+                              <img ng-src="{{currentUser.avatar}}" alt="{{currentUser.displayName}}">
+                              <span ng-bind="currentUser.displayName"></span>
+                      </a>
+                        <ul id="user-control-list" class="dropdown-menu" >
+                              <li>
+                                <a id="user-profile-link" ui-sref="profile({ id:currentUser._id })" ><i class="fa fa-circle status online"></i> <span id="user-header-name" ng-bind="currentUser.displayName"></span></a>
+                              </li>
+                              <li ng-show="{{currentUser.role=='admin'}}"><a ui-sref="system"><i class="fa fa-cogs"></i> Quản lý hệ thống</a></li>
+                              <li id="logout-link">
+                                <a href="javascript:void(0)" ng-click="logout()"><i class="fa fa-power-off"></i> Đăng xuất</a>
+                              </li>
+                            </ul>
+                      </li>
+                  </ul>
+                  </div>
+              </div>
+          </nav>
+      </div>
+      <!-- / Fixed menu -->

@@ -1,0 +1,53 @@
+
+
+<div class="show-form create_question_form" ng-controller="QuestionController">
+  <form name="form" ng-submit="createQuestion()" novalidate>
+    <div class="row">
+      <div class="form-group col-md-6">
+        <input type="text" id="title" class="form-control" ng-model="formData.title" placeholder="Tiêu đề câu hỏi" required="required"  name="title" ng-maxlength="120">
+      </div>
+      <div class="form-group col-md-6" ng-controller="AutocompleteTagController">
+        <tags-input ng-model="formData.tag" display-property="tagName" max-tags="3" placeholder="{{placeholder}}" add-from-autocomplete-only="true" replace-spaces-with-dashes="false" min-length="1" enforce-max-tags>
+            <auto-complete source="loadItems($query)" min-length="1" debounce-delay="0"></auto-complete>
+        </tags-input>
+      </div>
+    </div>
+    <div class="row" style="margin-bottom: 10px;">
+      <div class="col-md-6 col-sm-12">
+        <h4 class="preview-title">Khung soạn thảo câu hỏi <span class="pull-right" data-toggle="modal" data-target="#myModal" style="cursor: pointer; color: #1d9977"><i class="fa fa-question"></i> Hướng dẫn</span></h4>
+        <textarea class="form-control" rows="12" ng-model="formData.content" required="required" style="resize:none"></textarea>
+      </div>
+      <div class="col-md-6  hidden-sm hidden-xs">
+        <h4 class="preview-title">Chế độ xem trước</h4>
+        <div class="preview">
+          <div class="preview-content" marked="formData.content" ng-bind="formData.content"></div>
+        </div>
+      </div>
+    </div>
+    <button ng-controller="MainController" class="btn btn-primary" type="button" ng-click="upload()"><i class="fa fa-cloud-upload"></i> Upload ảnh</button>
+    <button class="btn btn-submit" type="submit"  ng-disabled="!form.$dirty || (form.$dirty && form.$invalid)"><i class="fa fa-edit" ng-show="!Proccess"></i><i class="fa fa-spinner fa-spin" ng-show="Proccess" ></i> Đăng câu hỏi</button>
+    <span class="btn btn-danger" ng-click="closeForm()"><i class="fa fa-times"></i> Hủy bỏ</span><br>
+    <div class="term-texts">
+      <p>Bạn nên đọc kỹ <a ui-sref="policy" target="_blank">Quy định & Nội quy</a> của website trước khi đăng bài. Bạn phải chịu hoàn toàn trách nhiệm về nội dung đăng tải trên website.</p>
+    </div>
+  </form>
+</div>
+<!-- / add-question-->
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Đóng</span></button>
+          <h4 class="modal-title" id="myModalLabel">Hướng dẫn sử dụng chức năng soạn thảo câu hỏi</h4>
+        </div>
+        <div class="modal-body" style="max-height: 400px; overflow-y:scroll;" ng-controller="SystemController">
+          <div marked="systemData.help" ng-bind="systemData.help"></div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-submit" data-dismiss="modal">OK</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- / Modal help -->

@@ -1,0 +1,24 @@
+<div class="modal-header">
+   Thay đổi ảnh đại diện
+</div>
+<div class="modal-body">
+    <div class="alert alert-warning alert-dismissable" ng-show="showAlert">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      Tập tin có dung lượng tối đa là 1M, bạn vui lòng chọn hình ảnh khác
+  </div>
+  <img ng-src="uploads/users/{{imgUrl}}" class="img-responsive center-block" alt="Avatar" ng-hide="showUpload" style="max-width:200px;">
+  <div class="form-group">
+     <label for="userPhoto">Tải lên một hình ảnh</label>
+     <input type="file" ng-file-select="onFileSelect($files)" accept="image/*" value="Chọn tập tin hình ảnh" name="avatar" ng-show="showUpload">
+     <p class="help-block">Bạn chỉ có thể tải lên được các file PNG, JPG hoặc GIF <span id="file-size-block" class=""> (tối đa <span id="upload-file-size">1</span> MB.)</span></p>
+  </div>
+  <div class="progress progress-striped" style="border-radius:0px;margin-top:10px;">
+    <div class="progress-bar"  role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width: {{uploadper}}%">
+        {{uploadper}}%
+    </div>
+  </div>
+</div>
+<div class="modal-footer" style="margin-top:0px;">
+    <button class="btn btn-submit" ng-click="ok()" ng-disabled="showUpload">OK</button>
+    <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+</div>

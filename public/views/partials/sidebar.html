@@ -1,0 +1,52 @@
+<div class="panel panel-default">
+  <div class="panel-body">
+    <div class="widget widget-statistic">
+      <p class="questions-count" ng-controller="CountQuestionController">
+      Câu hỏi<br>
+      <span ng-bind="countQuestion"></span>
+      </p>
+      <p class="members-count" ng-controller="CountUserController">
+      Thành viên<br>
+      <span ng-bind="countUser"></span>
+      </p><br>
+      <a href="https://facebook.com/sangnguyen2603">Mạng xã hội hỏi đáp Việt Nam</a><br>
+      <div fb-like="fbLike"></div>
+    </div>
+  </div>
+</div>
+<!-- / widget-statistic -->
+<div class="panel panel-default" ng-controller="PopularQuestionController">
+  <div class="panel-heading">
+    <h3 class="panel-title"><!-- <i class="fa fa-fw fa-fire"></i>  -->Câu hỏi nổi bật</h3>
+  </div>
+  <div class="panel-body">
+    <div class=" widget-hot-questions">
+      <ul>
+        <li ng-repeat="q in popularQuestion | limitTo:5">
+          <a ui-sref="question-detail({ id:q._id, slug: (q.title | friendlyUrl)+'.html'})">
+            <span class="topic-avatar">
+            <img src="{{q.userId.avatar}}" class="avatar" alt="{{q.userId.displayName}}"></span>
+            <span class="topic-title" ng-bind="q.title"></span>
+          </a>
+          <p class="time"><i class="fa fa-comment"></i> <span ng-bind="q.creationDate| fromNow"></span></p>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+<!-- / widget-hot-questions -->
+<div class="panel panel-default" ng-controller="PopularTagController">
+  <div class="panel-heading">
+    <h3 class="panel-title"><!-- <i class="fa fa-tags"></i>  -->Tags</h3>
+  </div>
+  <div class="panel-body">
+    <div class="list-tags-widget">
+      <ul>
+        <li ng-repeat="t in popularTag">
+          <a ui-sref="questions_tag({ id:t._id, slug: (t.tagName | friendlyUrl)+'.html'})" style="text-transform: lowercase;"><i class="fa fa-tags"></i><span  ng-bind="t.tagName"></span></a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+<!-- / widget-related-tags -->

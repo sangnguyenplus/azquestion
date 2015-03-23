@@ -1,0 +1,122 @@
+<div class="background-main-content">
+<div class="row select-category">
+   <div class="col-md-6 col-xs-6 current-category">
+      <span><i class="fa fa-user"></i> Thông tin thành viên</span>
+   </div>
+   <div class="col-md-6 col-xs-6 user-controls">
+      <ul ng-if="userInfo._id==currentUser._id">
+         <li>
+            <a ui-sref="edit-user({ id:userInfo._id, slug: (userInfo.displayName | friendlyUrl)+'.html'})"><i class="fa fa-edit"></i> Sửa thông tin</a>
+         </li>
+         <li>
+            <a href="javascript:void(0)" ng-click="logout()"><i class="fa fa-power-off"></i> Đăng xuất</a>
+         </li>
+      </ul>
+   </div>
+</div>
+<!-- END SELECT-CATEGORY -->
+<div class="row user-statistic">
+   <div class="col-md-12 col-sm-12 col-xs-12 user-info">
+     <div class="picture-account text-center">
+         <span><img ng-src="{{userInfo.avatar}}" class="avatar img-thumbnail" alt="{{userInfo.displayName}}" ></span><br><br>
+            <strong ng-if="userInfo.role=='user'" ng-repeat="badge in listBadge | getBadge: userInfo.reputation">
+               <span title="{{userInfo.reputation}}" ng-bind="badge.name" class="user-badge" style="background-color:{{badge.color}};"></span>
+            </strong>
+            <span ng-if="userInfo.role=='admin'" class="user-badge" style="background-color:#CA1C23;">Administrator</span>
+     </div>
+      <ul>
+         <li class="name" ng-bind="userInfo.displayName"></li>
+         <li class="location" ng-if="userInfo.location!=null"><i class="fa fa-map-marker"></i> <span ng-bind="userInfo.location"></span></li>
+         <li class="location" ng-if="userInfo.location==null"><i class="fa fa-map-marker"></i> Chưa cập nhật</li>
+         <li class="email"><i class="fa fa-envelope"></i> <span ng-bind="userInfo.email"></span></li>
+         <li><i class="fa fa-suitcase"></i> <span ng-bind="userInfo.website"></span></li>
+      </ul>
+   </div>
+   <div class="col-md-12 user-post-count">
+      <div class="row">
+         <div class="col-md-4 col-xs-4 question-cat">
+            <p class="badge-count">Điểm uy tín <br><span class="points-count" ng-bind="userInfo.reputation"></span>
+            <sup class="star"><i class="fa fa-star"></i></sup></p>
+         </div>
+         <div class="col-md-4 col-xs-4">
+            <p class="questions-count">Câu hỏi<br><span ng-bind="numberQuestion"></span></p>
+         </div>
+         <div class="col-md-4 col-xs-4">
+            <p class="answers-count">Trả lời<br><span ng-bind="numberAnswer"></span></p>
+         </div>
+         <div class="clearfix"></div>
+         <hr>
+      </div>
+   </div>
+   <div class="col-md-12 list-question-by-user">
+   <tabset>
+    <tab>
+       <tab-heading>
+           <i class="fa fa-question"></i> Hỏi
+      </tab-heading>
+      <div ng-if="listQuestion.length>0">
+         <div ng-repeat="q in listQuestion | orderBy:['-creationDate']|startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit">
+            <div class="qa-user-content">
+               <p marked="q.content.slice(0, 450)" ng-bind="q.content.slice(0, 450)"></p>
+               <p class="fade-out"></p>
+            </div>
+            <small>
+               <span class="pull-right">
+                  được đăng <span ng-bind="q.creationDate | fromNow"></span> •
+                  <a ui-sref="question-detail({id:q._id, slug: (q.title | friendlyUrl)+'.html'})">Đọc thêm</a>
+               </span>
+            </small>
+            <hr>
+         </div>
+         <pagination total-items="listQuestion.length" ng-model="currentPage" max-size="itemsPerPage" class="pagination-sm" boundary-links="false" rotate="false" num-pages="numPages" previous-text="←" next-text="→"></pagination>
+         <!-- / pagination -->
+      </div>
+      <div ng-if="listQuestion.length==0">
+         <p>Thành viên này hiện chưa đăng câu hỏi nào.</p>
+      </div>
+    </tab>
+    <tab >
+      <tab-heading>
+        <i class="fa fa-comments"></i> Trả lời
+      </tab-heading>
+      <div ng-if="listAnswer.length>0">
+      <div ng-repeat="a in listAnswer | orderBy:['-creationDate']|startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit">
+         <div class="qa-user-content">
+            <p marked="a.content.slice(0, 450)" ng-bind="a.content.slice(0, 450)"></p>
+            <p class="fade-out"></p>
+         </div>
+         <small>
+            <span class="pull-right">
+               được đăng <span ng-bind="a.creationDate | fromNow"></span> •
+               <a ui-sref="question-detail({id:a.questionId._id, slug: (a.questionId.title | friendlyUrl)+'.html'})">Đọc thêm </a>
+            </span>
+         </small>
+         <hr>
+      </div>
+      <pagination total-items="listAnswer.length" ng-model="currentPage" max-size="itemsPerPage" class="pagination-sm" boundary-links="false" rotate="false" num-pages="numPages" previous-text="←" next-text="→"></pagination>
+      <!-- / pagination -->
+      </div>
+      <div ng-if="listAnswer.length==0">
+               <p>Thành viên này hiện chưa đăng câu trả lời nào.</p>
+      </div>
+    </tab>
+  </tabset>
+   </div>
+</div>
+</div>
+<style>
+   .qa-user-content{max-height: 120px;word-break: break-word;overflow: hidden;position: relative;}
+   .fade-out {
+      position: absolute;
+      top: 60px;
+      left: 0;
+      width: 100%;
+      margin: 0;
+      padding: 30px 0;
+      background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0,transparent),color-stop(1,#fff));
+      background-image: -webkit-linear-gradient(top,rgba(255,255,255,0),#fff);
+      background-image: -moz-linear-gradient(top,rgba(255,255,255,0),#fff);
+      background-image: -ms-linear-gradient(top,transparent,#fff);
+      background-image: -o-linear-gradient(top,transparent,#fff);
+   }
+</style>

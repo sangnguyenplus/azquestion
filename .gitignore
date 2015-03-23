@@ -1,0 +1,11 @@
+<<<<<<< HEAD
+﻿node_modules/
+public/libs/
+*.DS_Store
+npm-debug.log
+=======
+node_modules/
+public/libs/
+*.DS_Store
+npm-debug.log
+>>>>>>> 23a2cb1e6559ea902ba62464e83cdb6584bdae79

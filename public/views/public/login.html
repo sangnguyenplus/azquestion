@@ -1,0 +1,60 @@
+<div class="background-main-content">
+    <div class="intro-content-wrapper">
+    <div class="form-signup-wrapper">
+        <div class="group-btn-intro col-md-12">
+            <a ui-sref="register" class="to_register"> Đăng ký </a> <span>hoặc</span> <a ui-sref="login" class="to_register active">Đăng nhập</a>
+        </div>
+            <div id="login" class="animate">
+                <form class="sign-in-intro" id="sign_in" name="form" ng-submit="login()" novalidate>
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        <p class="intro-name">
+                        <span class="your-email">
+                        <input type="email" autocomplete="off" id="email" name="email" ng-model="userData.email" placeholder="Email">
+                        <label for="email" class="error"  ng-show="form.email.$dirty && form.email.$invalid">Email không hợp lệ.</label>
+                        <i class="fa fa-envelope-o"></i>
+                        </span>
+                        </p>
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        <p class="intro-password">
+                        <span class="your-password">
+                        <input type="password" autocomplete="off" id="password" name="password" ng-model="userData.password" placeholder="Mật khẩu" required>
+                          <label for="password" class="error"  ng-show="form.password.$dirty && form.password.$error.required">Mật khẩu không được rỗng.</label>
+                        <i class="fa fa-key"></i>
+                        </span>
+                        </p>
+                    </div>
+                    <div class="col-md-6 col-xs-6">
+                        <p class="intro-remember">
+                        <input type="hidden" id="remember" name="remember" value="0" />
+                        <a class="your-remember" href="javascript:void(0)">
+                        <i class="fa fa-check-circle-o"></i> Ghi nhớ </a>
+                        </p>
+                    </div>
+                    <div class="col-md-6 col-xs-6">
+                        <p class="intro-remember">
+                        <a class="your-fogot-pass" ui-sref="forgot_password"> Quên mật khẩu?</a>
+                        </p>
+                    </div>
+                    <div class="col-md-12">
+                        <p class="btn-submit-intro">
+                        <span class="your-submit">
+                        <button type="submit" class="btn btn-submit" ng-disabled="!form.$dirty || (form.$dirty && form.$invalid)"><i class="fa fa-spinner fa-spin" ng-show="Proccess" ></i> Đăng nhập </button>
+                        </span>
+                        </p>
+                    </div>
+                    <div class="col-md-12">
+                        <p class="terms-intro">
+                        Bạn chưa có tài khoản? Hãy <a ui-sref="register">Đăng ký</a> !
+                        </p>
+                    </div>
+                    <div class="social-login col-md-12">
+                        <h4>ĐĂNG NHẬP THÔNG QUA MẠNG XÃ HỘI</h4>
+                        <a href="/auth/facebook" class="btn btn-primary" target='_self'><i class="fa fa-facebook" ></i> Tài khoản Facebook</a>
+                        <a href="/auth/google" class="btn btn-danger" target='_self'><i class="fa fa-google-plus"></i> Tài khoản Google</a>
+                    </div>
+                </form>
+            </div>
+    </div>
+</div>
+</div>
