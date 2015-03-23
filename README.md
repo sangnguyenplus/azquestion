@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 azquestion
 ==========
 
@@ -6,7 +7,6 @@ Mạng xã hội hỏi đáp
 Demo: https://azquestion.com
 
 Lưu ý khi đưa file lên server:
-- Sửa lại thẻ base ở public/index.html
 - Sửa cấu hình auth qua mạng xã hội config/auth.js
 - Sửa file gửi đường dẫn kích hoạt tài khoản app/routes/login.js
 
@@ -47,3 +47,7 @@ server {
 =======
 # az
 >>>>>>> 23a2cb1e6559ea902ba62464e83cdb6584bdae79
+=======
+# azquestion
+QA Social
+>>>>>>> f6a85b30ff7ac3ad03e2f52ba1a33f6f55b90020
