@@ -255,7 +255,7 @@ angular.module('QuestionCtrl',[])
         });
 
 }])
-.controller('DetailQuestionController',['$scope','$http', '$state','$stateParams','$location','flash', 'Question', 'Answer','$modal','appAlert',function($scope,$http, $state,$stateParams,$location,flash, Question, Answer,$modal,appAlert) {
+.controller('DetailQuestionController',['$scope','$http', '$state','$stateParams','$location','flash', 'Question', 'Answer','$modal','appAlert','socket',function($scope,$http, $state,$stateParams,$location,flash, Question, Answer,$modal,appAlert, socket) {
 /*Chi tiết câu hỏi*/
 $scope.loading=true;
     $scope.formAnswer = {};
@@ -295,7 +295,6 @@ $scope.loading=true;
 
     $scope.createAnswer = function(){
             $scope.Proccess=true;
-            console.log($scope.formAnswer);
             /*Kiểm tra dữ liệu rỗng nếu form rỗng thì không làm gì cả*/
             if (!$.isEmptyObject($scope.formAnswer)) {
 
@@ -305,6 +304,7 @@ $scope.loading=true;
                                     $scope.Proccess=false;
                                     $('.show-form').fadeOut();
                                     flash.success="Gửi trả lời thành công!";
+                                    socket.emit('new answer', data);
                                     $http.get('api/findAnswers/'+ question_id)
                                         .success(function(data){
                                           $scope.listAnswerQuestion=data;

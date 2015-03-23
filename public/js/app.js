@@ -13,6 +13,7 @@ var app=angular.module('AZQuestion', [
   'hc.marked',
   'ngAnimate',
   'btford.socket-io',
+  'luegg.directives',
   'appRoutes',
   'appDirectives',
   'appFilters',

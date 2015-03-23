@@ -136,4 +136,7 @@ io.on('connection', function (socket) {
       });
     }
   });
+  socket.on('new answer', function(data){
+    socket.broadcast.emit('new answer', data);
+  });
 });

@@ -5,8 +5,8 @@
 	   <button type="button" class="close hidden-xs"><span aria-hidden="true"><i class="fa fa-expand"></i></span><span class="sr-only">Phóng to</span></button>
 	</div>
 	<div class="modal-body chat-modal">
-	    <ul class="well well-sm chat-content">
-	    	<li class="message" ng-repeat="m in msg" style="display: list-item;">
+	    <ul class="well well-sm chat-content" id="smsBody" scroll-glue>
+	    	<li class="message" ng-repeat="m in msg">
 	    		<span ng-if="m.userSend!=user.userId"><img src="{{m.userSend.avatar}}" class="userAvatar" alt="{{m.userSend.displayName}}"><span class="messageBody">{{m.msg}} <p class="text-right"><i><small class="send_date">{{m.creationDate | fromNow}}</small></i></p></span>
 	    		</span>
 	    		<span ng-if="m.userSend==user.userId"><img src="{{m.userRecive.avatar}}" class="userAvatar" alt="{{m.userRecive.displayName}}"><span class="messageBody">{{m.msg}} <p class="text-right"><i><small class="send_date">{{m.creationDate | fromNow}}</small></i></p></span>

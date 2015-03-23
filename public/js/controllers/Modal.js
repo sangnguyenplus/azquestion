@@ -109,6 +109,10 @@ controller('modal.alert',['$scope', '$modalInstance','data', function($scope, $m
    $scope.formData.userRecive=userData.userId;
    $http.get('api/chat/'+userData.userId).success(function(data){
       $scope.msg=data;
+      $scope.messages = $.map(data, function(value, index) {
+        return [value];
+      });
+      console.log($scope.messages);
    })
    .error(function() {
      console.log('error');

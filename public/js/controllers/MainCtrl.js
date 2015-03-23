@@ -96,4 +96,7 @@ angular.module('MainCtrl',[])
 				}
 			});
 		};
+		socket.on('new answer', function(data){
+			console.log('Câu trả lời mới được đăng!');
+		});
 }]);
