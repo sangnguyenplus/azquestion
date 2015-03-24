@@ -4,8 +4,6 @@ angular.module('ChatCtrl',[])
   function($scope,$cookieStore,$window,$state, $location,$http,$rootScope,appAlert,flash,AuthenticationService,socket, Chat) {
     var FADE_TIME = 150; // ms
     var TYPING_TIMER_LENGTH = 400; // ms
-    var COLORS = ['#e21400', '#91580f', '#f8a700', '#f78b00','#58dc00', '#287b00', '#a8f07a', '#4ae8c4','#3b88eb', '#3824aa', '#a700ff', '#d300e7'];
-
     // Initialize varibles
     var $window = $(window);
     var $messages = $('.chat-content'); // Messages area
@@ -14,14 +12,16 @@ angular.module('ChatCtrl',[])
 
     // Prompt for setting a username
     var username;
+    var avatar;
     var connected = false;
     var typing = false;
     var lastTypingTime;
     var $currentInput = $inputMessage.focus();
     $inputMessage.focus(function(){
       if(!username){
-        username= cleanInput($cookieStore.get('currentUser').displayName);
-        socket.emit('add user', username);
+        username= $cookieStore.get('currentUser').displayName;
+        avatar= $cookieStore.get('currentUser').avatar;
+        socket.emit('add user', {username: username, avatar: avatar});
       }
     });
 
@@ -35,10 +35,11 @@ angular.module('ChatCtrl',[])
         $inputMessage.val('');
         addChatMessage({
           username: username,
+          avatar: avatar,
           message: message
         });
         // tell server to execute 'new message' and send along one parameter
-        socket.emit('new message', message);
+        socket.emit('new message', {username: username, message: message});
         Chat.create($scope.formData);
       }
     }
@@ -59,7 +60,7 @@ angular.module('ChatCtrl',[])
         $typingMessages.remove();
       }
 
-      var $usernameDiv = '<img src="'+$cookieStore.get('currentUser').avatar+'" class="userAvatar" alt="'+$cookieStore.get('currentUser').displayName+'">';
+      var $usernameDiv = '<img src="'+data.avatar+'" class="userAvatar" alt="'+data.username+'">';
       var $messageBodyDiv = $('<span class="messageBody">')
       .text(data.message);
       if(data.typing){
