@@ -84,26 +84,28 @@ var usernames = {};
 io.on('connection', function (socket) {
   var addedUser = false;
 
-  // when the client emits 'new message', this listens and executes
+  // when the client emits 'add user', this listens and executes
+  socket.on('add user', function (data) {
+    // we store the username in the socket session for this client
+    socket.username = data.displayName;
+    socket.avatar = data.avatar;
+    // add the client's username to the global list
+    usernames[socket.username] = socket.id;
+    addedUser = true;
+    socket.emit('login', {
+      usernames: usernames
+    });
+    console.log(usernames);
+  });
+
+   // when the client emits 'new message', this listens and executes
   socket.on('new message', function (data) {
     // we tell the client to execute 'new message'
+    //usernames[socket.username].emit('new message', {
     socket.broadcast.emit('new message', {
       username: socket.username,
       avatar: socket.avatar,
       message: data.message
-    });
-  });
-
-  // when the client emits 'add user', this listens and executes
-  socket.on('add user', function (data) {
-    // we store the username in the socket session for this client
-    socket.username = data.username;
-    socket.avatar = data.avatar;
-    // add the client's username to the global list
-    usernames[socket.username] = data.username;
-    addedUser = true;
-    socket.emit('login', {
-      usernames: usernames
     });
   });
 

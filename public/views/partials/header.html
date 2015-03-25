@@ -20,6 +20,22 @@
                   <li ng-class="getClass('/dang-ky.html')"><a ui-sref="register">Đăng ký</a></li>
               </ul>
               <ul class="nav navbar-nav pull-right hidden-xs" ng-controller="UserController"  ng-if="currentUser" style="max-height: 40px;">
+                  <li class="notifications dropdown"  ng-if="currentUser">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)"><i class="fa fa-fw fa-bell-o"></i> Thông báo</a>
+                        <ul class="dropdown-menu">
+                          <li>
+                            <a href="javascript:void(0)"><i class="fa fa-refresh fa-spin"></i> Đang tải Thông báo</a>
+                          </li>
+                        </ul>
+                      </li>
+                      <li class="chats dropdown"  ng-if="currentUser">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)"><i class="fa fa-comment-o fa-fw" ></i> <span>Chat</span></a>
+                        <ul class="dropdown-menu">
+                          <li>
+                            <a href="javascript:void(0)"><i class="fa fa-refresh fa-spin"></i> Đang tải phần Chat</a>
+                          </li>
+                        </ul>
+                      </li>
                   <li><a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)" >
                           <img ng-src="{{currentUser.avatar}}" class="img-thumbnail" alt="{{currentUser.displayName}}">
                           <span ng-bind="currentUser.displayName"></span>
@@ -80,40 +96,15 @@
                   </div>
                   <div class="col-xs-6 pull-right menu-xs" style="margin-top: 0">
                     <ul class="nav navbar-nav navbar-right pull-right">
-                      <li>
-                        <form  class="navbar-form navbar-right" role="search" method="GET" action="">
-                          <div style="width: 200px;">
-                            <div class="form-group">
-                              <input type="text" class="form-control" placeholder="Tìm kiếm" name="query"><span class="search-icon" style="right:10px; top:17px;"><i class="fa fa-search"></i></span>
-                            </div>
-                          </div>
-                        </form>
-                      </li>
                       <li ng-if="!currentUser">
                         <a ui-sref="login" style="font-weight: bold;">
                           <i class="fa fa-sign-in visible-xs-inline"></i>
                           <span>Đăng nhập</span>
                         </a>
                       </li>
-                      <!-- <li class="notifications dropdown"  ng-if="currentUser">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)"><i class="fa fa-fw fa-bell-o"></i> Thông báo</a>
-                        <ul class="dropdown-menu">
-                          <li>
-                            <a href="javascript:void(0)"><i class="fa fa-refresh fa-spin"></i> Đang tải Thông báo</a>
-                          </li>
-                        </ul>
-                      </li>
-                      <li class="chats dropdown"  ng-if="currentUser">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)"><i class="fa fa-comment-o fa-fw" ></i> <span class="visible-xs-inline">Phần Chat</span></a>
-                        <ul class="dropdown-menu">
-                          <li>
-                            <a href="javascript:void(0)"><i class="fa fa-refresh fa-spin"></i> Đang tải phần Chat</a>
-                          </li>
-                        </ul>
-                      </li> -->
                       <li id="user_label" class="dropdown" ng-controller="UserController"  ng-if="currentUser">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)" >
-                          <img ng-src="{{currentUser.avatar}}" alt="{{currentUser.displayName}}">
+                          <img ng-src="{{currentUser.avatar}}" alt="{{currentUser.displayName}}"> {{currentUser.displayName}}
                         </a>
                         <ul id="user-control-list" class="dropdown-menu">
                           <li>
@@ -122,6 +113,22 @@
                           <li ng-show="{{currentUser.role=='admin'}}"><a ui-sref="system"><i class="fa fa-cogs"></i> Quản lý hệ thống</a></li>
                           <li id="logout-link">
                             <a href="javascript:void(0)" ng-click="logout()"><i class="fa fa-power-off"></i> Đăng xuất</a>
+                          </li>
+                        </ul>
+                      </li>
+                      <li class="notifications dropdown"  ng-if="currentUser">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)"><i class="fa fa-fw fa-bell-o"></i> Thông báo</a>
+                        <ul class="dropdown-menu">
+                          <li>
+                            <a href="javascript:void(0)"><i class="fa fa-refresh fa-spin"></i> Đang tải Thông báo</a>
+                          </li>
+                        </ul>
+                      </li>
+                      <li class="chats dropdown"  ng-if="currentUser">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)"><i class="fa fa-comment-o fa-fw" ></i> <span class="visible-xs-inline">Chat</span></a>
+                        <ul class="dropdown-menu">
+                          <li>
+                            <a href="javascript:void(0)"><i class="fa fa-refresh fa-spin"></i> Đang tải phần Chat</a>
                           </li>
                         </ul>
                       </li>
@@ -151,6 +158,22 @@
                           <li ng-class="getClass('/dang-ky.html')"><a ui-sref="register">Đăng ký</a></li>
                       </ul>
                       <ul class="nav navbar-nav pull-right hidden-xs" ng-controller="UserController"  ng-if="currentUser" style="max-height: 46px;">
+                      <li class="notifications dropdown"  ng-if="currentUser">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)"><i class="fa fa-fw fa-bell-o"></i> Thông báo</a>
+                        <ul class="dropdown-menu">
+                          <li>
+                            <a href="javascript:void(0)"><i class="fa fa-refresh fa-spin"></i> Đang tải Thông báo</a>
+                          </li>
+                        </ul>
+                      </li>
+                      <li class="chats dropdown"  ng-if="currentUser">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)"><i class="fa fa-comment-o fa-fw" ></i> <span>Chat</span></a>
+                        <ul class="dropdown-menu">
+                          <li>
+                            <a href="javascript:void(0)"><i class="fa fa-refresh fa-spin"></i> Đang tải phần Chat</a>
+                          </li>
+                        </ul>
+                      </li>
                       <li><a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)"  id="user_dropdown" style="padding: 12px 5px" >
                               <img ng-src="{{currentUser.avatar}}" alt="{{currentUser.displayName}}">
                               <span ng-bind="currentUser.displayName"></span>
