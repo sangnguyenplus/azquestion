@@ -5,12 +5,11 @@
 	   <button type="button" class="close hidden-xs"><span aria-hidden="true"><i class="fa fa-expand"></i></span><span class="sr-only">Phóng to</span></button>
 	</div>
 	<div class="modal-body chat-modal">
-	    <ul class="well well-sm chat-content" id="smsBody" scroll-glue>
+	    <ul class="well well-sm chat-content" scroll-glue>
 	    	<li class="message" ng-repeat="m in msg">
-	    		<span ng-if="m.userSend!=user.userId"><img src="{{m.userSend.avatar}}" class="userAvatar" alt="{{m.userSend.displayName}}"><span class="messageBody">{{m.msg}} <p class="text-right"><i><small class="send_date">{{m.creationDate | fromNow}}</small></i></p></span>
-	    		</span>
-	    		<span ng-if="m.userSend==user.userId"><img src="{{m.userRecive.avatar}}" class="userAvatar" alt="{{m.userRecive.displayName}}"><span class="messageBody">{{m.msg}} <p class="text-right"><i><small class="send_date">{{m.creationDate | fromNow}}</small></i></p></span>
-	    		</span>
+	    	<div ng-class="{sendUser: m.userSend.displayName!=user.displayName}">
+	    		<img src="{{m.userSend.avatar}}" class="userAvatar" alt="{{m.userSend.displayName}}"><span class="messageBody">{{m.msg}} <p class="text-right"><i><small class="send_date">{{m.creationDate | fromNow}}</small></i></p></span>
+	    	</div>
 	    	</li>
 	    <p>&nbsp;</p>
 		</ul>
@@ -40,26 +39,15 @@
 	.username {float: left; overflow: hidden;padding-right: 15px;text-align: right;}
 	.chat-modal ul.well {height: 300px;overflow-y: auto;resize: none;background-color: #fff;margin-bottom: 0;border-radius: 0;}
 	.message{margin: 5px 0;}
-	.messageBody{
-		display: inline-block;
-		  max-width: 95%;
-  word-break: break-word;
-		min-width: 200px;
-		  background-color: #dbedfe;
-  background-image: -webkit-gradient(linear, center bottom, center top, from(#c7defe), to(#e7f1fe));
-  background-image: -webkit-linear-gradient(bottom, #c7defe, #e7f1fe);
-  padding: 3px 5px;
-  margin: 0 5px;
-  border-radius: 4px;
-  margin-left: 10px;
-  position: relative;
-  min-height: 42px;
-	}
+	.messageBody{display: inline-block;max-width: 81%;word-break: break-word;min-width: 200px;background-color: #dbedfe;background-image: -webkit-gradient(linear, center bottom, center top, from(#c7defe), to(#e7f1fe));background-image: -webkit-linear-gradient(bottom, #c7defe, #e7f1fe);padding: 3px 5px;margin: 0 5px;border-radius: 4px;margin-left: 10px;position: relative;min-height: 42px;}
 	.messageBody .text-right{margin-bottom: 0;}
-	.messageBody:before{
-		content: "";display: block;width: 0px;height: 0px;position: absolute;top: 10px;left: -14px;border: 7px solid transparent;border-right: 9px solid #dbedfe;background-image: -webkit-gradient(linear, center bottom, center top, from(#c7defe), to(#e7f1fe));
-  background-image: -webkit-linear-gradient(bottom, #c7defe, #e7f1fe);
-	}
-	.userAvatar{width: 40px; height: 40px; margin-top: -21px;}
+	.messageBody:before{content: "";display: block;width: 0px;height: 0px;position: absolute;top: 10px;left: -14px;border: 7px solid transparent;border-right: 9px solid #dbedfe;background-image: -webkit-gradient(linear, center bottom, center top, from(#c7defe), to(#e7f1fe));background-image: -webkit-linear-gradient(bottom, #c7defe, #e7f1fe);}
+	.userAvatar{width: 40px; height: 40px; float: left;}
 	.message.typing .messageBody .userAvatar{margin-top: 0;}
+	.sendUser{text-align: right;}
+	.sendUser .userAvatar{float: right;margin-top: 0;}
+	.sendUser .messageBody{margin-left: 0; margin-right: 10px;}
+	.sendUser .messageBody:before{border-left: 9px solid #dbedfe; right: -9px; border-right: none; left:auto;}
+	/*.sendUser .messageBody .text-right{text-align: left !important;}*/
+	.send_date{font-size: 80%; color: #8B8686;}
 </style>

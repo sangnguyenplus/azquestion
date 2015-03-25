@@ -68,13 +68,16 @@ angular.module('ChatCtrl',[])
         var $messageDiv = $('<li class="message"/>')
         .data('username', data.username)
         .addClass('typing')
-        .append(/*$usernameDiv,*/$messageBodyDiv);
+        .append($usernameDiv,$messageBodyDiv);
       }
       else{
         var d = new Date();
         $messageBodyDiv.append('<p class="text-right"><i><small class="send_date">'+moment(d).fromNow()+'</small></i></p>');
         var $messageDiv = $('<li class="message"/>')
         .append($usernameDiv, $messageBodyDiv);
+      }
+      if(data.username==$cookieStore.get('currentUser').displayName){
+        $messageDiv.addClass('sendUser');
       }
 
       addMessageElement($messageDiv, options);
@@ -170,6 +173,11 @@ angular.module('ChatCtrl',[])
           socket.emit('stop typing');
           typing = false;
       }
+    });
+    $('.chat-message-send-btn').click(function(){
+          sendMessage();
+          socket.emit('stop typing');
+          typing = false;
     });
 
     $inputMessage.on('input', function() {
