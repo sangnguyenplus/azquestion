@@ -1,13 +1,13 @@
 
 	<div ng-controller="ChatController">
 		<div class="modal-header">
-	   Chat với {{user.displayName}}
+	   Chat với {{user.username}}
 	   <button type="button" class="close hidden-xs"><span aria-hidden="true"><i class="fa fa-expand"></i></span><span class="sr-only">Phóng to</span></button>
 	</div>
 	<div class="modal-body chat-modal">
 	    <ul class="well well-sm chat-content" scroll-glue>
 	    	<li class="message" ng-repeat="m in msg">
-	    	<div ng-class="{sendUser: m.userSend.displayName!=user.displayName}">
+	    	<div ng-class="{sendUser: m.userSend.displayName!=user.username}">
 	    		<img src="{{m.userSend.avatar}}" class="userAvatar" alt="{{m.userSend.displayName}}"><span class="messageBody">{{m.msg}} <p class="text-right"><i><small class="send_date">{{m.creationDate | fromNow}}</small></i></p></span>
 	    	</div>
 	    	</li>

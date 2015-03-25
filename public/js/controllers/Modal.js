@@ -106,8 +106,8 @@ controller('modal.alert',['$scope', '$modalInstance','data', function($scope, $m
 {
    $scope.formData={};
    $scope.user=userData;
-   $scope.formData.userRecive=userData.userId;
-   $http.get('api/chat/'+userData.userId).success(function(data){
+   $scope.formData.userRecive=userData._id;
+   $http.get('api/chat/'+userData._id).success(function(data){
       $scope.msg=data;
    })
    .error(function() {

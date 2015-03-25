@@ -12,6 +12,7 @@ angular.module('ChatCtrl',[])
 
     // Prompt for setting a username
     var username;
+    var _id;
     var avatar;
     var connected = false;
     var typing = false;
@@ -21,6 +22,7 @@ angular.module('ChatCtrl',[])
       if(!username){
         username= $cookieStore.get('currentUser').displayName;
         avatar= $cookieStore.get('currentUser').avatar;
+        _id= $cookieStore.get('currentUser')._id;
         socket.emit('add user', {username: username, avatar: avatar});
       }
     });
@@ -39,7 +41,7 @@ angular.module('ChatCtrl',[])
           message: message
         });
         // tell server to execute 'new message' and send along one parameter
-        socket.emit('new message', {username: username, message: message});
+        socket.emit('new message', {username: username, _id: _id, message: message});
         Chat.create($scope.formData);
       }
     }

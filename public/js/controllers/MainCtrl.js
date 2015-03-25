@@ -1,6 +1,6 @@
 angular.module('MainCtrl',[])
 
-.controller('MainController',['$scope','$cookieStore','$window','$state', '$location','$http','$rootScope','$modal','appAlert','flash','AuthenticationService','socket', function($scope,$cookieStore,$window,$state, $location,$http,$rootScope,$modal,appAlert,flash,AuthenticationService,socket) {
+.controller('MainController',['$scope','$cookieStore','$window','$state', '$location','$http','$rootScope','$modal','$modalStack','appAlert','flash','AuthenticationService','socket', function($scope,$cookieStore,$window,$state, $location,$http,$rootScope,$modal,$modalStack,appAlert,flash,AuthenticationService,socket) {
 		$scope.$on('$viewContentLoaded', function ()
          {
 	         /*Dùng cho nút ghi nhớ mật khẩu*/
@@ -99,4 +99,28 @@ angular.module('MainCtrl',[])
 		socket.on('new answer', function(data){
 			console.log('Câu trả lời mới được đăng!');
 		});
+		socket.on('new message', function (data) {
+			if(!$modalStack.getTop()){
+		      $http.get('/loggedin').success(function(user){
+		    		if(user!=='0'){
+					    var modalInstance = $modal.open({
+					      templateUrl: '/views/modal/chat.html',
+					      controller: 'modal.chat',
+					      backdrop: 'static',
+					      resolve: {
+					      	userData: function () {
+					           return data;
+					         }
+					      }
+					    });
+					    modalInstance.result.then(function (dataFromOkModal) {
+					      console.log(dataFromOkModal);
+					    }, function (dataFromDissmissModal) {
+					      console.log(dataFromDissmissModal);
+					    });
+					    /*end modal*/
+					}
+				});
+			}
+	    });
 }]);

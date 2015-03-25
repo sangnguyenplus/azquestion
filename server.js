@@ -87,7 +87,8 @@ io.on('connection', function (socket) {
   // when the client emits 'add user', this listens and executes
   socket.on('add user', function (data) {
     // we store the username in the socket session for this client
-    socket.username = data.displayName;
+    socket.username = data.username;
+    socket.userId=data._id;
     socket.avatar = data.avatar;
     // add the client's username to the global list
     usernames[socket.username] = socket.id;
@@ -103,15 +104,18 @@ io.on('connection', function (socket) {
     // we tell the client to execute 'new message'
     //usernames[socket.username].emit('new message', {
     socket.broadcast.emit('new message', {
+      _id:data._id,
       username: socket.username,
       avatar: socket.avatar,
       message: data.message
     });
+    console.log(socket.userId);
   });
 
   // when the client emits 'typing', we broadcast it to others
   socket.on('typing', function () {
     socket.broadcast.emit('typing', {
+      _id:socket.userId,
       username: socket.username,
       avatar: socket.avatar
     });
@@ -120,6 +124,7 @@ io.on('connection', function (socket) {
   // when the client emits 'stop typing', we broadcast it to others
   socket.on('stop typing', function () {
     socket.broadcast.emit('stop typing', {
+      _id:socket.userId,
       username: socket.username,
       avatar: socket.avatar
     });
@@ -133,6 +138,7 @@ io.on('connection', function (socket) {
 
       // echo globally that this client has left
       socket.broadcast.emit('user left', {
+        _id:socket.userId,
         username: socket.username,
         avatar: socket.avatar,
         usernames: usernames

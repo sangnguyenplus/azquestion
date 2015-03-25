@@ -45,7 +45,7 @@
         </ul>
          <div>
           <div class="q-footer">
-              <button class="btn btn-sm btn-submit"  ng-show="currentUser._id!=questionDetail.userId._id" type="button" ng-click="chat({userId:questionDetail.userId._id, displayName: questionDetail.userId.displayName})"><i class="fa fa-comment"></i><span > Chat</span></button>
+              <button class="btn btn-sm btn-submit"  ng-show="currentUser._id!=questionDetail.userId._id" type="button" ng-click="chat({_id:questionDetail.userId._id, username: questionDetail.userId.displayName})"><i class="fa fa-comment"></i><span > Chat</span></button>
               <button class="btn btn-sm btn-submit" ng-click="showForm('create_answer_form')" type="button"><i class="fa fa-reply"></i><span > Trả lời</span></button>
               <a class="btn btn-sm btn-submit" href="http://www.facebook.com/sharer.php?u=https://azquestion.com/cau-hoi/chi-tiet/548726e2b3e5b4a81bd6a804/cac-ban-co-ai-biet-nodejs-la-gi-khong.html" title="Share with friends on Facebook" onclick="window.open(this.href,'targetWindow','toolbar=no,location=1,status=1,statusbar=1,menubar=no,scrollbars=yes,resizable=yes,width=1024,height=580');return false;" target="_blank"><i class="fa fa-facebook"></i> Chia sẻ</a>
               <span ng-show="currentUser._id==questionDetail.userId._id">
@@ -102,7 +102,7 @@
                        <p><span><i class="fa fa-calendar"></i> <small ng-bind="a.creationDate | fromNow"></small></span></p>
                         <!-- <button class="btn btn-sm btn-submit" ng-click="showForm('create_answer_form')" type="button"><i class="fa fa-reply"></i><span > Trả lời</span></button> -->
                         <!-- <button class="btn btn-sm btn-submit" type="button" title="Purge"><i class="fa fa-exclamation-triangle"></i><span > Báo cáo vi phạm</span></button> -->
-                        <button class="btn btn-sm btn-submit" ng-show="currentUser._id!=a.userId._id" type="button" ng-click="chat({userId:a.userId._id, displayName: a.userId.displayName})"><i class="fa fa-comment"></i><span > Chat</span></button>
+                        <button class="btn btn-sm btn-submit" ng-show="currentUser._id!=a.userId._id" type="button" ng-click="chat({_id:a.userId._id, username: a.userId.displayName})"><i class="fa fa-comment"></i><span > Chat</span></button>
                         <span ng-show="currentUser._id==a.userId._id">
                          <button class="btn btn-sm btn-submit" type="button" title="Edit" ng-click="showForm('edit_question_form')"><i class="fa fa-pencil"></i><span > Sửa</span></button>
                        </span>
