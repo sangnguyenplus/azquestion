@@ -147,4 +147,9 @@ io.on('connection', function (socket) {
   socket.on('new answer', function(data){
     socket.broadcast.emit('new answer', data);
   });
+  // Xử lý socket notifications
+  // Voteup
+  socket.on('voteup', function(data){
+    socket.broadcast.emit('voteup', data);
+  });
 });

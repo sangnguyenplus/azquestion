@@ -20,11 +20,14 @@
                   <li ng-class="getClass('/dang-ky.html')"><a ui-sref="register">Đăng ký</a></li>
               </ul>
               <ul class="nav navbar-nav pull-right hidden-xs" ng-controller="UserController"  ng-if="currentUser" style="max-height: 40px;">
-                  <li class="notifications dropdown"  ng-if="currentUser">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)"><i class="fa fa-fw fa-bell-o"></i> Thông báo</a>
+                  <li class="notifications dropdown" ng-controller="NotifiController" ng-if="currentUser">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)" ng-dblclick="updatecount()"><i class="fa fa-fw fa-bell-o"></i> Thông báo<span class='badge' ng-bind="sfc"></span></a>
                         <ul class="dropdown-menu">
-                          <li>
+                          <li ng-hide="listNotifi">
                             <a href="javascript:void(0)"><i class="fa fa-refresh fa-spin"></i> Đang tải Thông báo</a>
+                          </li>
+                          <li ng-show="listNotifi" ng-repeat="list in listNotifi|orderBy:['-creationDate']">
+                            <a href="">{{list.content}}</a>
                           </li>
                         </ul>
                       </li>

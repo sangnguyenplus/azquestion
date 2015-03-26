@@ -34,7 +34,9 @@ var app=angular.module('AZQuestion', [
   'SystemCtrl',
   'SystemService',
   'ChatCtrl',
-  'ChatService'
+  'ChatService',
+  'NotifiCtrl',
+  'NotifiService'
 ]);
 
  app.config(['markedProvider', function(markedProvider) {

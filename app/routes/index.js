@@ -6,6 +6,8 @@ var tag = require('./tag');
 var badge = require('./badge');
 var system = require('./system');
 var chat = require('./chat');
+var notifi = require('./notifi');
+
 
 
 var mongoose = require('mongoose');
@@ -27,6 +29,7 @@ module.exports = function (app, passport) {
   //Quản lý các thông tin cấu hình trên hệ thống
   system(app);
   chat(app);
+  notifi(app);
 
 
   //Tất cả request phải đi qua trang index.html để xử lý.

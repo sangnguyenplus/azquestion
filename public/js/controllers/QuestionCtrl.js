@@ -1,6 +1,7 @@
 angular.module('QuestionCtrl',[])
 
-.controller('QuestionController',['$scope','$cookieStore','$rootScope','$location','$state','$http','$stateParams', 'flash','$modal','appAlert','Answer', 'Question','socket', function($scope,$cookieStore,$rootScope,$location,$state,$http,$stateParams, flash,$modal,appAlert,Answer, Question, socket) {
+.controller('QuestionController',['$scope','$cookieStore','$rootScope','$location','$state','$http','$stateParams', 'flash','$modal','appAlert','Answer', 'Question','socket','Notifi',
+    function($scope,$cookieStore,$rootScope,$location,$state,$http,$stateParams, flash,$modal,appAlert,Answer, Question, socket,Notifi) {
 		$scope.formData = {};
         /*Khi form nhấn submit thì sẽ gửi giữ liệu tới api/questions*/
         $scope.createQuestion = function() {
@@ -119,7 +120,17 @@ angular.module('QuestionCtrl',[])
                         if(parseInt(data)==1)
                             flash.success="Bạn đã BỎ thích câu hỏi này!";
                         else
-                            flash.success="Bạn đã thích câu hỏi này!";
+                            {
+                                $http.get('api/question/detail/'+ id)
+                                .success(function(data){
+                                    Notifi.create({userRecive:data.userId._id,userSend:$cookieStore.get('currentUser')._id,content:$cookieStore.get('currentUser').displayName+' đã thích câu hỏi '+data.title});
+                                    socket.emit('voteup',{userSendName:$cookieStore.get('currentUser').displayName,userReciveId:data.userId._id});
+                                })
+                                .error(function(){
+                                console.log("error");
+                                });
+                                flash.success="Bạn đã thích câu hỏi này!";
+                            }
                         Question.get()
                             .success(function(question){
                                 $scope.listQuestion= question;
