@@ -1,7 +1,7 @@
 angular.module('ChatCtrl',[])
 
-.controller('ChatController',['$scope','$cookieStore','$window','$state', '$location','$http','$rootScope','appAlert','flash','AuthenticationService','socket', 'Chat',
-  function($scope,$cookieStore,$window,$state, $location,$http,$rootScope,appAlert,flash,AuthenticationService,socket, Chat) {
+.controller('ChatController',['$scope','$cookieStore','$window','$state', '$location','$http','$rootScope','appAlert','$modal','$modalStack','flash','AuthenticationService','socket', 'Chat',
+  function($scope,$cookieStore,$window,$state, $location,$http,$rootScope,appAlert,$modal,$modalStack,flash,AuthenticationService,socket, Chat) {
     var FADE_TIME = 150; // ms
     var TYPING_TIMER_LENGTH = 400; // ms
     // Initialize varibles
@@ -23,7 +23,7 @@ angular.module('ChatCtrl',[])
         username= $cookieStore.get('currentUser').displayName;
         avatar= $cookieStore.get('currentUser').avatar;
         _id= $cookieStore.get('currentUser')._id;
-        socket.emit('add user', {username: username, avatar: avatar});
+        socket.emit('add user', {username: username, _id:_id, avatar: avatar});
       }
     });
 
@@ -42,6 +42,28 @@ angular.module('ChatCtrl',[])
         });
         // tell server to execute 'new message' and send along one parameter
         socket.emit('new message', {username: username, _id: _id, message: message});
+          if(!$modalStack.getTop()){
+            $http.get('/loggedin').success(function(user){
+              if(user!=='0'){
+                var modalInstance = $modal.open({
+                  templateUrl: '/views/modal/chat.html',
+                  controller: 'modal.chat',
+                  backdrop: 'static',
+                  resolve: {
+                    userData: function () {
+                       return {username: username, _id: _id, message: message};
+                     }
+                  }
+                });
+                modalInstance.result.then(function (dataFromOkModal) {
+                  console.log(dataFromOkModal);
+                }, function (dataFromDissmissModal) {
+                  console.log(dataFromDissmissModal);
+                });
+                /*end modal*/
+            }
+          });
+        }
         Chat.create($scope.formData);
       }
     }

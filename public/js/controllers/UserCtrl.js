@@ -37,7 +37,7 @@ angular.module('UserCtrl',[])
                                  AuthenticationService.isLogged = true;
                                  $window.sessionStorage.token = data.token;
                                  flash.success="Chào mừng "+$cookieStore.get('currentUser').displayName+" quay lại!";
-                                 socket.emit('add user', $cookieStore.get('currentUser'));
+                                 socket.emit('add user', {username: $cookieStore.get('currentUser').displayName, avatar: $cookieStore.get('currentUser').avatar, _id: $cookieStore.get('currentUser')._id});
 
                                 if($rootScope.oldState!==''&& $rootScope.oldState!=='active_account'){
                                   if($rootScope.oldParam.id!==null)

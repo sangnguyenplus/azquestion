@@ -91,7 +91,7 @@ io.on('connection', function (socket) {
     socket.userId=data._id;
     socket.avatar = data.avatar;
     // add the client's username to the global list
-    usernames[socket.username] = socket.id;
+    usernames[socket.id] = {username:socket.username, userId: socket.userId};
     addedUser = true;
     socket.emit('login', {
       usernames: usernames
@@ -109,7 +109,6 @@ io.on('connection', function (socket) {
       avatar: socket.avatar,
       message: data.message
     });
-    console.log(socket.userId);
   });
 
   // when the client emits 'typing', we broadcast it to others

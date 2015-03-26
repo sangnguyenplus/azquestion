@@ -54,73 +54,30 @@ angular.module('MainCtrl',[])
 				}
 			});
 		};
-		$scope.upload=function () {
-		    /*begin modal*/
-		    var modalInstance = $modal.open({
-		      templateUrl: '/views/modal/upload.html',
-		      controller: 'modal.upload',
-		      backdrop: 'static',
-		      resolve: {
-		      }
-		    });
-		    modalInstance.result.then(function (dataFromOkModal) {
-		      console.log(dataFromOkModal);
-		    }, function (dataFromDissmissModal) {
-		      console.log(dataFromDissmissModal);
-		    });
-		    /*end modal*/
-		};
-		$scope.chat=function (user) {
-			$http.get('/loggedin').success(function(data){
-	    		if(data==='0'){
-					flash.error='Bạn cần đăng nhập để thực hiện hành động này !';
-				}
-				else{
-					/*begin modal*/
-				    var modalInstance = $modal.open({
-				      templateUrl: '/views/modal/chat.html',
-				      controller: 'modal.chat',
-				      backdrop: 'static',
-				      resolve: {
-				      	userData: function () {
-				           return user;
-				         }
-				      }
-				    });
-				    modalInstance.result.then(function (dataFromOkModal) {
-				      console.log(dataFromOkModal);
-				    }, function (dataFromDissmissModal) {
-				      console.log(dataFromDissmissModal);
-				    });
-				    /*end modal*/
-				}
-			});
-		};
 		socket.on('new answer', function(data){
 			console.log('Câu trả lời mới được đăng!');
 		});
-		socket.on('new message', function (data) {
+		socket.on('new message', function(data){
 			if(!$modalStack.getTop()){
-		      $http.get('/loggedin').success(function(user){
-		    		if(user!=='0'){
-					    var modalInstance = $modal.open({
-					      templateUrl: '/views/modal/chat.html',
-					      controller: 'modal.chat',
-					      backdrop: 'static',
-					      resolve: {
-					      	userData: function () {
-					           return data;
-					         }
-					      }
-					    });
-					    modalInstance.result.then(function (dataFromOkModal) {
-					      console.log(dataFromOkModal);
-					    }, function (dataFromDissmissModal) {
-					      console.log(dataFromDissmissModal);
-					    });
-					    /*end modal*/
-					}
-				});
-			}
-	    });
+            $http.get('/loggedin').success(function(user){
+              if(user!=='0'){
+                var modalInstance = $modal.open({
+                  templateUrl: '/views/modal/chat.html',
+                  controller: 'modal.chat',
+                  backdrop: 'static',
+                  resolve: {
+                    userData: function () {
+                       return data;
+                     }
+                  }
+                });
+                modalInstance.result.then(function (dataFromOkModal) {
+                  console.log(dataFromOkModal);
+                }, function (dataFromDissmissModal) {
+                  console.log(dataFromDissmissModal);
+                });
+            }
+          });
+        }
+		});
 }]);
