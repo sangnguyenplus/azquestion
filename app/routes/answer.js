@@ -51,7 +51,7 @@ module.exports = function (app, passport) {
 			Favorite.find({questionId: req.body.question_id}).populate('userId', 'email').populate('questionId').exec(function(err, list){
 				if(err)
 					res.send(err);
-				list.forEach(function(item){
+					list.forEach(function(item){
 					if(item.userId._id!=req.user._id){
 						var domain =req.headers.host || "azquestion.com";
 						var mailOptions = {

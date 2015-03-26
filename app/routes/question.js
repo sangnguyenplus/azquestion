@@ -412,6 +412,13 @@ module.exports = function (app, passport) {
 			}
 		});
 	});
+	// Lấy các user gắn dấu sao theo câu hỏi
+	app.get('/api/findFavorite/:question_id', function(req, res) {
+		var id=req.params.question_id;
+		Favorite.find({questionId:id}).populate('userId').exec(function(err,favorite){
+			res.json(favorite)
+		});
+     });
 	app.post('/api/question/edit', function(req, res) {
 
 		Question.findById(req.body._id).populate("userId").exec(function(err, question){

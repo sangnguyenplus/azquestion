@@ -152,4 +152,20 @@ io.on('connection', function (socket) {
   socket.on('voteup', function(data){
     socket.broadcast.emit('voteup', data);
   });
+  //Duyệt bài
+  socket.on('approve', function(data){
+    socket.broadcast.emit('approve', data);
+  });
+  // Favourite
+  socket.on('Favorite', function(data){
+    socket.broadcast.emit('Favorite', data);
+  });
+  // deleteQuestion
+  socket.on('deleteQuestion', function(data){
+    socket.broadcast.emit('deleteQuestion', data);
+  });
+  // createAnswer
+  socket.on('createAnswer', function(data){
+    socket.broadcast.emit('createAnswer', data);
+  });
 });
