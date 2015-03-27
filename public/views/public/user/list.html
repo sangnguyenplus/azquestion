@@ -25,7 +25,8 @@
          <img ng-src="{{u.avatar}}" class="avatar" alt="{{u.displayName}}">
          </span>
          <div class="left-info">
-            <a ui-sref="profile({ id:u._id, slug: (u.displayName | friendlyUrl)+'.html' })"><span class="display_name" ng-bind="u.displayName"></span></a><br>
+            <a ui-sref="profile({ id:u._id, slug: (u.displayName | friendlyUrl)+'.html' })"><span class="display_name" ng-bind="u.displayName"></span></a> <i class="fa fa-circle status online" tooltip="Đang online" ng-show="u.online"></i> 
+                     <i class="fa fa-circle status offline" tooltip="Đang offline" ng-show="!u.online"></i> <br>
             <span class="location" ng-if="u.location!=null">
             <i class="fa fa-map-marker"></i> <span ng-bind="u.location"></span></span>
              <span class="location" ng-if="u.location==null">

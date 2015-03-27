@@ -60,7 +60,8 @@
             <img src="{{questionDetail.userId.avatar}}" alt="{{questionDetail.userId.displayName}}" />
             <label><a ui-sref="profile({id:questionDetail.userId._id})" ng-bind="questionDetail.userId.displayName"></a></label>
             <span class="bg">
-                <i class="fa fa-circle"></i> Điểm <span ng-bind="questionDetail.userId.reputation"></span>
+                 <i class="fa fa-circle status online" tooltip="Đang online" ng-show="questionDetail.userId.online"></i> 
+                     <i class="fa fa-circle status offline" tooltip="Đang offline" ng-show="!questionDetail.userId.online"></i>  Điểm <span ng-bind="questionDetail.userId.reputation"></span>
             </span>
           </div>
           <!-- / user -->
@@ -115,7 +116,8 @@
                       <img src="{{a.userId.avatar}}" alt="{{a.userId.displayName}}" />
                       <label><a ui-sref="profile({id:a.userId._id, slug: (a.userId.displayName | friendlyUrl)+'.html'})" ng-bind="a.userId.displayName"></a></label>
                       <span class="bg">
-                          <i class="fa fa-circle"></i> Điểm <span ng-bind="a.userId.reputation"></span>
+                         <i class="fa fa-circle status online" tooltip="Đang online" ng-show="a.userId.online"></i> 
+                     <i class="fa fa-circle status offline" tooltip="Đang offline" ng-show="!a.userId.online"></i>  Điểm <span ng-bind="a.userId.reputation"></span>
                       </span>
                     </div>
                     <!-- / user -->

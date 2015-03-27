@@ -5,7 +5,7 @@ var io = require('socket.io')(server);
 var port = process.env.PORT || 3000;
 var mongoose = require('mongoose');
 var passport = require('passport');
-var flash 	 = require('connect-flash');
+var flash    = require('connect-flash');
 
 var morgan = require('morgan');
 var bodyParser = require('body-parser');
@@ -83,6 +83,7 @@ var usernames = {};
 
 io.on('connection', function (socket) {
   var addedUser = false;
+  socket.emit("usernames", usernames);
 
   // when the client emits 'add user', this listens and executes
   socket.on('add user', function (data) {
@@ -91,11 +92,9 @@ io.on('connection', function (socket) {
     socket.userId=data._id;
     socket.avatar = data.avatar;
     // add the client's username to the global list
-    usernames[socket.id] = {username:socket.username, userId: socket.userId};
+    usernames[socket.username] = socket.id;
     addedUser = true;
-    socket.emit('login', {
-      usernames: usernames
-    });
+    socket.emit('usernames', usernames);
     console.log(usernames);
   });
 
@@ -134,6 +133,9 @@ io.on('connection', function (socket) {
     // remove the username from global usernames list
     if (addedUser) {
       delete usernames[socket.username];
+
+      socket.emit('usernames', usernames);
+      console.log(usernames);
 
       // echo globally that this client has left
       socket.broadcast.emit('user left', {

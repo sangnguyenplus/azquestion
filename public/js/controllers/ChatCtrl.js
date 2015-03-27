@@ -216,7 +216,7 @@ angular.module('ChatCtrl',[])
     // Socket events
 
     // Whenever the server emits 'login', log the login message
-    socket.on('login', function (data) {
+    socket.on('usernames', function (data) {
       connected = true;
     });
 
@@ -238,8 +238,5 @@ angular.module('ChatCtrl',[])
     // Whenever the server emits 'stop typing', kill the typing message
     socket.on('stop typing', function (data) {
       removeChatTyping(data);
-    });
-    socket.on('usernames', function (data){
-      console.log(data);
     });
 }]);

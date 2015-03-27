@@ -314,11 +314,12 @@ p.intro-name input,p.intro-password input{width: 100%;background: none;box-shado
 .select-categories input.search-users{width: 228px;height: 32px;margin-top: 20px;margin-right: 5px;text-indent: 15px;border-radius: 3px;-moz-border-radius: 3px;-webkit-border-radius: 3px;border: 1px solid #dadfea !important;position: relative;}
 #main_users_list {padding: 20px 35px;}
 #main_users_list li.user-item {display: inline-block;margin-bottom: 25px;}
-#main_users_list li.user-item .user-avatar {float: left;margin-top: 7px;max-width: 50px;}
-#main_users_list li.user-item .user-avatar img{width: 50px;height: 50px;box-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+#main_users_list li.user-item .user-avatar {float: left;margin-top: 7px;max-width: 80px;}
+#main_users_list li.user-item .user-avatar img{width: 80px;height: 80px;box-shadow: 2px 2px 4px rgba(0,0,0,0.5);
 filter: filter: progid:DXImageTransform.Microsoft.Shadow(direction=135,strength=3, color=#808080);
 moz-box-shadow: 2px 2px 4px rgba(0,0,0,0.5);
 webkit-box-shadow: 2px 2px 4px rgba(0,0,0,0.5);}
+#main_users_list li.user-item .points{display: block;}
 #main_users_list li.user-item .left-info {display: inline-block;margin-left: 12px;margin-bottom: 15px;}
 #main_users_list li.user-item .left-info .display_name {font-size: 14px;line-height: 25px;}
 #main_users_list li.user-item .left-info .location {line-height: 25px;}

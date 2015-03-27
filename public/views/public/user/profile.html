@@ -25,7 +25,8 @@
             <span ng-if="userInfo.role=='admin'" class="user-badge" style="background-color:#CA1C23;">Administrator</span>
      </div>
       <ul>
-         <li class="name" ng-bind="userInfo.displayName"></li>
+         <li class="name" > <span ng-bind="userInfo.displayName"></span> <i class="fa fa-circle status online" tooltip="Đang online" ng-show="userInfo.online"></i> 
+                     <i class="fa fa-circle status offline" tooltip="Đang offline" ng-show="!userInfo.online"></i> </li>
          <li class="location" ng-if="userInfo.location!=null"><i class="fa fa-map-marker"></i> <span ng-bind="userInfo.location"></span></li>
          <li class="location" ng-if="userInfo.location==null"><i class="fa fa-map-marker"></i> Chưa cập nhật</li>
          <li class="email"><i class="fa fa-envelope"></i> <span ng-bind="userInfo.email"></span></li>

@@ -80,4 +80,33 @@ angular.module('MainCtrl',[])
           });
         }
 		});
+		socket.on('usernames', function(data){
+			$http.get('/loggedin').success(function(user){
+				if(user.displayName in data){
+					$http.get('/api/user/online/'+user._id).success(function(data){
+							console.log('Online');
+						})
+						.error(function(){
+							console.log("error");
+						});
+				}
+				else{
+					if(user!=='0'){
+						username= user.displayName;
+				        avatar= user.avatar;
+				        _id= user._id;
+				        socket.emit('add user', {username: username, _id:_id, avatar: avatar});
+					}
+				}
+	          });
+			console.log(data);
+		});
+		socket.on('user left', function(data){
+			$http.get('/api/user/offline/'+data._id).success(function(data){
+					console.log('Offline');
+				})
+				.error(function(){
+					console.log("error");
+				});
+		});
 }]);

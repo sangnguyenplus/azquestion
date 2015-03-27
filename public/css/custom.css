@@ -158,7 +158,7 @@ sup.star{color: #f39c12;}
 .menu{margin-top: 30px;min-height: 507px;}
 .menu a{display:inline-block;padding:15px;margin:0 15px 15px 0;text-align:center;text-decoration:none;border:1px solid #ddd;border-radius:10px;}
 .menu a .fa{display:block;font-size:40px;margin:0 auto;}
-.menu-xs>ul{width: 200px;line-height: 20px;font-weight: bold;}
+.menu-xs>ul{width: 100%;line-height: 20px;font-weight: bold;}
 .menu-xs ul li ul li a:hover{background: #b2cdf0;border:none !important;}
 .menu-xs .open>a:hover, .menu-xs .open>a:focus{border-left: 3px solid #f39c12;}
 
@@ -199,7 +199,7 @@ moz-box-shadow: 2px 2px 4px rgba(0,0,0,0.5);
 webkit-box-shadow: 2px 2px 4px rgba(0,0,0,0.5);}
 .question-item .user span {font-size: 11px;display: block;}
 .question-item .user label {line-height: 12px;}
-.question-item .user label a{font-size: 12px;text-overflow: ellipsis;display: block;white-space: nowrap;max-width: 110px;}
+.question-item .user label a{font-size: 12px;text-overflow: ellipsis;display: block;white-space: nowrap;width: 110px;}
 .question-item .user span.bg i:nth-child(2n+1) {margin-right: 5px;}
 .question-item .user span.bg span{display: inline;}
 
@@ -316,5 +316,19 @@ border: 1px solid #578824 !important;
   .current-category .input-group-btn{border:none !important;}
   .current-category .input-group-btn i{color: #fff !important;}
 
-
-
+.notify-menu .dropdown-menu{
+  margin: 0;
+  padding: 0;
+  border-radius: 0;
+  max-height: 400px;
+  overflow-y: scroll;
+}
+.notifications ul, .chats ul{width: 300px;}
+.notify-menu .dropdown-menu li a{
+  font-size: 12px;
+  word-wrap: break-word;
+  white-space: normal;
+  border-bottom: 1px solid #ddd;
+}
+.notify-menu .badge{padding: 3px 4px;padding-top: 2px;}
+#menu-mobile .notify-menu ul li ul li a{font-size: 11.5px;}

@@ -362,4 +362,32 @@ module.exports = function (app, passport) {
 	    });
 	});
 
+	app.get('/api/user/online/:user_id', function(req, res){
+		var id= req.params.user_id;
+		User.findById(id, function(err, user){
+			if(err)
+				res.send(err);
+			user.online="true";
+			user.save(function(err, u){
+				if(err)
+					res.send(err);
+				res.json(user);
+			});
+		});
+	});
+	app.get('/api/user/offline/:user_id', function(req, res){
+		var id= req.params.user_id;
+		User.findById(id, function(err, user){
+			if(err)
+				res.send(err);
+			user.online="false";
+			user.save(function(err, u){
+				if(err)
+					res.send(err);
+				res.json(user);
+			});
+		});
+	});
+
+
 }

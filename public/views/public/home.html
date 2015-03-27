@@ -56,7 +56,8 @@
               <div class="clearfix"></div>
               <div class="question-cat">
                        <span class="q-info">
-                     <a ui-sref="profile({id:q.userId._id, slug: (q.userId.displayName | friendlyUrl)+'.html'})">
+                     <a ui-sref="profile({id:q.userId._id, slug: (q.userId.displayName | friendlyUrl)+'.html'})"> <i class="fa fa-circle status online" tooltip="Đang online" ng-show="q.userId.online"></i> 
+                     <i class="fa fa-circle status offline" tooltip="Đang offline" ng-show="!q.userId.online"></i> 
                      <img ng-src="{{q.userId.avatar}}" alt="{{q.userId.displayName}}"> <span ng-bind="q.userId.displayName"></span>
                      </a>
                   </span>

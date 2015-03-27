@@ -12,6 +12,7 @@ var schema = mongoose.Schema({
     birthday:      {type: 'String', default: null},
     reputation:    {type: 'Number', default: 0},
     status:        {type: 'Number', default: 0},
+    online:        {type: 'Boolean', default: false},
     role:          {type: 'String',required:true},
     activeToken :  {type: 'String', default: null},
     resetPasswordToken: {type: 'String', default: null},
@@ -31,12 +32,6 @@ schema.methods.generateHash = function(password) {
 schema.methods.validPassword = function(password) {
     return bcrypt.compareSync(password, this.password);
 };
-
-
-schema.pre('save', function(next) {
-  console.log('A new User "%s" was inserted', this.displayName);
-  next();
-});
 
 // tạo model cho user và export vào app
 module.exports = mongoose.model('User', schema);
