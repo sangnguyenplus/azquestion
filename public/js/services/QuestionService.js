@@ -16,6 +16,9 @@ angular.module('QuestionService', [])
 		},
 		approve : function(id) {
 			return $http.get('/api/question/approve/' + id);
+		},
+		report : function(id){
+			return $http.get('/api/question/report/'+id);
 		}
 	};
 }]);

@@ -121,6 +121,28 @@ angular.module('AnswerCtrl',[])
 	            }
 	        });
 	    };
+	    $scope.reportAnswer = function(id){
+        appAlert.confirm({title:"Xác nhận",message:"Bạn chắc chắn muốn báo cáo câu trả lời này vi phạm?"},function(isOk){
+            if(isOk){
+                $http.get('/loggedin').success(function(data){
+                    if(data!=='0'){
+                        Answer.report(id)
+                                .success(function(data){
+                                    if(data.reported)
+                                        flash.error= "Bạn đã báo cáo câu trả lời này vi phạm rồi!";
+                                    else
+                                        flash.success="Báo cáo vi phạm thành công!";
+                                })
+                                .error(function(){
+                                    console.log('error');
+                                });
+                    }
+                    else
+                        flash.error = "Bạn cần đăng nhập để báo cáo vi phạm";
+                });
+            }
+        });
+    };
 }])
 .controller('AnswerDetail',['$scope','$http', '$stateParams', function ($scope,$http, $stateParams) {
 	$http.get('api/answer/detail/'+$stateParams.id)

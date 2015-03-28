@@ -10,6 +10,9 @@ angular.module('AnswerService', [])
 		},
 		delete : function(id) {
 			return $http.delete('/api/answer/detete/' + id);
+		},
+		report : function(id){
+			return $http.get('/api/answer/report/'+id);
 		}
 	};
 }]);

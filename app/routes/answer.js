@@ -2,6 +2,7 @@ var Answer = require('../models/answer');
 var User = require('../models/user');
 var Question = require('../models/question');
 var Vote = require('../models/vote');
+var Report = require('../models/report');
 var Favorite = require('../models/favorite');
 var nodemailer = require('nodemailer');
 
@@ -303,5 +304,44 @@ module.exports = function (app, passport) {
 				});
 			}
 		});
+	});
+	app.get('/api/answer/report/:answer_id', function(req, res,done) {
+		var id = req.params.answer_id;
+		Report.findOne( { $and: [ { answerId: id }, { userReported: req.user._id } ] } ).exec(function(err,data){
+			if(err)
+				res.send(err);
+			if(data==null){
+				Report.findOne({ 'answerId' :  id }, function(err, existReport) {
+		        // nếu có lỗi thì trả về lỗi.
+		        if (err)
+		            return done(err);
+
+		        if (existReport){
+		        	existReport.count +=1;
+		        	existReport.save(function(err, report){
+		        		if(err)
+		        			res.send(err);
+		        		res.json(report);
+		        	});
+		        }
+
+		        else{
+					Report.create({
+						userReported : req.user._id,
+						answerId : id,
+						type: 'answer',
+						creationDate: new Date(),
+					}, function(err, report) {
+						if (err)
+							res.send(err);
+						res.json(report);
+					});
+				}
+				});
+			}
+			else
+				res.send({reported: "true"});
+		});
+
 	});
 }

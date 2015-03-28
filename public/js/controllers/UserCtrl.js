@@ -84,6 +84,8 @@ angular.module('UserCtrl',[])
         $scope.logout = function(){
                 User.logout()
                         .success(function(){
+                          $http.get('/api/user/offline/'+$rootScope.currentUser._id);
+                           socket.emit('user left', {username: $rootScope.currentUser.displayName, avatar: $rootScope.currentUser.avatar, _id: $rootScope.currentUser._id});
                             $rootScope.currentUser=null;
                             $cookieStore.remove('currentUser');
                             if (AuthenticationService.isLogged) {
@@ -91,7 +93,6 @@ angular.module('UserCtrl',[])
                                 delete $window.sessionStorage.token;
                               }
                             flash.success="Đăng xuất thành công!";
-                            socket.emit('user left', {username: $cookieStore.get('currentUser').displayName, avatar: $cookieStore.get('currentUser').avatar, _id: $cookieStore.get('currentUser')._id});
                         });
         };
         $scope.deleteUser = function(id,path) {

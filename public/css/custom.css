@@ -186,7 +186,7 @@ ul.vote li span.fa {font-size: 30px;cursor: pointer;}
 ul.vote li span.fa-star{border: 3px solid #333333;border-radius: 50%;height: 35px;width: 35px;margin: 0px 8px;}
 ul.vote li.active span.fa-star,ul.vote li span.fa-star:hover{background-color: #ffaa31;}
 ul.vote li span.fa-check{border-radius: 50%;height: 35px;width: 35px;margin: 0px 8px; background: #eee; color: #1d9977; line-height: 35px;}
-ul.vote li.active span.fa-check, ul.vote li span.fa-check:hover{background: #1d9977; color: #fff;}
+ul.vote li.active span.fa-check, ul.vote li span.fa-check:hover{background: none;}
 ul.vote li.voted span.fa{color: #1d9977;}
 
 div.info{font-size: 12px;}

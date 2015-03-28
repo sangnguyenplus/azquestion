@@ -3,18 +3,19 @@
   <img src="images/loading.gif" alt="Đang tải dữ liệu">
   <p>Đang tải dữ liệu</p>
 </div>
-   <div id="question_content" ng-hide="loading" class="row question-main-content question-item background-main-content">
+   <div id="question_content" ng-hide="loading" class="row question-main-content question-item background-main-content" style="padding-top: 0;">
+    <div style="background: #f6f7f8; padding-top: 15px;">
       <!-- Vote section -->
       <div class="q-left-content  text-center hidden-xs">
          <ul class="vote">
             <li ng-class="{voted: (currentUser && (listVote | checkVoteUp: questionDetail._id))}">
-              <span class="fa fa-chevron-up" tooltip="{{(currentUser && (listVote | checkVoteUp: questionDetail._id))?'Bỏ thích':'Thích'}}" tooltip-placement="right" ng-click="voteUp(questionDetail._id)"></span>
+              <span class="fa fa-chevron-circle-up" tooltip="{{(currentUser && (listVote | checkVoteUp: questionDetail._id))?'Bỏ thích':'Thích'}}" tooltip-placement="right" ng-click="voteUp(questionDetail._id)"></span>
             </li>
             <li> 
                 <h3  ng-bind="questionDetail.score"></h3>
             </li>
             <li ng-class="{voted: (currentUser && (listVote | checkVoteDown: questionDetail._id))}">
-              <span class="fa fa-chevron-down" tooltip="{{(currentUser && (listVote | checkVoteDown: questionDetail._id))?'Bỏ không thích':'Không thích'}}" tooltip-placement="right" ng-click="voteDown(questionDetail._id)"></span>
+              <span class="fa fa-chevron-circle-down" tooltip="{{(currentUser && (listVote | checkVoteDown: questionDetail._id))?'Bỏ không thích':'Không thích'}}" tooltip-placement="right" ng-click="voteDown(questionDetail._id)"></span>
             </li>
             <li ng-if="currentUser._id!=questionDetail.userId._id"  ng-class="{active: (currentUser && (listFavorite | checkFavorite: questionDetail._id))}">
                 <span class="fa fa-star" tooltip="{{(currentUser && (listFavorite | checkFavorite: questionDetail._id))?'Bỏ theo dõi câu hỏi này':'Theo dõi câu hỏi này'}}" ng-click="Favorite(questionDetail._id)" tooltip-placement="right"></span>
@@ -28,7 +29,7 @@
          <div class="btn-group pull-right" style="top:-5px">
           <i class="fa fa-angle-down dropdown-toggle btn-action-caret" data-toggle="dropdown" aria-expanded="false"></i>
           <ul class="dropdown-menu menu-action" role="menu">
-            <li><a href="#">Báo cáo vi phạm</a></li>
+            <li><a style="cursor: pointer" ng-click="reportQuestion(questionDetail._id)">Báo cáo vi phạm</a></li>
           </ul>
         </div>
         <div class="clearfix"></div>
@@ -70,21 +71,24 @@
          <!-- / info -->
          </div>
          <div class="clearfix"></div>
+         </div>
       </div>
       <div ng-controller="AnswerController">
+            <h3 style="padding-left: 20px;color: #1d9977;">{{listAnswerQuestion.length}} câu trả lời</h3>
             <!-- ANSWERS LOOP -->
+            <div ng-if="listAnswerQuestion.length>0">
             <div class="question-item answer-item" ng-repeat="a in listAnswerQuestion |orderBy:['-isAcepted','creationDate']|startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit" >
                <div class="q-left-content text-center hidden-xs">
                <!-- vote group -->
                <ul class="vote">
                   <li ng-class="{voted: (currentUser && (listVote | checkAnswerVoteUp: a._id))}">
-                    <span class="fa fa-chevron-up" tooltip="{{(currentUser && (listVote | checkAnswerVoteUp: a._id))?'Bỏ thích':'Thích'}}" tooltip-placement="right" ng-click="voteUp(a._id, questionDetail._id)"></span>
+                    <span class="fa fa-chevron-circle-up" tooltip="{{(currentUser && (listVote | checkAnswerVoteUp: a._id))?'Bỏ thích':'Thích'}}" tooltip-placement="right" ng-click="voteUp(a._id, questionDetail._id)"></span>
                   </li>
                   <li>
                       <h3 ng-bind="a.score"></h3>
                   </li>
                   <li ng-class="{voted: (currentUser && (listVote | checkAnswerVoteDown: a._id))}">
-                    <span class="fa fa-chevron-down" tooltip="{{(currentUser && (listVote | checkAnswerVoteDown: a._id))?'Bỏ thích':'Thích'}}" tooltip-placement="right" ng-click="voteDown(a._id, questionDetail._id)"></span>
+                    <span class="fa fa-chevron-circle-down" tooltip="{{(currentUser && (listVote | checkAnswerVoteDown: a._id))?'Bỏ thích':'Thích'}}" tooltip-placement="right" ng-click="voteDown(a._id, questionDetail._id)"></span>
                   </li>
                   <li ng-if="questionDetail.isResolved!=true" ng-show="(currentUser._id==questionDetail.userId._id && currentUser._id!=a.userId._id) && !a.isAcepted">
                       <span class="fa fa-check" tooltip="Câu trả lời chính xác" tooltip-placement="right" ng-click="acepted(a._id)"></span>
@@ -101,11 +105,10 @@
                    <div>
                      <div class="q-footer">
                        <p><span><i class="fa fa-calendar"></i> <small ng-bind="a.creationDate | fromNow"></small></span></p>
-                        <!-- <button class="btn btn-sm btn-submit" ng-click="showForm('create_answer_form')" type="button"><i class="fa fa-reply"></i><span > Trả lời</span></button> -->
-                        <!-- <button class="btn btn-sm btn-submit" type="button" title="Purge"><i class="fa fa-exclamation-triangle"></i><span > Báo cáo vi phạm</span></button> -->
+                        <button class="btn btn-sm btn-submit"  ng-show="currentUser._id!=a.userId._id" type="button" ng-click="reportAnswer(a._id)"><i class="fa fa-exclamation-triangle"></i><span > Báo cáo vi phạm</span></button>
                         <button class="btn btn-sm btn-submit" ng-show="currentUser._id!=a.userId._id" type="button" ng-click="chat({_id:a.userId._id, username: a.userId.displayName})"><i class="fa fa-comment"></i><span > Chat</span></button>
                         <span ng-show="currentUser._id==a.userId._id">
-                         <button class="btn btn-sm btn-submit" type="button" title="Edit" ng-click="showForm('edit_question_form')"><i class="fa fa-pencil"></i><span > Sửa</span></button>
+                         <button class="btn btn-sm btn-submit" type="button" title="Edit" ng-click="showForm('create_answer_form')"><i class="fa fa-pencil"></i><span > Sửa</span></button>
                        </span>
                        <span ng-show="currentUser._id==a.userId._id && a.userId.reputation>1500">
                          <button class="btn btn-sm btn-submit" type="button" title="Delete" ng-click="deleteAnswer(a._id,'/')"><i class="fa fa-trash-o"></i><span > Xóa</span></button>
@@ -136,10 +139,11 @@
         <pagination total-items="listAnswerQuestion.length" ng-model="currentPage" max-size="itemsPerPage" class="pagination-sm" boundary-links="false" rotate="false" num-pages="numPages" previous-text="←" next-text="→"></pagination>
                 <!-- / pagination -->
       </div>
+       </div>
     </div>
       <div style="background: #fff; padding: 20px;">
       <div class="pull-left">
-        <button class="btn btn-sm btn-submit" type="button" title="Purge"><i class="fa fa-exclamation-triangle"></i><span > Báo cáo vi phạm</span></button>
+        <button class="btn btn-sm btn-submit" type="button" style="cursor: pointer" ng-click="reportQuestion(questionDetail._id)"><i class="fa fa-exclamation-triangle"></i><span > Báo cáo vi phạm</span></button>
       </div>
       <div class="pull-right">
         <button class="btn btn-sm btn-submit" ng-click="showForm('create_answer_form')" type="button"><i class="fa fa-reply"></i><span > Trả lời</span></button>
