@@ -2,6 +2,7 @@ angular.module('AnswerCtrl',[])
 
 .controller('AnswerController',['$scope','$rootScope','$cookieStore','$location', '$http','flash','$modal','appAlert', 'Answer', function($scope,$rootScope,$cookieStore,$location, $http,flash,$modal,appAlert, Answer) {
 
+
 	$scope.currentPage = 1;
     $scope.maxSize = 5;
     $scope.entryLimit = 10;
@@ -122,11 +123,11 @@ angular.module('AnswerCtrl',[])
 	        });
 	    };
 	    $scope.reportAnswer = function(id){
-        appAlert.confirm({title:"Xác nhận",message:"Bạn chắc chắn muốn báo cáo câu trả lời này vi phạm?"},function(isOk){
-            if(isOk){
-                $http.get('/loggedin').success(function(data){
-                    if(data!=='0'){
-                        Answer.report(id)
+            $http.get('/loggedin').success(function(data){
+                if(data!=='0'){
+                	appAlert.confirm({title:"Xác nhận",message:"Bạn chắc chắn muốn báo cáo câu trả lời này vi phạm?"},function(isOk){
+        				if(isOk){
+                        	Answer.report(id)
                                 .success(function(data){
                                     if(data.reported)
                                         flash.error= "Bạn đã báo cáo câu trả lời này vi phạm rồi!";
@@ -136,12 +137,12 @@ angular.module('AnswerCtrl',[])
                                 .error(function(){
                                     console.log('error');
                                 });
-                    }
-                    else
-                        flash.error = "Bạn cần đăng nhập để báo cáo vi phạm";
-                });
-            }
-        });
+                        }
+    				});
+                }
+                else
+                    flash.error = "Bạn cần đăng nhập để báo cáo vi phạm";
+            });
     };
 }])
 .controller('AnswerDetail',['$scope','$http', '$stateParams', function ($scope,$http, $stateParams) {
@@ -152,4 +153,15 @@ angular.module('AnswerCtrl',[])
 		.error(function(){
 			console.log('error');
 		});
+}])
+
+.controller('CountAnswerController',['$scope','$http', 'Answer', function($scope,$http, Answer) {
+    /*Đếm số câu trả lời trong hệ thống*/
+    $http.get('api/answer/count')
+    .success(function(data){
+        $scope.countAnswer=data;
+    })
+    .error(function(){
+        console.log("error");
+    });
 }]);

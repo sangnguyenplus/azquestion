@@ -1,14 +1,38 @@
+<div class="panel panel-default statics">
+  <ul>
+    <li>
+      <p class="statics-count"  ng-controller="CountQuestionController"><i class="fa fa-question-circle"></i> <span ng-bind="countQuestion"></span></p>
+      <p>Câu hỏi</p>
+    </li>
+    <li>
+      <p class="statics-count"  ng-controller="CountAnswerController"><i class="fa fa-comments-o"></i> <span ng-bind="countAnswer"></span></p>
+      <p>Trả lời</p>
+    </li>
+    <li>
+      <p class="statics-count"  ng-controller="CountTagController"><i class="fa fa-tags"></i> <span ng-bind="countTag"></span></p>
+      <p>Tag</p>
+    </li>
+    <li>
+      <p class="statics-count"  ng-controller="CountUserController"><i class="fa fa-users"></i> <span ng-bind="countUser"></span></p>
+      <p>Thành viên</p>
+    </li>
+  </ul>
+  <div class="clearfix"></div>
+</div>
+<style>
+  .statics li{display: block; list-style: none; width: 50%; height: 80px; float: left; text-align: center; font-size: 15px; color: #fff;}
+  .statics li:nth-child(1){background-color: #1abc9c;}
+  .statics li:nth-child(2){background-color: #2ecc71;}
+  .statics li:nth-child(3){background-color: #f1c40f;}
+  .statics li:nth-child(4){background-color: #e67e22;}
+  .statics .statics-count{font-size: 34px; font-family: 'RobotoBold'; margin-bottom: 0;}
+  .statics .statics-count .fa{font-size: 28px; opacity: 0.3;}
+  .statics li:hover .fa{opacity: 1;}
+</style>
+<!-- / widget-statistic -->
 <div class="panel panel-default">
   <div class="panel-body">
     <div class="widget widget-statistic">
-      <p class="questions-count" ng-controller="CountQuestionController">
-      Câu hỏi<br>
-      <span ng-bind="countQuestion"></span>
-      </p>
-      <p class="members-count" ng-controller="CountUserController">
-      Thành viên<br>
-      <span ng-bind="countUser"></span>
-      </p><br>
       <a href="https://facebook.com/sangnguyen2603">Mạng xã hội hỏi đáp Việt Nam</a><br>
       <div fb-like="fbLike"></div>
     </div>

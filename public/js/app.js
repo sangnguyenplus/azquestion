@@ -14,6 +14,7 @@ var app=angular.module('AZQuestion', [
   'ngAnimate',
   'btford.socket-io',
   'luegg.directives',
+  'mentio',
   'appRoutes',
   'appDirectives',
   'appFilters',

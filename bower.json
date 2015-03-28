@@ -24,6 +24,7 @@
     "moment": "~2.8.4",
     "highlightjs": "latest",
     "angular-socket-io": "~0.7.0",
-    "angular-scroll-glue": "~2.0.4"
+    "angular-scroll-glue": "~2.0.4",
+    "ment.io": "~0.9.23"
   }
 }

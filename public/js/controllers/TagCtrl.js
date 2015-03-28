@@ -151,4 +151,14 @@ angular.module('TagCtrl',[])
                     $scope.Proccess=false;
             }
     };
+}])
+.controller('CountTagController',['$scope','$http', 'Tag', function($scope,$http, Tag) {
+    /*Đếm số câu hỏi trong hệ thống*/
+    $http.get('api/tag/count')
+    .success(function(data){
+        $scope.countTag=data;
+    })
+    .error(function(){
+        console.log("error");
+    });
 }]);

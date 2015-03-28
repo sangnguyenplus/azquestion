@@ -109,4 +109,30 @@ angular.module('MainCtrl',[])
 					console.log("error");
 				});
 		});
+
+
+}])
+.controller('SmileController',['$scope','$http', function($scope, $http) {
+	$scope.people=[];
+    $http.get('/api/people').success(function(data){
+        angular.forEach(data, function(item){
+            $scope.people.push({label: item.displayName});
+        });
+        console.log($scope.people);
+    })
+    .error(function(){
+        console.log('error');
+    });
+    $scope.macros = {
+    '0_o' : '![img](/images/icon/O_o.png)',
+    ':((' : '![img](/images/icon/cry.png)',
+    ':-D' : '![img](/images/icon/biggrin.png)',
+    ':D' : '![img](/images/icon/biggrin.png)',
+    ':))' : '![img](/images/icon/roflmao.png)',
+    ':))' : '![img](/images/icon/roflmao.png)',
+    '=))' : '![img](/images/icon/roflmao.png)',
+    ':)' : '![img](/images/icon/smile.png)',
+    ':-)' : '![img](/images/icon/smile.png)',
+    ':=)' : '![img](/images/icon/smile.png)',
+    };
 }]);

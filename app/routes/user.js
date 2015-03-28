@@ -58,6 +58,13 @@ module.exports = function (app, passport) {
 			res.json(user);
         });
      });
+	app.get('/api/people', function(req, res) {
+        User.find({},'-_id displayName',function(err, user){
+        	if (err)
+				res.send(err);
+			res.json(user);
+        });
+     });
 	app.get('/api/countUser', function(req, res) {
         User.count(function(err, user){
         	if (err)

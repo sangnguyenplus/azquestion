@@ -344,4 +344,11 @@ module.exports = function (app, passport) {
 		});
 
 	});
+	app.get('/api/answer/count', function(req, res) {
+        Answer.count(function(err, answer){
+        	if (err)
+				res.send(err)
+			res.json(answer);
+        });
+     });
 }

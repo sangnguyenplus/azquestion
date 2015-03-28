@@ -4,14 +4,14 @@
   <p>Đang tải dữ liệu</p>
 </div>
    <div id="question_content" ng-hide="loading" class="row question-main-content question-item background-main-content" style="padding-top: 0;">
-    <div style="background: #f6f7f8; padding-top: 15px;">
+    <div style="padding-top: 15px;">
       <!-- Vote section -->
       <div class="q-left-content  text-center hidden-xs">
          <ul class="vote">
             <li ng-class="{voted: (currentUser && (listVote | checkVoteUp: questionDetail._id))}">
               <span class="fa fa-chevron-circle-up" tooltip="{{(currentUser && (listVote | checkVoteUp: questionDetail._id))?'Bỏ thích':'Thích'}}" tooltip-placement="right" ng-click="voteUp(questionDetail._id)"></span>
             </li>
-            <li> 
+            <li>
                 <h3  ng-bind="questionDetail.score"></h3>
             </li>
             <li ng-class="{voted: (currentUser && (listVote | checkVoteDown: questionDetail._id))}">
@@ -46,9 +46,9 @@
         </ul>
          <div>
           <div class="q-footer">
-              <button class="btn btn-sm btn-submit"  ng-show="currentUser._id!=questionDetail.userId._id" type="button" ng-click="chat({_id:questionDetail.userId._id, username: questionDetail.userId.displayName})"><i class="fa fa-comment"></i><span > Chat</span></button>
-              <button class="btn btn-sm btn-submit" ng-click="showForm('create_answer_form')" type="button"><i class="fa fa-reply"></i><span > Trả lời</span></button>
-              <a class="btn btn-sm btn-submit" href="http://www.facebook.com/sharer.php?u=https://azquestion.com/cau-hoi/chi-tiet/548726e2b3e5b4a81bd6a804/cac-ban-co-ai-biet-nodejs-la-gi-khong.html" title="Share with friends on Facebook" onclick="window.open(this.href,'targetWindow','toolbar=no,location=1,status=1,statusbar=1,menubar=no,scrollbars=yes,resizable=yes,width=1024,height=580');return false;" target="_blank"><i class="fa fa-facebook"></i> Chia sẻ</a>
+              <button class="btn btn-sm btn-submit"  ng-show="currentUser._id!=questionDetail.userId._id" type="button" ng-click="chat({_id:questionDetail.userId._id, username: questionDetail.userId.displayName})" title="Trò chuyện với người đăng câu hỏi"><i class="fa fa-comment"></i><span > Chat</span></button>
+              <button class="btn btn-sm btn-submit" ng-click="showForm('create_answer_form')" type="button" title="Trả lời câu hỏi này"><i class="fa fa-reply"></i><span> Trả lời</span></button>
+              <a class="btn btn-sm btn-submit" href="http://www.facebook.com/sharer.php?u=https://azquestion.com/cau-hoi/chi-tiet/548726e2b3e5b4a81bd6a804/cac-ban-co-ai-biet-nodejs-la-gi-khong.html" title="Chia sẻ với bạn bè trên Facebook" onclick="window.open(this.href,'targetWindow','toolbar=no,location=1,status=1,statusbar=1,menubar=no,scrollbars=yes,resizable=yes,width=1024,height=580');return false;" target="_blank"><i class="fa fa-facebook"></i> Chia sẻ</a>
               <span ng-show="currentUser._id==questionDetail.userId._id">
                <button class="btn btn-sm btn-submit" type="button" title="Edit" ng-click="showForm('edit_question_form')"><i class="fa fa-pencil"></i><span > Sửa</span></button>
              </span>
@@ -61,7 +61,7 @@
             <img src="{{questionDetail.userId.avatar}}" alt="{{questionDetail.userId.displayName}}" />
             <label><a ui-sref="profile({id:questionDetail.userId._id})" ng-bind="questionDetail.userId.displayName"></a></label>
             <span class="bg">
-                 <i class="fa fa-circle status online" tooltip="Đang online" ng-show="questionDetail.userId.online"></i> 
+                 <i class="fa fa-circle status online" tooltip="Đang online" ng-show="questionDetail.userId.online"></i>
                      <i class="fa fa-circle status offline" tooltip="Đang offline" ng-show="!questionDetail.userId.online"></i>  Điểm <span ng-bind="questionDetail.userId.reputation"></span>
             </span>
           </div>
@@ -105,7 +105,6 @@
                    <div>
                      <div class="q-footer">
                        <p><span><i class="fa fa-calendar"></i> <small ng-bind="a.creationDate | fromNow"></small></span></p>
-                        <button class="btn btn-sm btn-submit"  ng-show="currentUser._id!=a.userId._id" type="button" ng-click="reportAnswer(a._id)"><i class="fa fa-exclamation-triangle"></i><span > Báo cáo vi phạm</span></button>
                         <button class="btn btn-sm btn-submit" ng-show="currentUser._id!=a.userId._id" type="button" ng-click="chat({_id:a.userId._id, username: a.userId.displayName})"><i class="fa fa-comment"></i><span > Chat</span></button>
                         <span ng-show="currentUser._id==a.userId._id">
                          <button class="btn btn-sm btn-submit" type="button" title="Edit" ng-click="showForm('create_answer_form')"><i class="fa fa-pencil"></i><span > Sửa</span></button>
@@ -113,13 +112,14 @@
                        <span ng-show="currentUser._id==a.userId._id && a.userId.reputation>1500">
                          <button class="btn btn-sm btn-submit" type="button" title="Delete" ng-click="deleteAnswer(a._id,'/')"><i class="fa fa-trash-o"></i><span > Xóa</span></button>
                        </span>
+                       <button class="btn btn-sm btn-submit"  ng-show="currentUser._id!=a.userId._id" type="button" ng-click="reportAnswer(a._id)" tooltip="Báo cáo vi phạm câu trả lời này" tooltip-placement="top"><i class="fa fa-flag"></i></button>
                     </div>
                     <!-- / q-footer -->
                      <div class="user">
                       <img src="{{a.userId.avatar}}" alt="{{a.userId.displayName}}" />
                       <label><a ui-sref="profile({id:a.userId._id, slug: (a.userId.displayName | friendlyUrl)+'.html'})" ng-bind="a.userId.displayName"></a></label>
                       <span class="bg">
-                         <i class="fa fa-circle status online" tooltip="Đang online" ng-show="a.userId.online"></i> 
+                         <i class="fa fa-circle status online" tooltip="Đang online" ng-show="a.userId.online"></i>
                      <i class="fa fa-circle status offline" tooltip="Đang offline" ng-show="!a.userId.online"></i>  Điểm <span ng-bind="a.userId.reputation"></span>
                       </span>
                     </div>
@@ -163,7 +163,8 @@
           <div class="row" style="margin-bottom: 10px;">
             <div class="col-md-6 col-sm-12">
               <h4 class="preview-title">Khung soạn thảo câu trả lời <span class="pull-right" data-toggle="modal" data-target="#myModal" style="cursor: pointer; color: #1d9977"><i class="fa fa-question"></i> Hướng dẫn</span></h4>
-              <textarea class="form-control" rows="12" ng-model="formAnswer.content" required="required" style="resize:none"></textarea>
+              <textarea class="form-control" rows="12" ng-controller="SmileController"
+               mentio mentio-typed-text="typedTerm"mentio-macros="macros" mentio-require-leading-space="true" mentio-items="people | filter:label:typedTerm" mentio-id="'formAnswer.content'" ng-model="formAnswer.content" required="required" style="resize:none"></textarea>
             </div>
             <div class="col-md-6  hidden-sm hidden-xs">
               <h4 class="preview-title">Chế độ xem trước</h4>

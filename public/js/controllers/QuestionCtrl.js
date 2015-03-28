@@ -1,8 +1,8 @@
 angular.module('QuestionCtrl',[])
 
-.controller('QuestionController',['$scope','$cookieStore','$rootScope','$location','$state','$http','$stateParams', 'flash','$modal','appAlert','Answer', 'Question','socket','Notifi',
-    function($scope,$cookieStore,$rootScope,$location,$state,$http,$stateParams, flash,$modal,appAlert,Answer, Question, socket,Notifi) {
-		$scope.formData = {};
+.controller('QuestionController',['$scope','$cookieStore','$rootScope','$location','$state','$http','$q','$stateParams', 'flash','$modal','appAlert','Answer', 'Question','socket','Notifi',
+    function($scope,$cookieStore,$rootScope,$location,$state,$http,$q,$stateParams, flash,$modal,appAlert,Answer, Question, socket,Notifi) {
+        $scope.formData = {};
         /*Khi form nhấn submit thì sẽ gửi giữ liệu tới api/questions*/
         $scope.createQuestion = function() {
                 $scope.Proccess=true;
@@ -302,25 +302,25 @@ angular.module('QuestionCtrl',[])
     $http.get('api/answer').success(function(answer){$scope.listAllAnswer=answer;}).error(function(){console.log('error');});
 
     $scope.reportQuestion = function(id){
-        appAlert.confirm({title:"Xác nhận",message:"Bạn chắc chắn muốn báo cáo câu hỏi này vi phạm?"},function(isOk){
-            if(isOk){
-                $http.get('/loggedin').success(function(data){
-                    if(data!=='0'){
-                        Question.report(id)
-                                .success(function(data){
-                                    if(data.reported)
-                                        flash.error= "Bạn đã báo cáo câu hỏi này vi phạm rồi!";
-                                    else
-                                        flash.success="Báo cáo vi phạm thành công!";
-                                })
-                                .error(function(){
-                                    console.log('error');
-                                });
+        $http.get('/loggedin').success(function(data){
+            if(data!=='0'){
+                appAlert.confirm({title:"Xác nhận",message:"Bạn chắc chắn muốn báo cáo câu hỏi này vi phạm?"},function(isOk){
+                    if(isOk){
+                    Question.report(id)
+                        .success(function(data){
+                            if(data.reported)
+                                flash.error= "Bạn đã báo cáo câu hỏi này vi phạm rồi!";
+                            else
+                                flash.success="Báo cáo vi phạm thành công!";
+                        })
+                        .error(function(){
+                            console.log('error');
+                        });
                     }
-                    else
-                        flash.error = "Bạn cần đăng nhập để báo cáo vi phạm";
                 });
             }
+            else
+                flash.error = "Bạn cần đăng nhập để báo cáo vi phạm";
         });
     };
 }])
