@@ -7,6 +7,7 @@ module.exports = function (app, passport) {
 				userSend : req.user._id,
 				userRecive: req.body.userRecive,
 				content : req.body.content,
+				questionId:req.body.questionId,
 				creationDate: new Date(),
 			}, function(err, msgs) {
 				if (err)

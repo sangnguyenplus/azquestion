@@ -82,7 +82,9 @@ angular.module('QuestionCtrl',[])
                     .success(function(data) {
                             $http.get('api/question/detail/'+ id)
                             .success(function(data){
-                                Notifi.create({userRecive:data.userId._id,userSend:$cookieStore.get('currentUser')._id,content:'Câu hỏi '+data.title+' đã bị quản trị xóa!'});
+                                Notifi.create({userRecive:data.userId._id,
+                                userSend:$cookieStore.get('currentUser')._id,
+                                content:'Câu hỏi '+data.title+' đã bị quản trị xóa!'});
                                 socket.emit('deleteQuestion',{userTitle:data.title,userReciveId:data.userId._id});
                             })
                             .error(function(){
@@ -102,9 +104,15 @@ angular.module('QuestionCtrl',[])
                 Question.approve(id)
                     /*Nếu duyệt thành công thì load lại dữ liệu*/
                     .success(function(data) {
+                        console.log('OK');
                         $http.get('api/question/detail/'+ id)
                         .success(function(data){
-                            Notifi.create({userRecive:data.userId._id,userSend:$cookieStore.get('currentUser')._id,content:'Câu hỏi '+data.title+' đã được quản trị đăng!'});
+                            Notifi.create({
+                                userRecive:data.userId._id,
+                                userSend:$cookieStore.get('currentUser')._id,
+                                content:'Câu hỏi '+data.title+' đã được quản trị đăng!',
+                                questionId:id
+                            });
                             socket.emit('approve',{userTitle:data.title,userReciveId:data.userId._id});
                         })
                         .error(function(){
@@ -263,7 +271,7 @@ angular.module('QuestionCtrl',[])
                             $http.get('api/question/detail/'+ id)
                             .success(function(data){
                                 Notifi.create({userRecive:data.userId._id,userSend:$cookieStore.get('currentUser')._id,content:$cookieStore.get('currentUser').displayName+' đã theo dõi câu hỏi '+data.title});
-                                    socket.emit('Favorite',{userSendName:$cookieStore.get('currentUser').displayName,userReciveId:data.userId._id,userTitle:data.title});
+                                socket.emit('Favorite',{userSendName:$cookieStore.get('currentUser').displayName,userReciveId:data.userId._id,userTitle:data.title});
                             })
                             .error(function(){
                                console.log("error");
