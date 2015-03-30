@@ -7,6 +7,7 @@ var badge = require('./badge');
 var system = require('./system');
 var chat = require('./chat');
 var notifi = require('./notifi');
+var report = require('./report');
 
 
 
@@ -30,6 +31,7 @@ module.exports = function (app, passport) {
   system(app);
   chat(app);
   notifi(app);
+  report(app);
 
 
   //Tất cả request phải đi qua trang index.html để xử lý.

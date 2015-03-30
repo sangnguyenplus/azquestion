@@ -135,4 +135,17 @@ angular.module('MainCtrl',[])
     ':-)' : '![img](/images/icon/smile.png)',
     ':=)' : '![img](/images/icon/smile.png)',
     };
+}])
+.controller('ReportController',['$scope','$http', function($scope, $http) {
+	$scope.currentPage = 1;
+    $scope.maxSize = 5;
+    $scope.entryLimit = 10;
+	$http.get('api/report/getAll')
+		.success(function(list){
+			$scope.listReport=list;
+			console.log(list);
+		})
+		.error(function(){
+			console.log('error');
+		});
 }]);

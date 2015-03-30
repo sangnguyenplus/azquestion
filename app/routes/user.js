@@ -66,7 +66,7 @@ module.exports = function (app, passport) {
         });
      });
 	app.get('/api/countUser', function(req, res) {
-        User.count(function(err, user){
+        User.find({status: 1}).count(function(err, user){
         	if (err)
 				res.send(err);
 			res.json(user);
