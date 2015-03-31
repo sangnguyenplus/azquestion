@@ -3,6 +3,7 @@
   <p>Đang tải dữ liệu</p>
 </div>
 <div class="home-content" ng-hide="loading" ng-controller="QuestionController">
+      <div ng-repeat="item in listOnline"><span ng-if="item==currentUser.displayName">Online</span></div>
       <div class="main-questions-list">
         <ul id="main_questions_list">
            <li class="question-item" ng-animate="'animate'" style="margin-bottom: 20px;" ng-repeat="q in listQuestion | orderBy:['-creationDate']|startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit">

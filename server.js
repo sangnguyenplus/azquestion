@@ -49,13 +49,13 @@ app.enable('trust proxy');
 app.use(session({ secret: 'sangplus' })); // session secret
 
 var env = process.env.NODE_ENV || 'development';
-if ('development' === env || 'production' === env) {
+/*if ('development' === env || 'production' === env) {
     app.use(csrf());
     app.use(function(req, res, next) {
         res.cookie('XSRF-TOKEN', req.csrfToken());
         next();
     });
-}
+}*/
 
 
 app.use(passport.initialize());
@@ -84,24 +84,27 @@ var users = {};
 io.on('connection', function (socket) {
   var addedUser = false;
 
+  socket.broadcast.emit('new connection');
+
 
   // when the client emits 'add user', this listens and executes
   socket.on('add user', function(data){
-    if (data in users){
-      //callback(false);
-    } else{
-      //callback(true);
+    if (!(data in users)){
+      addedUser=true;
       socket.nickname = data.username;
       socket._id=data._id;
       socket.avatar=data.avatar;
       users[socket.nickname] = socket;
       updateNicknames();
     }
-    socket.broadcast.emit('login', Object.keys(users));
   });
   function updateNicknames(){
     io.sockets.emit('usernames', Object.keys(users));
   }
+
+  socket.on('reconnect', function(){
+    updateNicknames();
+  });
 
    // when the client emits 'new message', this listens and executes
   socket.on('new message', function (data) {
@@ -147,6 +150,7 @@ io.on('connection', function (socket) {
 
       // echo globally that this client has left
       socket.broadcast.emit('logout', Object.keys(users));
+      console.log(Object.keys(users));
     }
   });
   // Xử lý socket notifications

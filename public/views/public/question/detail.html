@@ -4,7 +4,7 @@
   <p>Đang tải dữ liệu</p>
 </div>
    <div id="question_content" ng-hide="loading" class="row question-main-content question-item background-main-content" style="padding-top: 0;">
-    <div style="padding-top: 15px;">
+    <div class="inner_question_content">
       <!-- Vote section -->
       <div class="q-left-content  text-center hidden-xs">
          <ul class="vote">
@@ -74,7 +74,7 @@
          </div>
       </div>
       <div ng-controller="AnswerController">
-            <h3 style="padding-left: 20px;color: #1d9977;">{{listAnswerQuestion.length}} câu trả lời</h3>
+            <h3 class="countAnswer">{{listAnswerQuestion.length}} câu trả lời</h3>
             <!-- ANSWERS LOOP -->
             <div ng-if="listAnswerQuestion.length>0">
             <div class="question-item answer-item" ng-repeat="a in listAnswerQuestion |orderBy:['-isAcepted','creationDate']|startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit" >

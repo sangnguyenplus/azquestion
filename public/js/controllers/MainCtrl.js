@@ -16,6 +16,7 @@ angular.module('MainCtrl',[])
 	            });
 	         /*Thiết lập thời gian tương đối*/
 	         moment.locale('vi', {});
+	         socket.emit('reconnect');
 	    });
 		$scope.fbLike="https://www.facebook.com/toiyeulaptrinhfanpage";
 		/*Lấy đường dẫn hiện tại để tiến hành hightlight menu.*/
@@ -77,12 +78,21 @@ angular.module('MainCtrl',[])
           });
         }
 		});
-		socket.on('login', function(data){
-			$rootScope.listOnline=data;
-			console.log($rootScope.listOnline);
+		socket.on('new connection', function(){
+			$http.get('/loggedin').success(function(user){
+				if(user!=='0'){
+					socket.emit('add user',{username: user.displayName, _id: user._id, avatar: user.avatar});
+				}
+			});
 		});
 		socket.on('logout', function(data){
 			$rootScope.listOnline=data;
+			console.log($rootScope.listOnline);
+		});
+		socket.on('usernames', function(data){
+			$rootScope.listOnline=data;
+			console.log($rootScope.listOnline);
+			console.log('Reconnected');
 		});
 
 

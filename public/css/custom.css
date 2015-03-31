@@ -355,3 +355,17 @@ border: 1px solid #578824 !important;
   .sendUser .messageBody:before{border-left: 9px solid #dbedfe; right: -9px; border-right: none; left:auto;}
   /*.sendUser .messageBody .text-right{text-align: left !important;}*/
   .send_date{font-size: 80%; color: #8B8686;}
+
+.countAnswer{
+  padding-left: 20px;
+  color: #1d9977;
+  border-left: 3px solid #1d9977;
+  margin-top: 0;
+  padding-top: 20px;
+  margin-bottom: 0;
+  padding-bottom: 10px;
+}
+.inner_question_content{
+    padding-top: 15px;
+  border-left: 3px solid #1d9977;
+}
