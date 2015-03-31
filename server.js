@@ -1,7 +1,7 @@
 var express = require('express');
 var app = express();
 var server = require('http').createServer(app);
-var io = require('socket.io')(server);
+var io = require('socket.io').listen(server);
 var port = process.env.PORT || 3000;
 var mongoose = require('mongoose');
 var passport = require('passport');
@@ -79,75 +79,75 @@ exports = module.exports=app;
 // Chatroom
 
 // usernames which are currently connected to the chat
-var usernames = {};
+var users = {};
 
 io.on('connection', function (socket) {
   var addedUser = false;
-  socket.emit("usernames", usernames);
+
 
   // when the client emits 'add user', this listens and executes
-  socket.on('add user', function (data) {
-    // we store the username in the socket session for this client
-    socket.username = data.username;
-    socket.userId=data._id;
-    socket.avatar = data.avatar;
-    // add the client's username to the global list
-    usernames[socket.username] = socket.id;
-    addedUser = true;
-    socket.emit('usernames', usernames);
-    console.log(usernames);
+  socket.on('add user', function(data){
+    if (data in users){
+      //callback(false);
+    } else{
+      //callback(true);
+      socket.nickname = data.username;
+      socket._id=data._id;
+      socket.avatar=data.avatar;
+      users[socket.nickname] = socket;
+      updateNicknames();
+    }
+    socket.broadcast.emit('login', Object.keys(users));
   });
+  function updateNicknames(){
+    io.sockets.emit('usernames', Object.keys(users));
+  }
 
    // when the client emits 'new message', this listens and executes
   socket.on('new message', function (data) {
     // we tell the client to execute 'new message'
-    //usernames[socket.username].emit('new message', {
-    socket.broadcast.emit('new message', {
-      _id:data._id,
-      username: socket.username,
-      avatar: socket.avatar,
-      message: data.message
-    });
+    if(data.username in users){
+      users[data.username].emit('new message', {
+        _id: socket._id,
+        username: socket.nickname,
+        avatar: socket.avatar,
+        message: data.message
+      });
+    }
   });
 
   // when the client emits 'typing', we broadcast it to others
-  socket.on('typing', function () {
-    socket.broadcast.emit('typing', {
-      _id:socket.userId,
-      username: socket.username,
-      avatar: socket.avatar
-    });
+  socket.on('typing', function (data) {
+    if(data.username in users){
+      users[data.username].emit('typing', {
+        _id: socket._id,
+        username: socket.nickname,
+        avatar: socket.avatar,
+      });
+    }
   });
-
   // when the client emits 'stop typing', we broadcast it to others
-  socket.on('stop typing', function () {
-    socket.broadcast.emit('stop typing', {
-      _id:socket.userId,
-      username: socket.username,
-      avatar: socket.avatar
-    });
+  socket.on('stop typing', function (data) {
+    if(data.username in users){
+        users[data.username].emit('stop typing', {
+        _id: socket._id,
+        username: socket.nickname,
+        avatar: socket.avatar,
+      });
+    }
   });
 
   // when the user disconnects.. perform this
   socket.on('disconnect', function () {
     // remove the username from global usernames list
     if (addedUser) {
-      delete usernames[socket.username];
-
-      socket.emit('usernames', usernames);
-      console.log(usernames);
+      if(!socket.nickname) return;
+      delete users[socket.nickname];
+      updateNicknames();
 
       // echo globally that this client has left
-      socket.broadcast.emit('user left', {
-        _id:socket.userId,
-        username: socket.username,
-        avatar: socket.avatar,
-        usernames: usernames
-      });
+      socket.broadcast.emit('logout', Object.keys(users));
     }
-  });
-  socket.on('new answer', function(data){
-    socket.broadcast.emit('new answer', data);
   });
   // Xử lý socket notifications
   // Voteup

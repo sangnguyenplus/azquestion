@@ -204,7 +204,6 @@ angular.module('UserCtrl',[])
         $http.get('api/answer/getAnswerByUser/'+$stateParams.id)
           .success(function(data){
             $scope.listAnswer=data;
-            console.log(data);
           });
         $scope.currentPage = 1; /*//current page*/
         $scope.maxSize = 5; /*//pagination max size*/

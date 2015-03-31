@@ -20,6 +20,7 @@
 			<input type="text" mentio mentio-typed-text="typedTerm"  mentio-trigger-char="'@'" mentio-require-leading-space="true"
             mentio-items="people | filter:label:typedTerm" mentio-id="'formData.msg'" placeholder="Nhập tin nhắn ở đây, nhấn enter để gửi" ng-model="formData.msg" name="chat-message" class="form-control inputMessage" />
 			<input type="hidden" ng-model="formData.userRecive">
+			<input type="hidden" id="userRecive" value="{{user.username}}">
 			<span class="input-group-btn" style="border:none !important;">
 				<button class="btn btn-submit chat-message-send-btn" type="button">Gửi đi</button>
 				<button class="btn btn-warning chat-close-btn"  ng-click="cancel()">Đóng lại</button>

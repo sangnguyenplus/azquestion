@@ -54,9 +54,6 @@ angular.module('MainCtrl',[])
 				}
 			});
 		};
-		socket.on('new answer', function(data){
-			console.log('Câu trả lời mới được đăng!');
-		});
 		socket.on('new message', function(data){
 			if(!$modalStack.getTop()){
             $http.get('/loggedin').success(function(user){
@@ -80,34 +77,12 @@ angular.module('MainCtrl',[])
           });
         }
 		});
-		socket.on('usernames', function(data){
-			$http.get('/loggedin').success(function(user){
-				if(user.displayName in data){
-					$http.get('/api/user/online/'+user._id).success(function(data){
-							console.log('Online');
-						})
-						.error(function(){
-							console.log("error");
-						});
-				}
-				else{
-					if(user!=='0'){
-						username= user.displayName;
-				        avatar= user.avatar;
-				        _id= user._id;
-				        socket.emit('add user', {username: username, _id:_id, avatar: avatar});
-					}
-				}
-	          });
-			console.log(data);
+		socket.on('login', function(data){
+			$rootScope.listOnline=data;
+			console.log($rootScope.listOnline);
 		});
-		socket.on('user left', function(data){
-			$http.get('/api/user/offline/'+data._id).success(function(data){
-					console.log('Offline');
-				})
-				.error(function(){
-					console.log("error");
-				});
+		socket.on('logout', function(data){
+			$rootScope.listOnline=data;
 		});
 
 
@@ -118,7 +93,7 @@ angular.module('MainCtrl',[])
         angular.forEach(data, function(item){
             $scope.people.push({label: item.displayName});
         });
-        console.log($scope.people);
+        //console.log($scope.people);
     })
     .error(function(){
         console.log('error');

@@ -2,28 +2,6 @@ angular.module('ChatCtrl',[])
 
 .controller('ChatController',['$scope','$cookieStore','$window','$state', '$location','$http','$rootScope','appAlert','$modal','$modalStack','flash','AuthenticationService','socket', 'Chat',
   function($scope,$cookieStore,$window,$state, $location,$http,$rootScope,appAlert,$modal,$modalStack,flash,AuthenticationService,socket, Chat) {
-/*    $scope.macros = {
-    '0_o' : '![img](/images/icon/O_o.png)',
-    ':((' : '![img](/images/icon/cry.png)',
-    ':-D' : '![img](/images/icon/biggrin.png)',
-    ':D' : '<img src="/images/icon/biggrin.png)" />',
-    ':))' : '![img](/images/icon/roflmao.png)',
-    ':))' : '![img](/images/icon/roflmao.png)',
-    '=))' : '![img](/images/icon/roflmao.png)',
-    ':)' : '![img](/images/icon/smile.png)',
-    ':-)' : '![img](/images/icon/smile.png)',
-    ':=)' : '<img src="/images/icon/smile.png)" />',
-    };*/
-    $scope.people=[];
-    $http.get('/api/people').success(function(data){
-        angular.forEach(data, function(item){
-            $scope.people.push({label: item.displayName});
-        });
-        console.log($scope.people);
-    })
-    .error(function(){
-        console.log('error');
-    });
 
     var FADE_TIME = 150; // ms
     var TYPING_TIMER_LENGTH = 400; // ms
@@ -34,21 +12,17 @@ angular.module('ChatCtrl',[])
     var $btnsendMessage =$('.chat-message-send-btn');
 
     // Prompt for setting a username
-    var username;
-    var _id;
-    var avatar;
-    var connected = false;
+    var username,avatar, _id;
+    $http.get('/loggedin').success(function(data){
+         if(data!=="0" && data.status==1){
+           _id=data._id;
+           username=data.displayName;
+           avatar = data.avatar;
+         }
+       });
     var typing = false;
     var lastTypingTime;
     var $currentInput = $inputMessage.focus();
-    $inputMessage.focus(function(){
-      if(!username){
-        username= $cookieStore.get('currentUser').displayName;
-        avatar= $cookieStore.get('currentUser').avatar;
-        _id= $cookieStore.get('currentUser')._id;
-        socket.emit('add user', {username: username, _id:_id, avatar: avatar});
-      }
-    });
 
     // Sends a chat message
     function sendMessage () {
@@ -56,15 +30,14 @@ angular.module('ChatCtrl',[])
       // Prevent markup from being injected into the message
       message = cleanInput(message);
       // if there is a non-empty message and a socket connection
-      if (message && connected) {
+      if (message) {
         $inputMessage.val('');
         addChatMessage({
           username: username,
-          avatar: avatar,
           message: message
         });
         // tell server to execute 'new message' and send along one parameter
-        socket.emit('new message', {username: username, _id: _id, message: message});
+        socket.emit('new message', {username: $('#userRecive').val(), message: message});
           if(!$modalStack.getTop()){
             $http.get('/loggedin').success(function(user){
               if(user!=='0'){
@@ -74,7 +47,7 @@ angular.module('ChatCtrl',[])
                   backdrop: 'static',
                   resolve: {
                     userData: function () {
-                       return {username: username, _id: _id, message: message};
+                       return {username: username, message: message};
                      }
                   }
                 });
@@ -108,8 +81,10 @@ angular.module('ChatCtrl',[])
       }
 
       var $usernameDiv = '<img src="'+data.avatar+'" class="userAvatar" alt="'+data.username+'">';
-      var $messageBodyDiv = $('<span class="messageBody">')
-      .text(data.message);
+      if(data.username==username){
+        $usernameDiv = '<img src="'+avatar+'" class="userAvatar" alt="'+data.username+'">';
+      }
+      var $messageBodyDiv = $('<span class="messageBody">').text(data.message);
       if(data.typing){
         $messageBodyDiv.prepend('<i class="fa fa-pencil"></i> ');
         var $messageDiv = $('<li class="message"/>')
@@ -123,7 +98,7 @@ angular.module('ChatCtrl',[])
         var $messageDiv = $('<li class="message"/>')
         .append($usernameDiv, $messageBodyDiv);
       }
-      if(data.username==$cookieStore.get('currentUser').displayName){
+      if(data.username==username){
         $messageDiv.addClass('sendUser');
       }
 
@@ -172,7 +147,6 @@ angular.module('ChatCtrl',[])
       } else {
         $messages.append($el);
       }
-      //$messages[0].scrollTop = $messages[0].scrollHeight;
     }
 
     // Prevents input from having injected markup
@@ -182,10 +156,10 @@ angular.module('ChatCtrl',[])
 
     // Updates the typing event
     function updateTyping () {
-      if (connected) {
+      //if (connected) {
         if (!typing) {
           typing = true;
-          socket.emit('typing');
+          socket.emit('typing',{username: $('#userRecive').val()});
         }
         lastTypingTime = (new Date()).getTime();
 
@@ -193,11 +167,11 @@ angular.module('ChatCtrl',[])
           var typingTimer = (new Date()).getTime();
           var timeDiff = typingTimer - lastTypingTime;
           if (timeDiff >= TYPING_TIMER_LENGTH && typing) {
-            socket.emit('stop typing');
+            socket.emit('stop typing',{username: $('#userRecive').val()});
             typing = false;
           }
         }, TYPING_TIMER_LENGTH);
-      }
+      //}
     }
 
     // Gets the 'X is typing' messages of a user
@@ -217,13 +191,13 @@ angular.module('ChatCtrl',[])
       // When the client hits ENTER on their keyboard
       if (event.which === 13) {
           sendMessage();
-          socket.emit('stop typing');
+          socket.emit('stop typing',{username: $('#userRecive').val()});
           typing = false;
       }
     });
     $('.chat-message-send-btn').click(function(){
           sendMessage();
-          socket.emit('stop typing');
+          socket.emit('stop typing',{username: $('#userRecive').val()});
           typing = false;
     });
 
@@ -236,30 +210,28 @@ angular.module('ChatCtrl',[])
       $inputMessage.focus();
     });
 
-    // Socket events
-
-    // Whenever the server emits 'login', log the login message
-    socket.on('usernames', function (data) {
-      connected = true;
-    });
 
     // Whenever the server emits 'new message', update the chat body
     socket.on('new message', function (data) {
-      addChatMessage(data);
+      if(data.username==$('#userRecive').val())
+        addChatMessage(data);
     });
 
     // Whenever the server emits 'user left', log it in the chat body
-    socket.on('user left', function (data) {
-      removeChatTyping(data);
+    socket.on('logout', function (data) {
+      if(data.username==$('#userRecive').val())
+        removeChatTyping(data);
     });
 
     // Whenever the server emits 'typing', show the typing message
     socket.on('typing', function (data) {
-      addChatTyping(data);
+      if(data.username==$('#userRecive').val())
+        addChatTyping(data);
     });
 
     // Whenever the server emits 'stop typing', kill the typing message
     socket.on('stop typing', function (data) {
-      removeChatTyping(data);
+      if(data.username==$('#userRecive').val())
+        removeChatTyping(data);
     });
 }]);

@@ -27,7 +27,7 @@
     "passport-google-oauth": "~0.1.5",
     "passport-local": "~0.1.6",
     "rand-token": "^0.2.1",
-    "socket.io": "^1.3.5",
+    "socket.io": "0.9.16",
     "validator": "~1.1.1"
   },
   "repository": {
