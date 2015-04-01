@@ -16,7 +16,6 @@ angular.module('MainCtrl',[])
 	            });
 	         /*Thiết lập thời gian tương đối*/
 	         moment.locale('vi', {});
-	         socket.emit('reconnect');
 	    });
 		$scope.fbLike="https://www.facebook.com/toiyeulaptrinhfanpage";
 		/*Lấy đường dẫn hiện tại để tiến hành hightlight menu.*/
@@ -78,6 +77,7 @@ angular.module('MainCtrl',[])
           });
         }
 		});
+		socket.emit('reconnect');
 		socket.on('new connection', function(){
 			$http.get('/loggedin').success(function(user){
 				if(user!=='0'){

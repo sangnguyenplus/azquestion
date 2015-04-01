@@ -25,8 +25,11 @@
             <span ng-if="userInfo.role=='admin'" class="user-badge" style="background-color:#CA1C23;">Administrator</span>
      </div>
       <ul>
-         <li class="name" > <span ng-bind="userInfo.displayName"></span> <i class="fa fa-circle status online" tooltip="Đang online" ng-show="userInfo.online"></i> 
-                     <i class="fa fa-circle status offline" tooltip="Đang offline" ng-show="!userInfo.online"></i> </li>
+         <li class="name" > <span ng-bind="userInfo.displayName"></span> <span ng-repeat="item in listOnline">
+             <i class="fa fa-circle status online" tooltip="Đang online" ng-show="item==userInfo.displayName"></i> 
+             <i class="fa fa-circle status offline" tooltip="Đang offline" ng-hide="item==userInfo.displayName"></i> 
+           </span>
+           <i class="fa fa-circle status offline" tooltip="Đang offline" ng-hide="listOnline"></i></li>
          <li class="location" ng-if="userInfo.location!=null"><i class="fa fa-map-marker"></i> <span ng-bind="userInfo.location"></span></li>
          <li class="location" ng-if="userInfo.location==null"><i class="fa fa-map-marker"></i> Chưa cập nhật</li>
          <li class="email"><i class="fa fa-envelope"></i> <span ng-bind="userInfo.email"></span></li>

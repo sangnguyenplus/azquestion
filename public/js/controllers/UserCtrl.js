@@ -91,7 +91,7 @@ angular.module('UserCtrl',[])
                                 delete $window.sessionStorage.token;
                               }
                             flash.success="Đăng xuất thành công!";
-                            socket.emit('reconnect');
+                            socket.emit('logout');
                         });
         };
         $scope.deleteUser = function(id,path) {

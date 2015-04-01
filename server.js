@@ -76,6 +76,8 @@ server.listen(port);
 console.log('Server is running on '+ port);
 exports = module.exports=app;
 
+
+
 // Chatroom
 
 // usernames which are currently connected to the chat
@@ -103,7 +105,7 @@ io.on('connection', function (socket) {
   }
 
   socket.on('reconnect', function(){
-    updateNicknames();
+    io.sockets.emit('new connection');
   });
 
    // when the client emits 'new message', this listens and executes
