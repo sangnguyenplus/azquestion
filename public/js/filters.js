@@ -39,6 +39,18 @@ angular.module('appFilters', [])
     return filtered;
   };
 })
+.filter('checkOnline', function () {
+  return function (items, user) {
+    if(items){
+      for(var i=0; i<items.length; i++){
+        if(items[i]==user)
+          return true;
+      }
+      return false;
+    }
+    return false;
+  };
+})
 .filter('checkFavorite', function () {
   return function (items, question) {
       for (var i = 0; i < items.length; i++) {

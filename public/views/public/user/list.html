@@ -26,11 +26,8 @@
          </span>
          <div class="left-info">
             <a ui-sref="profile({ id:u._id, slug: (u.displayName | friendlyUrl)+'.html' })"><span class="display_name" ng-bind="u.displayName"></span></a> 
-            <span ng-repeat="item in listOnline">
-             <i class="fa fa-circle status online" tooltip="Đang online" ng-show="item==u.displayName"></i> 
-             <i class="fa fa-circle status offline" tooltip="Đang offline" ng-hide="item==u.displayName"></i> 
-           </span>
-           <i class="fa fa-circle status offline" tooltip="Đang offline" ng-hide="listOnline"></i><br>
+            <i class="fa fa-circle status online" tooltip="Đang online" ng-if="listOnline|checkOnline: u.displayName"></i> 
+            <i class="fa fa-circle status offline" tooltip="Đang offline" ng-if="!(listOnline|checkOnline: u.displayName)"></i> <br>
             <span class="location" ng-if="u.location!=null">
             <i class="fa fa-map-marker"></i> <span ng-bind="u.location"></span></span>
              <span class="location" ng-if="u.location==null">

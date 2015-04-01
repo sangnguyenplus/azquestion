@@ -60,6 +60,12 @@ angular.module('ChatCtrl',[])
             }
           });
         }
+        $scope.formData.status='false';
+        for(var i=0; i<$rootScope.listOnline.length; i++)
+          if($rootScope.listOnline[i]==$('#userRecive').val()){
+            $scope.formData.status='true';
+            break;
+          }
         Chat.create($scope.formData);
       }
     }

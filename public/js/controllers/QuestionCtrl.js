@@ -25,6 +25,7 @@ angular.module('QuestionCtrl',[])
                                             flash.success="Đăng câu hỏi thành công!";
                                             $location.path('/cau-hoi/chi-tiet/'+data._id+'/success');
                                         }
+                                        socket.emit('new question');
                                 });
                 }
                 else{
@@ -332,11 +333,11 @@ angular.module('QuestionCtrl',[])
         });
     };
 }])
-.controller('ListQuestionController', ['$scope','$http','flash','$location', 'Question',function($scope,$http,flash,$location, Question) {
+.controller('ListQuestionController', ['$scope','$rootScope','$http','flash','$location', 'Question',function($scope,$rootScope, $http,flash,$location, Question) {
     $scope.loading=true;
     Question.get()
     .success(function(data){
-        $scope.listQuestion= data;
+        $rootScope.listQuestion= data;
         $scope.loading=false;
         $http.get('api/questiontag/getall').success(function(data){
             $scope.listTag=data;
@@ -348,11 +349,11 @@ angular.module('QuestionCtrl',[])
         /*Phân trang*/
         $http.get('api/question/count')
             .success(function(data){
-                $scope.totalItems=data;
+                $rootScope.totalItems=data;
             });
-        $scope.currentPage = 1;
-        $scope.maxSize = 5;
-        $scope.entryLimit = 10;
+        $rootScope.currentPage = 1;
+        $rootScope.maxSize = 5;
+        $rootScope.entryLimit = 10;
         /*Hết xử lý phân trang*/
     })
     .error(function(){

@@ -57,11 +57,8 @@
               <div class="question-cat">
                        <span class="q-info">
                      <a ui-sref="profile({id:q.userId._id, slug: (q.userId.displayName | friendlyUrl)+'.html'})"> 
-                     <span ng-repeat="item in listOnline">
-                       <i class="fa fa-circle status online" tooltip="Đang online" ng-show="item==q.userId.displayName"></i> 
-                       <i class="fa fa-circle status offline" tooltip="Đang offline" ng-hide="item==q.userId.displayName"></i> 
-                     </span>
-                     <i class="fa fa-circle status offline" tooltip="Đang offline" ng-hide="listOnline"></i> 
+                     <i class="fa fa-circle status online" tooltip="Đang online" ng-if="listOnline|checkOnline: q.userId.displayName"></i> 
+                     <i class="fa fa-circle status offline" tooltip="Đang offline" ng-if="!(listOnline|checkOnline: q.userId.displayName)"></i> 
                      <img ng-src="{{q.userId.avatar}}" alt="{{q.userId.displayName}}"> <span ng-bind="q.userId.displayName"></span>
                      </a>
                   </span>

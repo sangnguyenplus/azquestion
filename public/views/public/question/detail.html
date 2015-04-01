@@ -61,11 +61,8 @@
             <img src="{{questionDetail.userId.avatar}}" alt="{{questionDetail.userId.displayName}}" />
             <label><a ui-sref="profile({id:questionDetail.userId._id})" ng-bind="questionDetail.userId.displayName"></a></label>
             <span class="bg">
-                <span ng-repeat="item in listOnline">
-                 <i class="fa fa-circle status online" tooltip="Đang online" ng-show="item==questionDetail.userId.displayName"></i> 
-                 <i class="fa fa-circle status offline" tooltip="Đang offline" ng-hide="item==questionDetail.userId.displayName"></i> 
-               </span>
-               <i class="fa fa-circle status offline" tooltip="Đang offline" ng-hide="listOnline"></i> Điểm <span ng-bind="questionDetail.userId.reputation"></span>
+                <i class="fa fa-circle status online" tooltip="Đang online" ng-if="listOnline|checkOnline: questionDetail.userId.displayName"></i>
+                <i class="fa fa-circle status offline" tooltip="Đang offline" ng-if="!(listOnline|checkOnline: questionDetail.userId.displayName)"></i> Điểm <span ng-bind="questionDetail.userId.reputation"></span>
             </span>
           </div>
           <!-- / user -->
@@ -122,11 +119,8 @@
                       <img src="{{a.userId.avatar}}" alt="{{a.userId.displayName}}" />
                       <label><a ui-sref="profile({id:a.userId._id, slug: (a.userId.displayName | friendlyUrl)+'.html'})" ng-bind="a.userId.displayName"></a></label>
                       <span class="bg">
-                         <span ng-repeat="item in listOnline">
-                       <i class="fa fa-circle status online" tooltip="Đang online" ng-show="item==a.userId.displayName"></i>
-                       <i class="fa fa-circle status offline" tooltip="Đang offline" ng-hide="item==a.userId.displayName"></i>
-                     </span>
-                     <i class="fa fa-circle status offline" tooltip="Đang offline" ng-hide="listOnline"></i>
+                        <i class="fa fa-circle status online" tooltip="Đang online" ng-if="listOnline|checkOnline: a.userId.displayName"></i> 
+                        <i class="fa fa-circle status offline" tooltip="Đang offline" ng-if="!(listOnline|checkOnline: a.userId.displayName)"></i> 
                       Điểm <span ng-bind="a.userId.reputation"></span>
                       </span>
                     </div>

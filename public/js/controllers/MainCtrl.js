@@ -92,7 +92,33 @@ angular.module('MainCtrl',[])
 		socket.on('usernames', function(data){
 			$rootScope.listOnline=data;
 			console.log($rootScope.listOnline);
-			console.log('Reconnected');
+		});
+
+
+		socket.on('new question', function(){
+			$http.get('/api/question').success(function(data){
+		        $rootScope.listQuestion= data;
+		        $http.get('api/questiontag/getall').success(function(data){
+		            $rootScope.listTag=data;
+		        })
+		        .error(function(){
+		            console.log('error');
+		        });
+
+		        /*Phân trang*/
+		        $http.get('api/question/count')
+		            .success(function(data){
+		                $rootScope.totalItems=data;
+		            });
+		        $rootScope.currentPage = 1;
+		        $rootScope.maxSize = 5;
+		        $rootScope.entryLimit = 10;
+		        /*Hết xử lý phân trang*/
+		    })
+		    .error(function(){
+		        console.log("Error");
+		    });
+
 		});
 
 
@@ -103,7 +129,6 @@ angular.module('MainCtrl',[])
         angular.forEach(data, function(item){
             $scope.people.push({label: item.displayName});
         });
-        //console.log($scope.people);
     })
     .error(function(){
         console.log('error');

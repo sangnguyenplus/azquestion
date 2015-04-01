@@ -12,7 +12,6 @@ var schema = mongoose.Schema({
     birthday:      {type: 'String', default: null},
     reputation:    {type: 'Number', default: 0},
     status:        {type: 'Number', default: 0},
-    online:        {type: 'Boolean', default: false},
     role:          {type: 'String',required:true},
     activeToken :  {type: 'String', default: null},
     resetPasswordToken: {type: 'String', default: null},

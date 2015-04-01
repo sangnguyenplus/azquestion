@@ -176,4 +176,7 @@ io.on('connection', function (socket) {
   socket.on('createAnswer', function(data){
     socket.broadcast.emit('createAnswer', data);
   });
+  socket.on('new question', function(){
+    io.sockets.emit('new question');
+  });
 });
