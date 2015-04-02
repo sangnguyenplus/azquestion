@@ -58,6 +58,17 @@ module.exports = function (app, passport) {
 			res.json(user);
         });
      });
+	// Get User Admin
+	app.get('/api/admin',function(req,res)
+	{
+		User.find({role:'admin'}).select('_id').exec(function(err,user)
+		{
+			if(err)
+				res.send(err);
+			res.json(user);
+		});
+	});
+
 	app.get('/api/people', function(req, res) {
         User.find({},'-_id displayName',function(err, user){
         	if (err)

@@ -170,7 +170,7 @@ io.on('connection', function (socket) {
   });
   // deleteQuestion
   socket.on('deleteQuestion', function(data){
-    socket.broadcast.emit('deleteQuestion', data);
+    socket.broadcast.emit('deleteQuestion',data);
   });
   // createAnswer
   socket.on('createAnswer', function(data){
@@ -178,5 +178,9 @@ io.on('connection', function (socket) {
   });
   socket.on('new question', function(){
     io.sockets.emit('new question');
+  });
+  // reportQuestion
+  socket.on('reportQuestion', function(data){
+    socket.broadcast.emit('reportQuestion', data);
   });
 });

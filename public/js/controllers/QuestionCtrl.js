@@ -52,19 +52,27 @@ angular.module('QuestionCtrl',[])
         $scope.deleteQuestion = function(id,path) {
         appAlert.confirm({title:"Xóa",message:"Bạn chắc chắn muốn xóa câu hỏi này ?"},function(isOk){
             if(isOk){
-                Question.delete(id)
-                    /*Nếu xóa thành công thì load lại dữ liệu*/
-                    .success(function(data) {
-                            $http.get('api/question/detail/'+ id)
+                $http.get('api/question/detail/'+ id)
                             .success(function(data){
-                                Notifi.create({userRecive:data.userId._id,
-                                userSend:$cookieStore.get('currentUser')._id,
-                                content:'Câu hỏi '+data.title+' đã bị quản trị xóa!'});
-                                socket.emit('deleteQuestion',{userTitle:data.title,userReciveId:data.userId._id});
+                                $http.get('api/admin').success(function(user)
+                                {
+                                    console.log(user);
+                                    console.log(user.indexOf(data.userId._id));
+                                    if(user.indexOf(data.userId._id)!=-1)
+                                    {
+                                        Notifi.create({userRecive:data.userId._id,
+                                        userSend:$cookieStore.get('currentUser')._id,
+                                        content:'Câu hỏi '+data.title+' đã bị quản trị xóa!'});
+                                        socket.emit('deleteQuestion',{userTitle:data.title,userReciveId:data.userId._id});
+                                    }
+                                });
                             })
                             .error(function(){
                                console.log("error");
                             });
+                Question.delete(id)
+                    /*Nếu xóa thành công thì load lại dữ liệu*/
+                    .success(function(data) {
                             flash.success="Xóa câu hỏi thành công!";
                             $scope.listQuestion=data;
                             $scope.listAdminQuestion=data;
@@ -88,7 +96,7 @@ angular.module('QuestionCtrl',[])
                                 content:'Câu hỏi '+data.title+' đã được quản trị đăng!',
                                 questionId:id
                             });
-                            socket.emit('approve',{userTitle:data.title,userReciveId:data.userId._id});
+                            socket.emit('approve',{userTitle:data.title,userReciveId:data.userId._id,questionIds:id});
                         })
                         .error(function(){
                            console.log("error");
@@ -121,8 +129,14 @@ angular.module('QuestionCtrl',[])
                             {
                                 $http.get('api/question/detail/'+ id)
                                 .success(function(data){
-                                    Notifi.create({userRecive:data.userId._id,userSend:$cookieStore.get('currentUser')._id,content:$cookieStore.get('currentUser').displayName+' đã thích câu hỏi '+data.title});
-                                    socket.emit('voteup',{userSendName:$cookieStore.get('currentUser').displayName,userReciveId:data.userId._id,userTitle:data.title});
+                                    Notifi.create({userRecive:data.userId._id,
+                                        userSend:$cookieStore.get('currentUser')._id,
+                                        content:$cookieStore.get('currentUser').displayName+' đã thích câu hỏi '+data.title,
+                                        questionId:id});
+                                    socket.emit('voteup',{userSendName:$cookieStore.get('currentUser').displayName,
+                                        userReciveId:data.userId._id,
+                                        userTitle:data.title,
+                                        questionIds:id});
                                 })
                                 .error(function(){
                                 console.log("error");
@@ -245,8 +259,14 @@ angular.module('QuestionCtrl',[])
                         {
                             $http.get('api/question/detail/'+ id)
                             .success(function(data){
-                                Notifi.create({userRecive:data.userId._id,userSend:$cookieStore.get('currentUser')._id,content:$cookieStore.get('currentUser').displayName+' đã theo dõi câu hỏi '+data.title});
-                                socket.emit('Favorite',{userSendName:$cookieStore.get('currentUser').displayName,userReciveId:data.userId._id,userTitle:data.title});
+                                Notifi.create({userRecive:data.userId._id,
+                                    userSend:$cookieStore.get('currentUser')._id,
+                                    content:$cookieStore.get('currentUser').displayName+' đã theo dõi câu hỏi '+data.title,
+                                    questionId:id});
+                                socket.emit('Favorite',{userSendName:$cookieStore.get('currentUser').displayName,
+                                    userReciveId:data.userId._id,
+                                    userTitle:data.title,
+                                    questionIds:id});
                             })
                             .error(function(){
                                console.log("error");
@@ -294,7 +314,30 @@ angular.module('QuestionCtrl',[])
                             if(data.reported)
                                 flash.error= "Bạn đã báo cáo câu hỏi này vi phạm rồi!";
                             else
+                            {
+                                $http.get('api/question/detail/'+ id)
+                                .success(function(data){
+                                    $http.get('api/admin').success(function(user)
+                                    {
+                                        for(var i in user)
+                                        {
+                                            var item=user[i];
+                                            Notifi.create({userRecive:item._id,
+                                            userSend:$cookieStore.get('currentUser')._id,
+                                            content:$cookieStore.get('currentUser').displayName+' báo cáo vi phạm câu hỏi '+data.title,
+                                            questionId:id});
+                                            socket.emit('reportQuestion',{userSendName:$cookieStore.get('currentUser').displayName,
+                                            userReciveId:data.userId._id,
+                                            userTitle:data.title,
+                                            questionIds:id});
+                                        }
+                                    });
+                                })
+                                .error(function(){
+                                   console.log("error");
+                                });
                                 flash.success="Báo cáo vi phạm thành công!";
+                            }
                         })
                         .error(function(){
                             console.log('error');
@@ -382,36 +425,60 @@ $scope.loading=true;
             $scope.Proccess=true;
             /*Kiểm tra dữ liệu rỗng nếu form rỗng thì không làm gì cả*/
             if (!$.isEmptyObject($scope.formAnswer)) {
-
+                // Notify answer
+                                    $http.get('api/question/detail/'+ $scope.formAnswer.question_id)
+                                    .success(function(data){
+                                    $http.get('api/findFavorite/'+$scope.formAnswer.question_id)
+                                    .success(function(listFA)
+                                    {
+                                        for(var i in listFA)
+                                        {
+                                            var item=listFA[i];
+                                            Notifi.create({userRecive:item.userId._id,
+                                                    userSend:$cookieStore.get('currentUser')._id,
+                                                    content:$cookieStore.get('currentUser').displayName+' đã trả lời câu hỏi '+ data.title,
+                                                    questionId:item._id});
+                                            socket.emit('createAnswer',{userSendName:$cookieStore.get('currentUser').displayName,
+                                            userReciveId:item.userId._id,
+                                            userTitle:data.title,userQuestionId:data._id});
+                                        }
+                                    });
+                                    $http.get('api/findAnswers/'+$scope.formAnswer.question_id)
+                                    .success(function(listAN)
+                                    {
+                                        var listNTF=[];
+                                        console.log(listAN);
+                                        for(var i in listAN)
+                                        {
+                                            var item=listAN[i];
+                                            if(listNTF.indexOf(item.userId._id)==-1)
+                                                listNTF.push(item.userId._id);
+                                        }
+                                        console.log(listNTF);
+                                        for(var i in listNTF)
+                                        {
+                                            var item=listNTF[i];
+                                            if(item!=data.userId._id)
+                                            {
+                                                Notifi.create({userRecive:item,
+                                                    userSend:$cookieStore.get('currentUser')._id,
+                                                    content:$cookieStore.get('currentUser').displayName+' đã trả lời câu hỏi '+ data.title,
+                                                    questionId:data._id});
+                                            socket.emit('createAnswer',{userSendName:$cookieStore.get('currentUser').displayName,
+                                            userReciveId:item,
+                                            userTitle:data.title,userQuestionId:data._id});
+                                            }
+                                        }
+                                    });
+                                    })
+                                    .error(function(){
+                                       console.log("error");
+                                    });
                     Answer.create($scope.formAnswer)
                             .success(function(data) {
                                     $scope.formAnswer.content='';
                                     $scope.Proccess=false;
                                     $('.show-form').fadeOut();
-                                    // Notify answer
-                                    $http.get('api/question/detail/'+ $scope.formAnswer.question_id)
-                                    .success(function(data){
-                                       var listAU=[];
-                                        $http.get('api/findAnswers/'+data._id)
-                                        .success(function(listQA)
-                                        {
-                                            for(var i in listQA)
-                                            {
-                                                var item=listQA[i];
-                                                if(listAU.indexOf(item.userId._id)==-1 && item.userId._id!=$cookieStore.get('currentUser')._id)
-                                                    listAU.push(item.userId._id);
-                                            }
-                                            for(var i in listAU)
-                                            {
-                                                var item=listAU[i];
-                                                Notifi.create({userRecive:item,userSend:$cookieStore.get('currentUser')._id,content:$cookieStore.get('currentUser').displayName+' đã trả lời câu hỏi '+data.title});
-                                            }
-                                        });
-                                        socket.emit('createAnswer',{userSendName:$cookieStore.get('currentUser').displayName,userReciveId:data.userId._id,userTitle:data.title,userQuestionId:data._id});
-                                    })
-                                    .error(function(){
-                                       console.log("error");
-                                    });
                                     flash.success="Gửi trả lời thành công!";
                                     $http.get('api/findAnswers/'+ question_id)
                                         .success(function(data){

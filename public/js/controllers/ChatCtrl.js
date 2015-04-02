@@ -244,22 +244,28 @@ angular.module('ChatCtrl',[])
     });
 
     function getCount(){
-      Chat.count($cookieStore.get('currentUser')._id)
+      if($cookieStore.get('currentUser'))
+      {
+        Chat.count($cookieStore.get('currentUser')._id)
           .success(function(data){
             $scope.unread=data;
           })
           .error(function() {
             console.log('Error');
           });
+      }
     };
     function getList(){
-      Chat.getList($cookieStore.get('currentUser')._id)
-          .success(function(data){
-            $scope.listChat=data;
-          })
-          .error(function() {
-            console.log('Error');
-          });
+      if($cookieStore.get('currentUser'))
+      {
+        Chat.getList($cookieStore.get('currentUser')._id)
+            .success(function(data){
+              $scope.listChat=data;
+            })
+            .error(function() {
+              console.log('Error');
+            });
+      }
     };
     getCount();
     getList();

@@ -24,7 +24,7 @@ angular.module('NotifiCtrl',[])
     {
     	if($cookieStore.get('currentUser')._id == data.userReciveId)
     	{
-    		flash.success=data.userSendName+" đã thích câu hỏi "+data.userTitle;
+    		flash.success="<a href='cau-hoi/chi-tiet/"+data.questionIds+"/'>"+data.userSendName+" đã thích câu hỏi "+data.userTitle+"</a>";
     	}
     	$http.get('api/notifi/detail/'+$cookieStore.get('currentUser')._id)
     	.success(function(data)
@@ -40,22 +40,40 @@ angular.module('NotifiCtrl',[])
     // createAnswer
     socket.on('createAnswer',function(data)
     {
-        var listAU=[];
-        $http.get('api/findAnswers/'+data.userQuestionId)
-        .success(function(listQA)
-        {
-            for(var i in listQA)
-            {
-                var item=listQA[i];
-                if(listAU.indexOf(item.userId._id)==-1)
-                    listAU.push(item.userId._id);
-            }
-            for(var i in listAU)
-            {
-                var item=listAU[i];
-                if($cookieStore.get('currentUser')._id == item)
+                if($cookieStore.get('currentUser')._id == data.userReciveId)
                 {
                     flash.success=data.userSendName+" đã trả lời câu hỏi "+data.userTitle;
+                }
+                $http.get('api/notifi/detail/' + $cookieStore.get('currentUser')._id)
+                .success(function(data)
+                {
+                    $scope.listNotifi=data;
+                });
+                $http.get('api/notifi/count/' + $cookieStore.get('currentUser')._id)
+                .success(function(data)
+                {
+                    $scope.sfc=data;
+                });
+    });
+    // reportQuestion
+    socket.on('reportQuestion',function(data)
+    {
+        var listAD=[];
+        $http.get('api/admin')
+        .success(function(listAM)
+        {
+            for(var i in listAM)
+            {
+                var item=listAM[i];
+                if(listAD.indexOf(item._id)==-1)
+                    listAD.push(item._id);
+            }
+            for(var i in listAD)
+            {
+                var item=listAD[i];
+                if($cookieStore.get('currentUser')._id == item)
+                {
+                    flash.success="<a href='cau-hoi/chi-tiet/"+data.questionIds+"/'>"+data.userSendName+" báo cáo vi phạm câu hỏi "+data.userTitle+"</a>";
                 }
             }
         });
@@ -75,7 +93,7 @@ angular.module('NotifiCtrl',[])
     {
         if($cookieStore.get('currentUser')._id == data.userReciveId)
         {
-            flash.success="Câu hỏi "+ data.userTitle +" đã được quản trị đăng!";
+            flash.success="<a href='cau-hoi/chi-tiet/"+data.questionIds+"/'>Câu hỏi "+ data.userTitle +" đã được quản trị đăng!</a>";
         }
         $http.get('api/notifi/detail/'+$cookieStore.get('currentUser')._id)
         .success(function(data)
@@ -93,7 +111,7 @@ angular.module('NotifiCtrl',[])
     {
         if($cookieStore.get('currentUser')._id == data.userReciveId)
         {
-            flash.success=data.userSendName+" đã theo dõi câu hỏi "+data.userTitle;
+            flash.success="<a href='cau-hoi/chi-tiet/"+data.questionIds+"/'>"+data.userSendName+" đã theo dõi câu hỏi "+data.userTitle+"</a>";
         }
         $http.get('api/notifi/detail/'+$cookieStore.get('currentUser')._id)
         .success(function(data)
@@ -111,7 +129,7 @@ angular.module('NotifiCtrl',[])
     {
         if($cookieStore.get('currentUser')._id == data.userReciveId)
         {
-            flash.success="Câu hỏi "+ data.userTitle +" đã bị quản trị xóa!";
+            flash.error="Câu hỏi "+ data.userTitle +" đã bị quản trị xóa!";
         }
         $http.get('api/notifi/detail/'+$cookieStore.get('currentUser')._id)
         .success(function(data)

@@ -129,7 +129,7 @@
                             <a href="javascript:void(0)">Chưa có thông báo nào cả.</a>
                           </li>
                           <li ng-show="listNotifi" ng-repeat="list in listNotifi|orderBy:['-creationDate']">
-                            <a href="">{{list.content}}</a>
+                            <a ui-sref="question-detail({id:list.questionId, slug:''})">{{list.content}}</a>
                           </li>
                         </ul>
                       </li>

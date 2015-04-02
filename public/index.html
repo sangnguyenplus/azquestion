@@ -66,7 +66,7 @@
           <div flash-alert="success" active-class="in alert-flash" class="fade ">
               <button type="button" class="close" ng-click="hide()">&times;</button>
               <strong class="alert-heading">Thông báo!</strong>
-              <span class="alert-message">{{flash.message}}</span>
+              <span class="alert-message" ng-bind-html="flash.message | unsafe"></span>
           </div>
           <div class="footer">
             <div class="container">
