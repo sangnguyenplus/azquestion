@@ -221,6 +221,8 @@ angular.module('ChatCtrl',[])
     socket.on('new message', function (data) {
       if(data.username==$('#userRecive').val())
         addChatMessage(data);
+        getCount();
+        getList();
     });
 
     // Whenever the server emits 'user left', log it in the chat body
@@ -240,4 +242,37 @@ angular.module('ChatCtrl',[])
       if(data.username==$('#userRecive').val())
         removeChatTyping(data);
     });
+
+    function getCount(){
+      Chat.count($cookieStore.get('currentUser')._id)
+          .success(function(data){
+            $scope.unread=data;
+          })
+          .error(function() {
+            console.log('Error');
+          });
+    };
+    function getList(){
+      Chat.getList($cookieStore.get('currentUser')._id)
+          .success(function(data){
+            $scope.listChat=data;
+          })
+          .error(function() {
+            console.log('Error');
+          });
+    };
+    getCount();
+    getList();
+
+    $scope.updateCount= function(){
+      Chat.updateStatus($cookieStore.get('currentUser')._id)
+          .success(function(){
+              getCount();
+          })
+          .error(function() {
+            console.log('Error');
+          });
+    };
+
+
 }]);

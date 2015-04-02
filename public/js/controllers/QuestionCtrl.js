@@ -49,32 +49,6 @@ angular.module('QuestionCtrl',[])
             });
             /*end modal*/
         };
-        $scope.chat=function (user) {
-            $http.get('/loggedin').success(function(data){
-                if(data==='0'){
-                    flash.error='Bạn cần đăng nhập để thực hiện hành động này !';
-                }
-                else{
-                    /*begin modal*/
-                    var modalInstance = $modal.open({
-                      templateUrl: '/views/modal/chat.html',
-                      controller: 'modal.chat',
-                      backdrop: 'static',
-                      resolve: {
-                        userData: function () {
-                           return user;
-                         }
-                      }
-                    });
-                    modalInstance.result.then(function (dataFromOkModal) {
-                      console.log(dataFromOkModal);
-                    }, function (dataFromDissmissModal) {
-                      console.log(dataFromDissmissModal);
-                    });
-                    /*end modal*/
-                }
-            });
-        };
         $scope.deleteQuestion = function(id,path) {
         appAlert.confirm({title:"Xóa",message:"Bạn chắc chắn muốn xóa câu hỏi này ?"},function(isOk){
             if(isOk){

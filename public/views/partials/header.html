@@ -21,7 +21,7 @@
               </ul>
               <ul class="nav navbar-nav pull-right hidden-xs notify-menu" ng-controller="UserController"  ng-if="currentUser" style="max-height: 40px;">
                   <li class="notifications dropdown" ng-controller="NotifiController" ng-if="currentUser">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)" ng-dblclick="updatecount()"><i class="fa fa-fw fa-bell-o"></i> Thông báo <sup class='badge' ng-bind="sfc"></sup></a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)" ng-click="updatecount()"><i class="fa fa-fw fa-bell-o"></i> Thông báo <sup class='badge' ng-bind="sfc"></sup></a>
                         <ul class="dropdown-menu">
                           <li ng-hide="listNotifi">
                             <a href="javascript:void(0)">Chưa có thông báo nào cả.</a>
@@ -31,11 +31,14 @@
                           </li>
                         </ul>
                       </li>
-                      <li class="chats dropdown"  ng-if="currentUser">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)"><i class="fa fa-comment-o fa-fw" ></i> <span>Chat</span></a>
+                      <li class="chats dropdown" ng-controller="ChatController" ng-if="currentUser">
+                        <a class="dropdown-toggle" data-toggle="dropdown" ng-click="updateCount()" href="javascript:void(0)"><i class="fa fa-comment-o fa-fw" ></i> <span>Chat</span> <sup class='badge' ng-bind="unread"></sup></a>
                         <ul class="dropdown-menu">
-                          <li>
+                          <li ng-hide="listChat">
                             <a href="javascript:void(0)">Chưa có tin nhắn nào cả.</a>
+                          </li>
+                          <li ng-show="listChat" ng-repeat="item in listChat|orderBy:['-creationDate']">
+                            <a ng-click="chat({_id:item.userSend._id, username: item.userSend.displayName})" style="cursor: pointer;">{{item.userSend.displayName}}</a>
                           </li>
                         </ul>
                       </li>

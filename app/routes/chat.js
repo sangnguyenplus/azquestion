@@ -35,4 +35,30 @@ module.exports = function (app, passport) {
 			res.json(msg);
         });
 	});
+	app.get('/api/chat/count/:userRecive', function(req, res) {
+		var id=req.params.userRecive;
+        Chat.find( { $and: [ { status: false},{userRecive:id} ] } ).count(function(err, count){
+        	if (err)
+				res.send(err)
+			res.json(count);
+        });
+     });
+	app.get('/api/chat/list/:userRecive', function(req, res){
+		var id=req.params.userRecive;
+        Chat.find({userRecive:id}).group(userSend).populate('userRecive').populate('userSend').exec(function(err, list){
+        	if (err)
+				res.send(err)
+			res.json(list);
+        });
+	});
+	app.get('/api/chat/update/:userRecive',function(req,res)
+	{
+		var id=req.params.userRecive;
+		Chat.update({userRecive:id }, { $set: { status: true }},{multi:true}).exec(function(err, chat)
+			{
+				if(err)
+					res.send(err);
+				res.json(chat);
+			});
+	});
 }
