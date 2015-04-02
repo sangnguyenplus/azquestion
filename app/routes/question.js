@@ -13,7 +13,7 @@ var randtoken = require('rand-token');
 var transporter = nodemailer.createTransport({
     service: 'Gmail',
     auth: {
-        user: 'minhsang2603@gmail.com',
+        user: 'azquestion.com@gmail.com',
         pass: 'fit@dhcn123!@#'
     }
 });

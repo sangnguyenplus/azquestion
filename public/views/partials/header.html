@@ -27,7 +27,7 @@
                             <a href="javascript:void(0)">Chưa có thông báo nào cả.</a>
                           </li>
                           <li ng-show="listNotifi" ng-repeat="list in listNotifi|orderBy:['-creationDate']">
-                            <a ui-sref="question-detail({id:list.questionId, slug:''})">{{list.content}}</a>
+                            <a ui-sref="question-detail({id:list.questionId, slug:''})"><img src="{{list.userSend.avatar}}" alt="{{list.userSend.displayName}}" class="userSend">{{list.content}}</a>
                           </li>
                         </ul>
                       </li>
@@ -38,7 +38,7 @@
                             <a href="javascript:void(0)">Chưa có tin nhắn nào cả.</a>
                           </li>
                           <li ng-show="listChat" ng-repeat="item in listChat|orderBy:['-creationDate']">
-                            <a ng-click="chat({_id:item.userSend._id, username: item.userSend.displayName})" style="cursor: pointer;">{{item.userSend.displayName}}</a>
+                            <a ng-click="chat({_id:item.userSend._id, username: item.userSend.displayName})" style="cursor: pointer;"><img src="{{item.userSend.avatar}}" alt="{{item.userSend.displayName}}" class="userSend">{{item.userSend.displayName}}</a>
                           </li>
                         </ul>
                       </li>
@@ -129,15 +129,18 @@
                             <a href="javascript:void(0)">Chưa có thông báo nào cả.</a>
                           </li>
                           <li ng-show="listNotifi" ng-repeat="list in listNotifi|orderBy:['-creationDate']">
-                            <a ui-sref="question-detail({id:list.questionId, slug:''})">{{list.content}}</a>
+                            <a ui-sref="question-detail({id:list.questionId, slug:''})"><img src="{{list.userSend.avatar}}" alt="{{list.userSend.displayName}}" class="userSend">{{list.content}}</a>
                           </li>
                         </ul>
                       </li>
-                      <li class="chats dropdown"  ng-if="currentUser">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)"><i class="fa fa-comment-o fa-fw" ></i> <span>Chat</span></a>
+                      <li class="chats dropdown" ng-controller="ChatController" ng-if="currentUser">
+                        <a class="dropdown-toggle" data-toggle="dropdown" ng-click="updateCount()" href="javascript:void(0)"><i class="fa fa-comment-o fa-fw" ></i> <span>Chat</span> <sup class='badge' ng-bind="unread"></sup></a>
                         <ul class="dropdown-menu">
-                          <li>
+                          <li ng-hide="listChat">
                             <a href="javascript:void(0)">Chưa có tin nhắn nào cả.</a>
+                          </li>
+                          <li ng-show="listChat" ng-repeat="item in listChat|orderBy:['-creationDate']">
+                            <a ng-click="chat({_id:item.userSend._id, username: item.userSend.displayName})" style="cursor: pointer;"><img src="{{item.userSend.avatar}}" alt="{{item.userSend.displayName}}" class="userSend">{{item.userSend.displayName}}</a>
                           </li>
                         </ul>
                       </li>
@@ -174,15 +177,18 @@
                             <a href="javascript:void(0)">Chưa có thông báo nào cả.</a>
                           </li>
                           <li ng-show="listNotifi" ng-repeat="list in listNotifi|orderBy:['-creationDate']">
-                            <a href="">{{list.content}}</a>
+                            <a href=""><img src="{{list.userSend.avatar}}" alt="{{list.userSend.displayName}}" class="userSend"> {{list.content}}</a>
                           </li>
                         </ul>
                       </li>
-                      <li class="chats dropdown"  ng-if="currentUser">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)"><i class="fa fa-comment-o fa-fw" ></i> <span>Chat</span></a>
+                      <li class="chats dropdown" ng-controller="ChatController" ng-if="currentUser">
+                        <a class="dropdown-toggle" data-toggle="dropdown" ng-click="updateCount()" href="javascript:void(0)"><i class="fa fa-comment-o fa-fw" ></i> <span>Chat</span> <sup class='badge' ng-bind="unread"></sup></a>
                         <ul class="dropdown-menu">
-                          <li>
+                          <li ng-hide="listChat">
                             <a href="javascript:void(0)">Chưa có tin nhắn nào cả.</a>
+                          </li>
+                          <li ng-show="listChat" ng-repeat="item in listChat|orderBy:['-creationDate']">
+                            <a ng-click="chat({_id:item.userSend._id, username: item.userSend.displayName})" style="cursor: pointer;"><img src="{{item.userSend.avatar}}" alt="{{item.userSend.displayName}}" class="userSend">{{item.userSend.displayName}}</a>
                           </li>
                         </ul>
                       </li>

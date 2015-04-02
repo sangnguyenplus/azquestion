@@ -17,7 +17,7 @@ module.exports = function (app, passport) {
 	});
 	app.get('/api/notifi/detail/:userRecive', function(req, res){
 		var id=req.params.userRecive;
-		Notifi.find({userRecive:id}).populate('userRecive').exec(function(err, list){
+		Notifi.find({userRecive:id}).populate('userRecive').populate('userSend').exec(function(err, list){
 			res.json(list);
         });
 	});

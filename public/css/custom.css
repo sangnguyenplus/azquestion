@@ -369,3 +369,5 @@ border: 1px solid #578824 !important;
     padding-top: 15px;
   border-left: 3px solid #1d9977;
 }
+.userSend{width: 40px; height: 40px !important; margin-right: 10px;}
+.notifications .userSend{float: left;}
