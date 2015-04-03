@@ -371,3 +371,7 @@ border: 1px solid #578824 !important;
 }
 .userSend{width: 40px; height: 40px !important; margin-right: 10px;}
 .notifications .userSend{float: left;}
+.notifications ul li a, .chats ul li a{display: block !important;}
+.chatLeft{width: 40px; float: left;}
+.chatRight{width: 200px; float: right;font-family: "RobotoBold";}
+.chatRight small{font-family: 'RobotoRegular'; color: #7f7f7f;}

@@ -114,7 +114,11 @@ angular.module('TagCtrl',[])
     if (value < maxTags)
       $scope.placeholder = 'Thêm tối đa ' + (maxTags - value) + ' tags';
     else
-      $scope.placeholder = 'Đã đủ '+ maxTags + ' tags';
+        if(value>0)
+            $scope.placeholder='Sửa tag';
+        else
+            $scope.placeholder = 'Thêm';
+
   });
 }])
 .controller('TagDetail',['$scope','$http','$state', '$stateParams','flash', 'Tag', function ($scope,$http,$state, $stateParams,flash, Tag) {

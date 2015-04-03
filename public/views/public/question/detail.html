@@ -6,7 +6,7 @@
    <div id="question_content" ng-hide="loading" class="row question-main-content question-item background-main-content" style="padding-top: 0;">
     <div class="inner_question_content">
       <!-- Vote section -->
-      <div class="q-left-content  text-center hidden-xs">
+      <div class="q-left-content  text-center">
          <ul class="vote">
             <li ng-class="{voted: (currentUser && (listVote | checkVoteUp: questionDetail._id))}">
               <span class="fa fa-chevron-circle-up" tooltip="{{(currentUser && (listVote | checkVoteUp: questionDetail._id))?'Bỏ thích':'Thích'}}" tooltip-placement="right" ng-click="voteUp(questionDetail._id)"></span>
@@ -78,7 +78,7 @@
             <!-- ANSWERS LOOP -->
             <div ng-if="listAnswerQuestion.length>0">
             <div class="question-item answer-item" ng-repeat="a in listAnswerQuestion |orderBy:['-isAcepted','creationDate']|startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit" >
-               <div class="q-left-content text-center hidden-xs">
+               <div class="q-left-content text-center">
                <!-- vote group -->
                <ul class="vote">
                   <li ng-class="{voted: (currentUser && (listVote | checkAnswerVoteUp: a._id))}">

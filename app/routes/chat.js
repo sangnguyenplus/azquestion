@@ -2,6 +2,7 @@
 var Chat = require('../models/chat');
 var User = require('../models/user');
 var ObjectId = require('mongoose').Types.ObjectId;
+var listChat;
 
 module.exports = function (app, passport) {
 	app.post('/api/chat/create', function(req, res,done) {
@@ -41,7 +42,7 @@ module.exports = function (app, passport) {
 		var id=req.params.userRecive;
         Chat.aggregate(
             {$group: {_id: "$userSend", userRecive: {$last: '$userRecive'},msg: { $last: "$msg" }, userSend: { $last: "$userSend" },status: { $last: "$status" }}},
-        	{$project: {_id : 0,userRecive : "$userRecive", userSend : "$userSend", msg: "$msg", status: "$status"}},
+        	{$project: {_id : 0,userRecive : 1, userSend : 1, msg: 1, status: 1}},
         	{$match: {$and: [{"userRecive" : {$eq: new ObjectId(id)}}, {"status": {$eq: false}}] } },
         	 function(err, count){
         	if (err)
@@ -52,18 +53,26 @@ module.exports = function (app, passport) {
 	app.get('/api/chat/list/:userRecive', function(req, res){
 		var id=req.params.userRecive;
         Chat.aggregate(
-            {$group: {_id: {threadId: {"userSend":"$userSend","userRecive":"$userRecive"}}, userRecive: {$last: '$userRecive'},msg: { $last: "$msg" }, userSend: { $last: "$userSend" },status: { $last: "$status" }}},
-        	{$project: {_id : 0,userRecive : "$userRecive", userSend : "$userSend", msg: "$msg", status: "$status"}},
+            {$group: {_id : "$userRecive", userRecive: {$last: '$userRecive'},msg: { $last: "$msg" }, userSend: { $last: "$userSend" },status: { $last: "$status" }}},
+        	{$project: {_id : 0,userRecive : 1, userSend : 1, msg: 1, status: 1}},
         	{$match: {$or: [{"userRecive" : {$eq: new ObjectId(id)}}, {"userSend": {$eq: new ObjectId(id)}}] } },
-        	 function(err, count){
+        	 function(err, list){
         	if (err)
 				res.send(err)
-			/*User.findById(count[0].userRecive,'_id, displayName',function(err, user){
-	        	if (err)
-					res.send(err);
-				count.push(user.displayName);
-	        });*/
-			res.json(count);
+			list.forEach(function(item){
+				User.find({_id:item.userRecive}).select('_id displayName avatar').exec(function(err, userRecive){
+		        	if (err)
+						res.send(err);
+					item.userRecive=userRecive;
+					User.find({_id:item.userSend}).select('_id displayName avatar').exec(function(err, userSend){
+			        	if (err)
+							res.send(err);
+						item.userSend=userSend;
+						listChat=list;
+			        });
+		        });
+			});
+			res.json(listChat);
         });
 	});
 	app.get('/api/chat/update/:userRecive',function(req,res)

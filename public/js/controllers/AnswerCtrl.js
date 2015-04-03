@@ -1,7 +1,7 @@
 angular.module('AnswerCtrl',[])
 
-.controller('AnswerController',['$scope','$rootScope','$cookieStore','$location', '$http','flash','$modal','appAlert', 'Answer', function($scope,$rootScope,$cookieStore,$location, $http,flash,$modal,appAlert, Answer) {
-
+.controller('AnswerController',['$scope','$rootScope','$cookieStore','$location', '$http','flash','$modal','appAlert', 'Answer','Notifi','socket',
+ function($scope,$rootScope,$cookieStore,$location, $http,flash,$modal,appAlert, Answer,Notifi,socket) {
 
 	$scope.currentPage = 1;
     $scope.maxSize = 5;
@@ -59,8 +59,23 @@ angular.module('AnswerCtrl',[])
 	                    .success(function(data){
 	                        if(parseInt(data)==1)
 	                            flash.success="Bạn đã BỎ thích câu trả lời này!";
-	                        else
-	                            flash.success="Bạn đã thích câu trả lời này!";
+	                        else{
+	                        	$http.get('api/answer/detail/'+ id)
+                                .success(function(data){
+                                    Notifi.create({userRecive:data.userId._id,
+                                        userSend:$cookieStore.get('currentUser')._id,
+                                        content:$cookieStore.get('currentUser').displayName+' đã thích câu trả lời cho câu hỏi '+data.questionId.title,
+                                        questionId:data.questionId._id});
+                                    socket.emit('voteup',{userSendName:$cookieStore.get('currentUser').displayName,
+                                        userReciveId:data.userId._id,
+                                        userTitle:data.questionId.title,
+                                        questionIds:data.questionId._id});
+                                })
+                                .error(function(){
+                                console.log("error");
+                                });
+	                        	flash.success="Bạn đã thích câu trả lời này!";
+	                        }
 	                        $http.get('api/findAnswers/'+ question_id)
 						        .success(function(data){
 						          $scope.listAnswerQuestion=data;
