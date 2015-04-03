@@ -93,7 +93,7 @@
               <div class="visible-xs" style="border-top: 1px solid #eee; width: 100%;">
                   <div class="col-xs-4">
                     <ul class="nav navbar-nav">
-                      <li><a href="javascript:void(0)" class="question-form"><i class="fa fa-plus"></i> Đăng câu hỏi</a></li>
+                      <li><a href="#" ng-click="showForm('create_question_form')" class="question-form"><i class="fa fa-plus"></i> Đăng câu hỏi</a></li>
                       <li ng-class="getClass('/')"><a ui-sref="home"><i class="fa fa-question-circle"></i> Câu hỏi</a></li>
                       <li ng-class="getClass('/tags.html')"><a ui-sref="tags"><i class="fa fa-tags"></i> Tags</a></li>
                       <li ng-class="getClass('/danh-hieu.html')"><a ui-sref="badges"><i class="fa fa-trophy"></i> Danh hiệu</a></li>
@@ -123,7 +123,7 @@
                         </ul>
                       </li>
                       <li class="notifications dropdown" ng-controller="NotifiController" ng-if="currentUser">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)" ng-dblclick="updatecount()"><i class="fa fa-fw fa-bell-o"></i> Thông báo <sup class='badge' ng-bind="sfc"></sup></a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)" ng-click="updatecount()"><i class="fa fa-fw fa-bell-o"></i> Thông báo <sup class='badge' ng-bind="sfc"></sup></a>
                         <ul class="dropdown-menu">
                           <li ng-hide="listNotifi">
                             <a href="javascript:void(0)">Chưa có thông báo nào cả.</a>

@@ -442,33 +442,64 @@ $scope.loading=true;
                                             userReciveId:item.userId._id,
                                             userTitle:data.title,userQuestionId:data._id});
                                         }
-                                    });
-                                    $http.get('api/findAnswers/'+$scope.formAnswer.question_id)
-                                    .success(function(listAN)
+                                        $http.get('api/findAnswers/'+$scope.formAnswer.question_id)
+                                        .success(function(listAN)
                                     {
+                                        var listFANA=[];
+                                        for(var j in listFA)
+                                                {
+                                                    var item2=listFA[j];
+                                                    listFANA.push(item2.userId._id);
+                                                }
                                         var listNTF=[];
                                         console.log(listAN);
                                         for(var i in listAN)
                                         {
                                             var item=listAN[i];
-                                            if(listNTF.indexOf(item.userId._id)==-1)
+                                            if(listNTF.indexOf(item.userId._id)==-1 && listFANA.indexOf(item.userId._id)==-1)
+                                            {
+
                                                 listNTF.push(item.userId._id);
+                                            }
                                         }
                                         console.log(listNTF);
                                         for(var i in listNTF)
                                         {
                                             var item=listNTF[i];
-                                            if(item!=data.userId._id)
+                                            if(item==data.userId._id && listNTF.length == 0)
                                             {
-                                                Notifi.create({userRecive:item,
+                                            }
+                                            else
+                                            {
+                                                
+                                                if($cookieStore.get('currentUser')._id != data.userId._id)
+                                                {
+                                                    Notifi.create({userRecive:data.userId._id,
                                                     userSend:$cookieStore.get('currentUser')._id,
                                                     content:$cookieStore.get('currentUser').displayName+' đã trả lời câu hỏi '+ data.title,
                                                     questionId:data._id});
-                                            socket.emit('createAnswer',{userSendName:$cookieStore.get('currentUser').displayName,
-                                            userReciveId:item,
-                                            userTitle:data.title,userQuestionId:data._id});
+                                                    socket.emit('createAnswer',{userSendName:$cookieStore.get('currentUser').displayName,
+                                                            userReciveId:data.userId._id,
+                                                            userTitle:data.title,userQuestionId:data._id});
+                                                }          
+                                                else
+                                                {
+                                                    if($cookieStore.get('currentUser')._id != item)
+                                                {
+                                                    Notifi.create({userRecive:item,
+                                                    userSend:$cookieStore.get('currentUser')._id,
+                                                    content:$cookieStore.get('currentUser').displayName+' đã trả lời câu hỏi '+ data.title,
+                                                    questionId:data._id});
+                                                    socket.emit('createAnswer',{userSendName:$cookieStore.get('currentUser').displayName,
+                                                            userReciveId:item,
+                                                            userTitle:data.title,userQuestionId:data._id});
+                                                }
+                                                
+                                            }
+                                                          
                                             }
                                         }
+                                    });
                                     });
                                     })
                                     .error(function(){
@@ -535,12 +566,10 @@ $scope.loading=true;
             if (!$.isEmptyObject($scope.questionData)) {
                     Question.edit($scope.questionData)
                             .success(function(data) {
-                                    /*$scope.questionData = {}; // Xóa form
-                                    $scope.edit_question_form.$setPristine();*/
                                     $scope.Proccess=false;
                                     $('.edit_question_form').fadeOut();
                                     flash.success="Sửa câu hỏi thành công!";
-                                    $location.path("/question/detail/"+data._id);
+                                    $location.path("/api/question/detail/"+data._id);
                             });
             }
             else{
