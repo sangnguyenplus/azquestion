@@ -569,10 +569,6 @@ $scope.loading=true;
                                     $scope.Proccess=false;
                                     $('.edit_question_form').fadeOut();
                                     flash.success="Sửa câu hỏi thành công!";
-<<<<<<< HEAD
-=======
-                                    $location.path("/api/question/detail/"+data._id);
->>>>>>> c6b6dbf4eb6782cada22520d0fab0b2d70e1838d
                             });
             }
             else{
