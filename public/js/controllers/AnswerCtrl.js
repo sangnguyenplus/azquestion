@@ -2,6 +2,10 @@ angular.module('AnswerCtrl',[])
 
 .controller('AnswerController',['$scope','$rootScope','$cookieStore','$location', '$http','flash','$modal','appAlert', 'Answer','Notifi','socket',
  function($scope,$rootScope,$cookieStore,$location, $http,flash,$modal,appAlert, Answer,Notifi,socket) {
+<<<<<<< HEAD
+=======
+
+>>>>>>> c6b6dbf4eb6782cada22520d0fab0b2d70e1838d
 
 	$scope.currentPage = 1;
     $scope.maxSize = 5;
@@ -59,7 +63,12 @@ angular.module('AnswerCtrl',[])
 	                    .success(function(data){
 	                        if(parseInt(data)==1)
 	                            flash.success="Bạn đã BỎ thích câu trả lời này!";
+<<<<<<< HEAD
 	                        else{
+=======
+	                        else
+	                        {
+>>>>>>> c6b6dbf4eb6782cada22520d0fab0b2d70e1838d
 	                        	$http.get('api/answer/detail/'+ id)
                                 .success(function(data){
                                     Notifi.create({userRecive:data.userId._id,
@@ -74,7 +83,11 @@ angular.module('AnswerCtrl',[])
                                 .error(function(){
                                 console.log("error");
                                 });
+<<<<<<< HEAD
 	                        	flash.success="Bạn đã thích câu trả lời này!";
+=======
+	                            flash.success="Bạn đã thích câu trả lời này!";
+>>>>>>> c6b6dbf4eb6782cada22520d0fab0b2d70e1838d
 	                        }
 	                        $http.get('api/findAnswers/'+ question_id)
 						        .success(function(data){
