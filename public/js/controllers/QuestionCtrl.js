@@ -3,6 +3,7 @@ angular.module('QuestionCtrl',[])
 .controller('QuestionController',['$scope','$cookieStore','$rootScope','$location','$state','$http','$q','$stateParams', 'flash','$modal','appAlert','Answer', 'Question','socket','Notifi',
     function($scope,$cookieStore,$rootScope,$location,$state,$http,$q,$stateParams, flash,$modal,appAlert,Answer, Question, socket,Notifi) {
         $scope.formData = {};
+        $scope.FullPath=$location.absUrl();
         /*Khi form nhấn submit thì sẽ gửi giữ liệu tới api/questions*/
         $scope.createQuestion = function() {
                 $scope.Proccess=true;

@@ -25,6 +25,6 @@
     "highlightjs": "latest",
     "angular-socket-io": "~0.7.0",
     "angular-scroll-glue": "~2.0.4",
-    "ment.io": "~0.9.23"
+    "ng-emoticons": "~2.0.0"
   }
 }

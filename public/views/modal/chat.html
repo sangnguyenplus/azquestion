@@ -10,7 +10,8 @@
 	    <ul class="well well-sm chat-content" scroll-glue>
 	    	<li class="message" ng-repeat="m in msg">
 	    	<div ng-class="{sendUser: m.userSend.displayName!=user.username}">
-	    		<img src="{{m.userSend.avatar}}" class="userAvatar" alt="{{m.userSend.displayName}}"><span class="messageBody">{{m.msg}} <p class="text-right"><i><small class="send_date">{{m.creationDate | fromNow}}</small></i></p></span>
+	    		<img src="{{m.userSend.avatar}}" class="userAvatar" alt="{{m.userSend.displayName}}">
+	    		<span class="messageBody"><span ng-bind-html="m.msg | emoticons:{linkTarget:'_blank'}"></span> <p class="text-right"><i><small class="send_date">{{m.creationDate | fromNow}}</small></i></p></span>
 	    	</div>
 	    	</li>
 	    <p>&nbsp;</p>
@@ -19,8 +20,7 @@
 	<div class="modal-footer">
 	<!-- <form name="form" class="form-horizontal" method="post" novalidate> -->
 		<div class="input-group">
-			<input type="text" mentio mentio-typed-text="typedTerm"  mentio-trigger-char="'@'" mentio-require-leading-space="true"
-            mentio-items="people | filter:label:typedTerm" mentio-id="'formData.msg'" placeholder="Nhập tin nhắn ở đây, nhấn enter để gửi" ng-model="formData.msg" name="chat-message" class="form-control inputMessage" />
+			<input type="text" placeholder="Nhập tin nhắn ở đây, nhấn enter để gửi" ng-model="formData.msg" name="chat-message" class="form-control inputMessage" />
 			<input type="hidden" ng-model="formData.userRecive">
 			<input type="hidden" id="userRecive" value="{{user.username}}">
 			<span class="input-group-btn" style="border:none !important;">

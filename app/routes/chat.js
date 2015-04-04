@@ -60,11 +60,11 @@ module.exports = function (app, passport) {
         	if (err)
 				res.send(err)
 			list.forEach(function(item){
-				User.find({_id:item.userRecive}).select('_id displayName avatar').exec(function(err, userRecive){
+				User.findById(item.userRecive,'_id displayName avatar', function(err, userRecive){
 		        	if (err)
 						res.send(err);
 					item.userRecive=userRecive;
-					User.find({_id:item.userSend}).select('_id displayName avatar').exec(function(err, userSend){
+					User.findById(item.userSend,'_id displayName avatar', function(err, userSend){
 			        	if (err)
 							res.send(err);
 						item.userSend=userSend;

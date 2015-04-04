@@ -38,12 +38,12 @@
                             <a href="javascript:void(0)">Chưa có tin nhắn nào cả.</a>
                           </li>
                           <li ng-show="listChat" ng-repeat="item in listChat|orderBy:['-creationDate']">
-                              <a ng-if="item.userSend[0]._id!==currentUser._id" ng-click="chat({_id:item.userSend[0]._id, username: item.userSend[0].displayName})" style="cursor: pointer;">
-                                <div class="chatLeft"><img src="{{item.userSend[0].avatar}}" alt="{{item.userSend[0].displayName}}" class="userSend"></div><div class="chatRight">{{item.userSend[0].displayName}} <br><small><i class="fa fa-check" ng-show="item.status"></i> {{item.msg}}</small></div>
+                              <a ng-if="item.userSend._id!==currentUser._id" ng-click="chat({_id:item.userSend._id, username: item.userSend.displayName})" style="cursor: pointer;">
+                                <div class="chatLeft"><img src="{{item.userSend.avatar}}" alt="{{item.userSend.displayName}}" class="userSend"></div><div class="chatRight">{{item.userSend.displayName}} <br><small><i class="fa fa-check" ng-show="item.status"></i> {{item.msg}}</small></div>
                                 <span class="clearfix"></span>
                               </a>
-                              <a ng-if="item.userSend[0]._id===currentUser._id" ng-click="chat({_id:item.userRecive[0]._id, username: item.userRecive[0].displayName})" style="cursor: pointer;">
-                                <div class="chatLeft"><img src="{{item.userRecive[0].avatar}}" alt="{{item.userRecive[0].displayName}}" class="userSend"></div><div class="chatRight">{{item.userRecive[0].displayName}} <br><small><i class="fa fa-check" ng-show="item.status && item.userSend[0]._id!==currentUser._id"></i> {{item.msg}}</small></div>
+                              <a ng-if="item.userSend._id===currentUser._id" ng-click="chat({_id:item.userRecive._id, username: item.userRecive.displayName})" style="cursor: pointer;">
+                                <div class="chatLeft"><img src="{{item.userRecive.avatar}}" alt="{{item.userRecive.displayName}}" class="userSend"></div><div class="chatRight">{{item.userRecive.displayName}} <br><small><i class="fa fa-check" ng-show="item.status && item.userSend._id!==currentUser._id"></i> {{item.msg}}</small></div>
                                 <span class="clearfix"></span>
                               </a>
                           </li>
@@ -147,7 +147,14 @@
                             <a href="javascript:void(0)">Chưa có tin nhắn nào cả.</a>
                           </li>
                           <li ng-show="listChat" ng-repeat="item in listChat|orderBy:['-creationDate']">
-                            <a ng-click="chat({_id:item.userSend._id, username: item.userSend.displayName})" style="cursor: pointer;"><img src="{{item.userSend.avatar}}" alt="{{item.userSend.displayName}}" class="userSend">{{item.userSend.displayName}}</a>
+                              <a ng-if="item.userSend._id!==currentUser._id" ng-click="chat({_id:item.userSend._id, username: item.userSend.displayName})" style="cursor: pointer;">
+                                <div class="chatLeft"><img src="{{item.userSend.avatar}}" alt="{{item.userSend.displayName}}" class="userSend"></div><div class="chatRight">{{item.userSend.displayName}} <br><small><i class="fa fa-check" ng-show="item.status"></i> {{item.msg}}</small></div>
+                                <span class="clearfix"></span>
+                              </a>
+                              <a ng-if="item.userSend._id===currentUser._id" ng-click="chat({_id:item.userRecive._id, username: item.userRecive.displayName})" style="cursor: pointer;">
+                                <div class="chatLeft"><img src="{{item.userRecive.avatar}}" alt="{{item.userRecive.displayName}}" class="userSend"></div><div class="chatRight">{{item.userRecive.displayName}} <br><small><i class="fa fa-check" ng-show="item.status && item.userSend._id!==currentUser._id"></i> {{item.msg}}</small></div>
+                                <span class="clearfix"></span>
+                              </a>
                           </li>
                         </ul>
                       </li>
@@ -195,7 +202,14 @@
                             <a href="javascript:void(0)">Chưa có tin nhắn nào cả.</a>
                           </li>
                           <li ng-show="listChat" ng-repeat="item in listChat|orderBy:['-creationDate']">
-                            <a ng-click="chat({_id:item.userSend._id, username: item.userSend.displayName})" style="cursor: pointer;"><img src="{{item.userSend.avatar}}" alt="{{item.userSend.displayName}}" class="userSend">{{item.userSend.displayName}}</a>
+                              <a ng-if="item.userSend._id!==currentUser._id" ng-click="chat({_id:item.userSend._id, username: item.userSend.displayName})" style="cursor: pointer;">
+                                <div class="chatLeft"><img src="{{item.userSend.avatar}}" alt="{{item.userSend.displayName}}" class="userSend"></div><div class="chatRight">{{item.userSend.displayName}} <br><small><i class="fa fa-check" ng-show="item.status"></i> {{item.msg}}</small></div>
+                                <span class="clearfix"></span>
+                              </a>
+                              <a ng-if="item.userSend._id===currentUser._id" ng-click="chat({_id:item.userRecive._id, username: item.userRecive.displayName})" style="cursor: pointer;">
+                                <div class="chatLeft"><img src="{{item.userRecive.avatar}}" alt="{{item.userRecive.displayName}}" class="userSend"></div><div class="chatRight">{{item.userRecive.displayName}} <br><small><i class="fa fa-check" ng-show="item.status && item.userSend._id!==currentUser._id"></i> {{item.msg}}</small></div>
+                                <span class="clearfix"></span>
+                              </a>
                           </li>
                         </ul>
                       </li>

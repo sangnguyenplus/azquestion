@@ -17,6 +17,7 @@ angular.module('MainCtrl',[])
 	         /*Thiết lập thời gian tương đối*/
 	         moment.locale('vi', {});
 	    });
+
 		$scope.fbLike="https://www.facebook.com/toiyeulaptrinhfanpage";
 		/*Lấy đường dẫn hiện tại để tiến hành hightlight menu.*/
 		 $scope.getClass = function (path) {
@@ -148,29 +149,6 @@ angular.module('MainCtrl',[])
 		});
 
 
-}])
-.controller('SmileController',['$scope','$http', function($scope, $http) {
-	$scope.people=[];
-    $http.get('/api/people').success(function(data){
-        angular.forEach(data, function(item){
-            $scope.people.push({label: item.displayName});
-        });
-    })
-    .error(function(){
-        console.log('error');
-    });
-    $scope.macros = {
-    '0_o' : '![img](/images/icon/O_o.png)',
-    ':((' : '![img](/images/icon/cry.png)',
-    ':-D' : '![img](/images/icon/biggrin.png)',
-    ':D' : '![img](/images/icon/biggrin.png)',
-    ':))' : '![img](/images/icon/roflmao.png)',
-    ':))' : '![img](/images/icon/roflmao.png)',
-    '=))' : '![img](/images/icon/roflmao.png)',
-    ':)' : '![img](/images/icon/smile.png)',
-    ':-)' : '![img](/images/icon/smile.png)',
-    ':=)' : '![img](/images/icon/smile.png)',
-    };
 }])
 .controller('ReportController',['$scope','$http', function($scope, $http) {
 	$scope.currentPage = 1;
