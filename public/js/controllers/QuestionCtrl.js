@@ -4,6 +4,12 @@ angular.module('QuestionCtrl',[])
     function($scope,$cookieStore,$rootScope,$location,$state,$http,$q,$stateParams, flash,$modal,appAlert,Answer, Question, socket,Notifi) {
         $scope.formData = {};
         $scope.FullPath=$location.absUrl();
+
+        // Gợi ý câu hỏi
+        $scope.showForm = function(){
+            $('.listqf').val($scope.formData.title);
+            $('#myModal2').modal('show');  
+        };
         /*Khi form nhấn submit thì sẽ gửi giữ liệu tới api/questions*/
         $scope.createQuestion = function() {
                 $scope.Proccess=true;
@@ -74,6 +80,7 @@ angular.module('QuestionCtrl',[])
                 Question.delete(id)
                     /*Nếu xóa thành công thì load lại dữ liệu*/
                     .success(function(data) {
+                        socket.emit('new question');
                             flash.success="Xóa câu hỏi thành công!";
                             $scope.listQuestion=data;
                             $scope.listAdminQuestion=data;
@@ -130,7 +137,9 @@ angular.module('QuestionCtrl',[])
                             {
                                 $http.get('api/question/detail/'+ id)
                                 .success(function(data){
-                                    Notifi.create({userRecive:data.userId._id,
+                                    if($cookieStore.get('currentUser')._id!=data.userId._id)
+                                    {
+                                        Notifi.create({userRecive:data.userId._id,
                                         userSend:$cookieStore.get('currentUser')._id,
                                         content:$cookieStore.get('currentUser').displayName+' đã thích câu hỏi '+data.title,
                                         questionId:id});
@@ -138,6 +147,8 @@ angular.module('QuestionCtrl',[])
                                         userReciveId:data.userId._id,
                                         userTitle:data.title,
                                         questionIds:id});
+                                    }
+                                    
                                 })
                                 .error(function(){
                                 console.log("error");

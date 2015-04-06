@@ -105,9 +105,6 @@ angular.module('TagCtrl',[])
     $scope.loadItems = function($query) {
         return DataAccess.searchTag('tags', $query);
     };
-   /* $scope.loadItems = function(query) {
-        return $http.get('/api/tag');
-      };*/
   var maxTags = 3;
 
   $scope.$watch('formData.tag.length', function(value) {

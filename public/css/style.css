@@ -388,3 +388,12 @@ a.q-tag a{font-size: 12px;}
 	.q-left-content{margin-left: 15px; }
 	footer .row{margin-left: 0; margin-right: 0}
 }
+.listqf
+{
+    width: 90%;
+    height: 90%;
+    padding: 5%;
+    border: none;
+    resize:none;
+    outline: none;
+}
