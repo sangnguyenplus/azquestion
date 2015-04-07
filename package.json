@@ -12,6 +12,7 @@
     "connect-multiparty": "^1.2.4",
     "cookie-parser": "~1.0.0",
     "cookie-session": "~1.0.2",
+    "cron": "^1.0.9",
     "crypto": "0.0.3",
     "csurf": "~1.2.2",
     "debug": "2.1.0",

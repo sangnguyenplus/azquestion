@@ -5,10 +5,12 @@ angular.module('QuestionCtrl',[])
         $scope.formData = {};
         $scope.FullPath=$location.absUrl();
 
-        // Gợi ý câu hỏi
-        $scope.showForm = function(){
-            $('.listqf').val($scope.formData.title);
-            $('#myModal2').modal('show');  
+        $scope.showSuggest = function(){
+            if($scope.formData.title!=null){
+                appAlert.confirm({title:"Câu hỏi gợi ý từ hệ thống",message:"Đây là những câu hỏi liên quan tới chủ đề của bạn!", post: $scope.formData.title },function(isOk){
+
+                });
+            }
         };
         /*Khi form nhấn submit thì sẽ gửi giữ liệu tới api/questions*/
         $scope.createQuestion = function() {

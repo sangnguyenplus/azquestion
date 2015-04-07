@@ -8,6 +8,17 @@ var system = require('./system');
 var chat = require('./chat');
 var notifi = require('./notifi');
 var report = require('./report');
+/*var CronJob = require('cron').CronJob;
+try {
+   new CronJob('00 13 17 * * * *', function() {
+   console.log('You will see this message every 17:06 in Vietnam');
+  }, function () {
+  },
+  true,
+  'Asia/Ho_Chi_Minh'
+)} catch(ex) {
+    console.log("cron pattern not valid");
+}*/
 
 
 

@@ -5,7 +5,8 @@
 	</div>
 	<div class="modal-body">
 
-		<div class="alert alert-warning"><span class="fa fa-warning"></span> {{data.message}}</div>
+		<div class="alert alert-warning" ng-if="!data.post"><span class="fa fa-warning"></span> {{data.message}}</div>
+		<div class="alert alert-success" ng-if="data.post">{{data.post}}</div>
 
 	</div>
 	<div class="modal-footer ">

@@ -2,7 +2,7 @@
   <form name="form" ng-submit="createQuestion()" novalidate>
     <div class="row">
       <div class="form-group col-md-6">
-        <input type="text" id="title" class="form-control" ng-blur="showForm()" ng-model="formData.title" placeholder="Tiêu đề câu hỏi" required="required"  name="title" ng-maxlength="120">
+        <input type="text" id="title" class="form-control" ng-blur="showSuggest()" ng-model="formData.title" placeholder="Tiêu đề câu hỏi" required="required"  name="title" ng-maxlength="120">
       </div>
       <div class="form-group col-md-6" ng-controller="AutocompleteTagController">
         <tags-input ng-model="formData.tag" display-property="tagName" max-tags="3" placeholder="{{placeholder}}" add-from-autocomplete-only="true" replace-spaces-with-dashes="false" min-length="1" enforce-max-tags>
@@ -49,21 +49,3 @@
     </div>
   </div>
   <!-- / Modal help -->
-
-  <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Đóng</span></button>
-          <h4 class="modal-title" id="myModalLabel">Gợi ý câu trả lời cho bạn?</h4>
-        </div>
-        <div class="modal-body" ng-controller="QuestionController">
-          <textarea name="" class="listqf" readonly="true"></textarea>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-submit" data-dismiss="modal">OK</button>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- / Modal list question -->
