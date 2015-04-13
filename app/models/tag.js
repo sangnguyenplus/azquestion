@@ -13,6 +13,5 @@ var schema = mongoose.Schema({
 schema.statics.getQuestionByTag = function (id, callback) {
   return this.model('QuestionTag').find({ tagId: id }, callback);
 }
-
 // tạo model cho Tag và export vào app
 module.exports = mongoose.model('Tag', schema);

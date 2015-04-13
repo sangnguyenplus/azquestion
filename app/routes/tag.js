@@ -43,6 +43,14 @@ module.exports = function (app, passport) {
 			res.json(tag);
 		});
 	});
+	app.get('/api/tag/getTagByName/:tag_name', function(req, res){
+		var name= req.params.tag_name;
+		Tag.find({tagName:name}).exec(function(err, tag){
+			if(err)
+				res.send(err);
+			res.json(tag);
+		});
+	});
 	//Lấy toàn bộ tag
 	app.get('/api/tag',function(req, res) {
         Tag.find({}).sort({created_at: -1}).exec(function(err, tags){

@@ -34,6 +34,17 @@ module.exports = function (app, passport) {
 			res.json(questions);
         });
 	});
+	// Search Title
+	app.get('/api/title/search/:title',function(req,res)
+	{
+		// var title = new RegExp('/+'+req.params.title+'+/', 'i');
+		Question.find({ title : { $regex:req.params.title,$options:'i'} }).exec(function(err,questions)
+		{
+			if(err)
+				res.send(err)
+			res.json(questions);
+		});
+	});
 	app.get('/api/question/count', function(req, res) {
         Question.count(function(err, question){
         	if (err)

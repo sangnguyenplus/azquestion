@@ -1,30 +1,17 @@
-	<div ng-controller="SuggestController">
-		<div class="modal-header">
-	   Câu hỏi gợi ý từ hệ thống
-	   <button type="button" class="close hidden-xs"><span aria-hidden="true"><i class="fa fa-times"></i></span><span class="sr-only">Phóng to</span></button>
+<div class="modal-content">
+	<div class="modal-header">
+		<button type="button" class="close" ng-click="cancel()" aria-hidden="true">×</button>
+		<h4 class="modal-title custom_align" id="Heading">{{data.title}}</h4>
 	</div>
-	<div class="modal-body chat-modal">
-	    <ul class="well well-sm chat-content" scroll-glue>
-	    	<li class="message" ng-repeat="m in msg">
-	    	<div ng-class="{sendUser: m.userSend.displayName!=user.username}">
-	    		<img src="{{m.userSend.avatar}}" class="userAvatar" alt="{{m.userSend.displayName}}">
-	    		<span class="messageBody"><span ng-bind-html="m.msg | emoticons:{linkTarget:'_blank'}"></span> <p class="text-right"><i><small class="send_date">{{m.creationDate | fromNow}}</small></i></p></span>
-	    	</div>
-	    	</li>
-	    <p>&nbsp;</p>
-		</ul>
+	<div class="modal-body">
+
+		<div class="alert alert-warning" ng-if="!data.post"><span class="fa fa-warning"></span> {{data.message}}</div>
+		<div class="alert alert-success" ng-repeat="value in data.post | limitTo:5">{{value.title}}</div>
+
 	</div>
-	<div class="modal-footer">
-	<!-- <form name="form" class="form-horizontal" method="post" novalidate> -->
-		<div class="input-group">
-			<input type="text" placeholder="Nhập tin nhắn ở đây, nhấn enter để gửi" ng-model="formData.msg" name="chat-message" class="form-control inputMessage" />
-			<input type="hidden" ng-model="formData.userRecive">
-			<input type="hidden" id="userRecive" value="{{user.username}}">
-			<span class="input-group-btn" style="border:none !important;">
-				<button class="btn btn-submit chat-message-send-btn" type="button">Gửi đi</button>
-				<button class="btn btn-warning chat-close-btn"  ng-click="cancel()">Đóng lại</button>
-			</span>
-		</div>
-	<!-- </form> -->
+	<div class="modal-footer ">
+		<button type="button" class="btn btn-warning" ng-click="ok()" ><span class="fa fa-check-circle-o"></span> Đồng ý</button>
+		<button type="button" class="btn btn-warning" ng-click="cancel()" ><span class="fa fa-times-circle-o"></span> Hủy</button>
 	</div>
-	</div>
+</div>
+<!-- /.modal-content -->

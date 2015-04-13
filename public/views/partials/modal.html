@@ -1,8 +1,8 @@
 <div class="show-form create_question_form" ng-controller="QuestionController">
-  <form name="form" ng-submit="createQuestion()" novalidate>
+  <form name="form" ng-submit="showSuggest()" novalidate>
     <div class="row">
       <div class="form-group col-md-6">
-        <input type="text" id="title" class="form-control" ng-blur="showSuggest()" ng-model="formData.title" placeholder="Tiêu đề câu hỏi" required="required"  name="title" ng-maxlength="120">
+        <input type="text" id="title" class="form-control" ng-model="formData.title" placeholder="Tiêu đề câu hỏi" required="required"  name="title" ng-maxlength="120">
       </div>
       <div class="form-group col-md-6" ng-controller="AutocompleteTagController">
         <tags-input ng-model="formData.tag" display-property="tagName" max-tags="3" placeholder="{{placeholder}}" add-from-autocomplete-only="true" replace-spaces-with-dashes="false" min-length="1" enforce-max-tags>

@@ -22,7 +22,7 @@ angular.module('appServices', [])
         return deferred.promise;
     };
 }])
-.service('appAlert',['$modal', function($modal) {
+.service('appAlert',['$modal','$http', function($modal,$http) {
     /*Cau truc data
     {
     tieuDe:"",
@@ -54,6 +54,28 @@ angular.module('appServices', [])
         /*begin modal*/
         var modalInstance = $modal.open({
             templateUrl: '/views/modal/confirm.html',
+            controller: 'modal.confirm',
+            backdrop:'static',
+            /*scope:$scope,*/
+            resolve: {
+                data: function () {
+                    return data;
+                }
+            }
+        });
+        modalInstance.result.then(function () {
+            return callback(true);
+        }, function () {
+            return callback(false);
+        });
+        /*end modal*/
+    };
+    // Suggest Question
+    this.suggest=function(data,callback)
+    {
+        /*begin modal*/
+        var modalInstance = $modal.open({
+            templateUrl: '/views/modal/suggest.html',
             controller: 'modal.confirm',
             backdrop:'static',
             /*scope:$scope,*/
