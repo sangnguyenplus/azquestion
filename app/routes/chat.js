@@ -53,7 +53,7 @@ module.exports = function (app, passport) {
 	app.get('/api/chat/list/:userRecive', function(req, res){
 		var id=req.params.userRecive;
         Chat.aggregate(
-            {$group: {_id : "$userRecive", userRecive: {$last: '$userRecive'},msg: { $last: "$msg" }, userSend: { $last: "$userSend" },status: { $last: "$status" }}},
+            {$group: {_id : (parseInt('$userRecive')*parseInt('$userSend')), userRecive: {$last: '$userRecive'},msg: { $last: "$msg" }, userSend: { $last: "$userSend" },status: { $last: "$status" }}},
         	{$project: {_id : 0,userRecive : 1, userSend : 1, msg: 1, status: 1}},
         	{$match: {$or: [{"userRecive" : {$eq: new ObjectId(id)}}, {"userSend": {$eq: new ObjectId(id)}}] } },
         	 function(err, list){

@@ -9,7 +9,7 @@ angular.module('TagCtrl',[])
         });
     $scope.currentPage = 1; /*//current page*/
     $scope.maxSize = 5; /*//pagination max size*/
-    $scope.entryLimit = 10; /*//max rows for data table*/
+    $scope.entryLimit = 8; /*//max rows for data table*/
     /*Biến lưu trữ dữ liệu form*/
 	$scope.formData = {};
 

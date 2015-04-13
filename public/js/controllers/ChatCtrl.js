@@ -260,7 +260,7 @@ angular.module('ChatCtrl',[])
       {
         Chat.getList($cookieStore.get('currentUser')._id)
             .success(function(data){
-              $scope.listChat=data;
+              $rootScope.listChat=data;
             })
             .error(function() {
               console.log('Error');

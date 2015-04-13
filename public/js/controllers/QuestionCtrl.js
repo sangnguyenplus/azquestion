@@ -73,11 +73,11 @@ angular.module('QuestionCtrl',[])
                     // List order answer count
                     
                 if($scope.formData.title!=null){
-                appAlert.suggest({title:"Câu hỏi gợi ý từ hệ thống",
-                    message:"Đây là những câu hỏi liên quan tới chủ đề của bạn!", 
-                    post: listFinal },function(isOk){
-                    });
-            }
+                    appAlert.suggest({title:"Câu hỏi gợi ý từ hệ thống",
+                        message:"Đây là những câu hỏi liên quan tới chủ đề của bạn!", 
+                        post: listFinal },function(isOk){
+                        });
+                }
         };
         /*Khi form nhấn submit thì sẽ gửi giữ liệu tới api/questions*/
         $scope.createQuestion = function() {
