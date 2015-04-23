@@ -37,8 +37,8 @@ module.exports = function (app, passport) {
 	// Search Title
 	app.get('/api/title/search/:title',function(req,res)
 	{
-		// var title = new RegExp('/+'+req.params.title+'+/', 'i');
-		Question.find({ title : { $regex:req.params.title,$options:'i'} }).exec(function(err,questions)
+		var title=req.params.title;
+		Question.find({ $text :{"$search":title}},{score:{$meta:"textScore"}}).sort({score:{$meta:"textScore"}}).exec(function(err,questions)
 		{
 			if(err)
 				res.send(err)

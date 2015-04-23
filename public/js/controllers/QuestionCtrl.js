@@ -6,85 +6,34 @@ angular.module('QuestionCtrl',[])
         $scope.FullPath=$location.absUrl();
         // Suggest Question
         $scope.showSuggest = function(){
+                // Suggest Title
+                tag=$scope.formData.tag;
                 listFinal=[];
-                // Search Title
-                var title=$scope.formData.title.split(/[ ,.]+/);
-                listTitle=[];
-                for (var i = 0; i < title.length; i++) {
-                    $http.get('api/title/search/'+title[i]).success(function(list)
+                    // Title
+                    $http.get('api/title/search/'+$scope.formData.title).success(function(ltitle)
                     {
-                        for (var i = 0; i < list.length; i++) {
-                            if(listTitle.indexOf(list[i]) == -1)
-                            {
-                                listTitle.push(list[i]);
-                            }
-                        };
-                    });
-                };
-                // Search Tag
-                    listTag=[];
-                    tag=[];
-                    for (var i = 0; i < $scope.formData.tag.length; i++) {
-                        tag.push($scope.formData.tag[i]);
-                    }
-                    for (var i = 0; i < tag.length; i++) {
-                        $http.get('api/tag/getTagByName/'+tag[i].tagName).success(function(data)
-                        {
-                            $http.get('api/getQuestionByTag/' + data[0]._id).success(function(listt)
-                            {
-                                for (var i = 0; i < listt.length; i++) {
-                                    if(listTag.indexOf(listt[i])==-1)
-                                    {
-                                        listTag.push(listt[i]);
-                                    }
-                                };
-                            });
-                        });
-                    }
-                    // Finish List when Search
-                    listSearch=[];
-                    if(listTag[0]==null)
-                    {
-                        listSearch=listTitle;
-                    }
-                    else
-                    {
-                        for (var i = 0; i < listTag.length; i++) {
-                            if(listTitle.indexOf(listTag.questionId) > -1)
-                                listSearch.push(listTag.questionId);
-                        };
-                        listSearch.push(listTitle);
-                    }
-                    // List about answer right
-                    listAnswer=[];
-                    for (var i = 0; i < listSearch.length; i++) {
-                        if(listSearch[i].isResolved==true)
-                            listAnswer.push(listSearch[i]);
-                    };
-                    if(listAnswer[0]==null)
-                    {
-                        listFinal=listSearch;
-                    }
-                    else
-                    {
-                        listFinal.push(listAnswer);
-                        listFinal.push(listSearch);
-                    }
-                    // List order answer count
-                    
-                if($scope.formData.title!=null){
-                    appAlert.suggest({title:"Câu hỏi gợi ý từ hệ thống",
-                        message:"Đây là những câu hỏi liên quan tới chủ đề của bạn!", 
-                        post: listFinal },function(isOk){
-                        });
-                }
+                        for (var i = 0; i < ltitle.length; i++) {
+                            if(ltitle[i].isResolved==true)
+                                if(listFinal.indexOf(ltitle[i])==-1)
+                                    listFinal.push(ltitle[i]);
+                        }
+                        for (var i = 0; i < ltitle.length; i++) {
+                                if(listFinal.indexOf(ltitle[i])==-1)
+                                    listFinal.push(ltitle[i]);
+                        }
+                    });  
+                $('.show-form').fadeOut(500);
+                $rootScope.suggestTag=$scope.formData.tag;
+                $rootScope.suggestTitle=$scope.formData.title;
+                $rootScope.suggestContent=$scope.formData.content;
+                $rootScope.listSuggest=listFinal;
+                $state.go('cau-hoi-goi-y');
         };
+
         /*Khi form nhấn submit thì sẽ gửi giữ liệu tới api/questions*/
         $scope.createQuestion = function() {
                 $scope.Proccess=true;
-                /*Kiểm tra dữ liệu rỗng nếu form rỗng thì không làm gì cả*/
-                if (!$.isEmptyObject($scope.formData)) {
-                        Question.create($scope.formData)
+                        Question.create({title:$scope.suggestTitle, content:$scope.suggestContent, tag:$scope.suggestTag})
                                 .success(function(data) {
                                         $scope.formData = {};
                                         $scope.form.$setPristine();
@@ -100,11 +49,6 @@ angular.module('QuestionCtrl',[])
                                         }
                                         socket.emit('new question');
                                 });
-                }
-                else{
-                        flash.error="Bạn phải điền đầy đủ nội dung";
-                        $scope.Proccess=false;
-                }
         };
         $scope.upload=function () {
             /*begin modal*/

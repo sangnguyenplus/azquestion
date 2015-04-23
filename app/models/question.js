@@ -26,7 +26,6 @@ schema.statics.findTags = function (id, callback) {
 }
 
 schema.pre('save', function(next) {
-  console.log('A new question "%s" was inserted', this.title);
   next();
 });
 
