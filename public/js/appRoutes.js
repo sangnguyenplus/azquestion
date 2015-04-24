@@ -243,14 +243,6 @@ angular.module('appRoutes',[]).config(['$stateProvider', '$urlRouterProvider','$
       	title: 'Quản lý vi phạm',
       	access: { requiredLogin: false }
 	})
-	// Show Suggest
-	.state('cau-hoi-goi-y',{
-		url:"/suggest-questions",
-		templateUrl:'views/private/suggest.html',
-		controller: 'QuestionController',
-		title: 'Câu hỏi gợi ý',
-		access: {requiredLogin:false}
-	})
 	/*===============404 NOT FOUND================*/
 	.state('404', {
 		url: "/404.html",

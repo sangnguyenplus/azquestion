@@ -1,5 +1,7 @@
 <div class="show-form create_question_form" ng-controller="QuestionController">
-  <form name="form" ng-submit="showSuggest()" novalidate>
+  <div class="showContent" ng-click="toogleContent()"><p>Câu hỏi đang được soạn. Nhấn vào để tiếp tục</p></div>
+  <button class="toogleContent" ng-click="toogleContent()"><i class="fa fa-chevron-down"></i></button>
+  <form class="createForm" name="form" ng-submit="showSuggest()" novalidate>
     <div class="row">
       <div class="form-group col-md-6">
         <input type="text" id="title" class="form-control" ng-model="formData.title" placeholder="Tiêu đề câu hỏi" required="required"  name="title" ng-maxlength="120">
@@ -27,6 +29,41 @@
     <span class="btn btn-danger" ng-click="closeForm()"><i class="fa fa-times"></i> Hủy bỏ</span><br>
     <div class="term-texts">
       <p>Bạn nên đọc kỹ <a ui-sref="policy" target="_blank">Quy định & Nội quy</a> của website trước khi đăng bài. Bạn phải chịu hoàn toàn trách nhiệm về nội dung đăng tải trên website.</p>
+    </div>
+  </form>
+  <!-- Suggest -->
+  <div class="loading suggest"><svg class="spinner" width="65px" height="65px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+   <circle class="path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30"></circle>
+</svg>
+ <p>Hệ thống đang xử lý</p>
+  </div>
+  <form class="suggestForm" ng-submit="createQuestion()" novalidate ng-show="suggestTitle!=null">
+    <div class="row">
+        <div class="col-md-6 col-sm-12 col-xs-12">
+        <div>
+          <h3 class="title" ng-bind="suggestTitle"></h3>
+          <div marked="suggestContent" ng-bind="suggestContent" class="suggestContent"></div>
+          <ul class="question-tags" ng-repeat="tag in suggestTag">
+           <li><a class="q-tag" style="font-size:13px;"><i class="fa fa-tags"></i> <span ng-bind="tag.tagName"></span></a></li>
+        </ul>
+        </div>
+        </div>
+        <div class="col-md-6 col-sm-12 col-xs-12">
+        <div class="suggestQuestion">
+          <h3 class="title">Câu hỏi liên quan hiện có trong hệ thống</h3>
+          <ul ng-repeat="value in listSuggest | limitTo:5" ng-if="value.title!=null">
+            <li><a ng-bind="value.title"></a></li>
+          </ul> 
+          </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="term-texts col-xs-12">
+          <p>Bạn hãy chắc chắn rằng câu hỏi của bạn là duy nhất.</p>
+        </div>
+        <div class="suggestButton col-xs-12">
+          <button class="btn btn-submit" type="submit"><i class="fa fa-check"></i> Tiếp tục đăng câu hỏi</button>
+          <span class="btn btn-danger" ng-click="closeForm()"><i class="fa fa-times"></i> Hủy bỏ</span>
+        </div>
     </div>
   </form>
 </div>

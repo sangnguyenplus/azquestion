@@ -1,6 +1,9 @@
 <div class="text-center" style="padding-top: 80px; min-height: 700px; background-color: #fff;" ng-show="loading">
-  <img src="images/loading.gif" alt="Đang tải dữ liệu">
-  <p>Đang tải dữ liệu</p>
+  <div class="loading page"><svg class="spinner" width="65px" height="65px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+   <circle class="path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30"></circle>
+</svg>
+<p>Đang tải dữ liệu</p>
+  </div>
 </div>
 <div class="home-content" ng-hide="loading" ng-controller="QuestionController">
       <div class="main-questions-list">

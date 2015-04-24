@@ -48,10 +48,12 @@ angular.module('MainCtrl',[])
 		$scope.showForm = function(type){
 			$http.get('/loggedin').success(function(data){
 	    		if(data!=='0'){
-					$('.show-form.'+type).fadeIn(500);
+					$('.show-form.'+type).show();
+					$('.show-form .createForm').show();
 				}
 				else{
 					flash.error='Bạn cần đăng nhập để thực hiện hành động này !';
+					$state.go('login');
 				}
 			});
 		};

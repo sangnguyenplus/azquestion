@@ -1,10 +1,9 @@
 angular.module('QuestionCtrl',[])
 
-.controller('QuestionController',['$scope','$cookieStore','$rootScope','$location','$state','$http','$q','$stateParams', 'flash','$modal','appAlert','Answer', 'Question','socket','Notifi',
-    function($scope,$cookieStore,$rootScope,$location,$state,$http,$q,$stateParams, flash,$modal,appAlert,Answer, Question, socket,Notifi) {
+.controller('QuestionController',['$timeout','$scope','$cookieStore','$rootScope','$location','$state','$http','$q','$stateParams', 'flash','$modal','appAlert','Answer', 'Question','socket','Notifi',
+    function($timeout,$scope,$cookieStore,$rootScope,$location,$state,$http,$q,$stateParams, flash,$modal,appAlert,Answer, Question, socket,Notifi) {
         $scope.formData = {};
         $scope.FullPath=$location.absUrl();
-        // Suggest Question
         $scope.showSuggest = function(){
                 // Suggest Title
                 tag=$scope.formData.tag;
@@ -22,14 +21,54 @@ angular.module('QuestionCtrl',[])
                                     listFinal.push(ltitle[i]);
                         }
                     });  
-                $('.show-form').fadeOut(500);
-                $rootScope.suggestTag=$scope.formData.tag;
+                $('.createForm').fadeOut(500);
+                $('.loading.suggest').fadeIn(500);
+                $timeout(function()
+                {
+                    $rootScope.suggestTag=$scope.formData.tag;
                 $rootScope.suggestTitle=$scope.formData.title;
                 $rootScope.suggestContent=$scope.formData.content;
                 $rootScope.listSuggest=listFinal;
-                $state.go('cau-hoi-goi-y');
+                $('.loading.suggest').fadeOut();
+                },1000);
+                
         };
+        // Toogle Content
+        $scope.toogleContent=function()
+        {
+            if($scope.formData.content==null)
+            {
+                $('.show-form').fadeOut(500);
+            }
+            else
+            {
+                if($('.toogleContent i').hasClass('fa-chevron-down'))
+                {
+                    $('.show-form').css({
+                        'height':'40px',
+                        'padding':'0'
+                    }
 
+                        );
+                    $('.show-form .createForm').hide();
+                    $('.showContent').show();
+                }
+                else
+                {
+                    $('.show-form').css({
+                        'height':'477px',
+                        'padding':'30px 20px 20px' 
+                    }
+                    );
+                $('.show-form .createForm').fadeIn(200);
+                $('.showContent').hide();
+                }
+                $('.toogleContent i').toggleClass('fa-chevron-down');
+                $('.toogleContent i').toggleClass('fa-chevron-up');    
+            }
+            
+
+        };
         /*Khi form nhấn submit thì sẽ gửi giữ liệu tới api/questions*/
         $scope.createQuestion = function() {
                 $scope.Proccess=true;
@@ -130,6 +169,14 @@ angular.module('QuestionCtrl',[])
             appAlert.confirm({title:"Xác nhận hủy",message:"Bạn chắc chắn muốn hủy đăng câu hỏi này ?"},function(isOk){
             if(isOk){
                 $('.show-form').fadeOut(500);
+                $rootScope.suggestTag=null;
+                $rootScope.suggestTitle=null;
+                $rootScope.suggestContent=null;
+
+                $('.createForm').show();
+                $scope.formData.title=null;
+                $scope.formData.tag=null;
+                $scope.formData.content=null;
             }
             });
         };
