@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 azquestion
 ==========
@@ -43,3 +44,7 @@ server {
         return 301 $scheme://azquestion.com$request_uri;
 }
 ```
+=======
+# azquestion
+Đồ án chuyên ngành 
+>>>>>>> eb612d8413ac2bf0e43e7296f18f74c5a82e4bfe
