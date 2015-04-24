@@ -16,6 +16,13 @@ angular.module('MainCtrl',[])
 	            });
 	         /*Thiết lập thời gian tương đối*/
 	         moment.locale('vi', {});
+	         $('.show-form').resizable({
+				    handles: 'n',
+				    animateDuration: "fast",
+				    //alsoResize: "#mirror, .preview",
+				    minHeight: 350,
+				    maxHeight: 555
+				});
 	    });
 
 		$scope.fbLike="https://www.facebook.com/toiyeulaptrinhfanpage";

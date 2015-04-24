@@ -229,7 +229,7 @@ webkit-box-shadow: 2px 2px 4px rgba(0,0,0,0.5);}
      -o-transition: all .24s ease;
         transition: all .24s ease;
   position:relative;-webkit-touch-callout: none;-webkit-user-select: none;-khtml-user-select: none;
-  -moz-user-select: none;-ms-user-select: none;user-select: none;position: fixed;bottom: 0;right: 0;
+  -moz-user-select: none;-ms-user-select: none;user-select: none;position: fixed !important ;bottom: 0 !important;right: 0; top: auto !important;
   width: 100%;background: #e0e0e0;height: 477px;z-index: 99;padding: 20px;display:none;opacity: 0.98;
 padding-top: 30px;
 }
@@ -543,3 +543,10 @@ border: 1px solid #578824 !important;
   cursor: pointer;
   padding-left: 30px;
 }
+
+ .ui-resizable-n {
+  cursor: row-resize !important;
+  background: url(../images/resize.png)no-repeat center 3px;
+  top: 3px !important;
+}
+#mirror, .preview{width: 100% !important;}

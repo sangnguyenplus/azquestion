@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-
-azquestion
-==========
-
 Mạng xã hội hỏi đáp
 Demo: https://azquestion.com
 
@@ -43,8 +38,3 @@ server {
         # and 301 is best practice for tablet, phone, desktop and seo
         return 301 $scheme://azquestion.com$request_uri;
 }
-```
-=======
-# azquestion
-Đồ án chuyên ngành 
->>>>>>> eb612d8413ac2bf0e43e7296f18f74c5a82e4bfe

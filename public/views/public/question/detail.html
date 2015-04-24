@@ -1,7 +1,10 @@
 <div ng-controller="QuestionController">
 <div class="text-center" style="padding-top: 80px; min-height: 700px; background-color: #fff;" ng-show="loading">
-  <img src="images/loading.gif" alt="Đang tải dữ liệu">
+  <div class="loading page"><svg class="spinner" width="65px" height="65px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+     <circle class="path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30"></circle>
+  </svg>
   <p>Đang tải dữ liệu</p>
+  </div>
 </div>
    <div id="question_content" ng-hide="loading" class="row question-main-content question-item background-main-content" style="padding-top: 0;">
     <div class="inner_question_content">
@@ -155,6 +158,8 @@
    <!-- END QUESTION-MAIN-CONTENT -->
     <!-- Modal form Reply -->
       <div class="show-form create_answer_form">
+       <div class="showContent" ng-click="toogleContent()"><p>Câu trả lời đang được soạn. Nhấn vào để tiếp tục</p></div>
+        <button class="toogleContent" ng-click="toogleContent()"><i class="fa fa-chevron-down"></i></button>
         <form name="create_answer_form" ng-submit="createAnswer()" novalidate>
           <div class="row">
             <input type="hidden" ng-value="formAnswer.question_id">

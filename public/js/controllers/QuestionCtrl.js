@@ -52,6 +52,7 @@ angular.module('QuestionCtrl',[])
                         );
                     $('.show-form .createForm').hide();
                     $('.showContent').show();
+                    $('.ui-resizable-n').hide();
                 }
                 else
                 {
@@ -60,8 +61,9 @@ angular.module('QuestionCtrl',[])
                         'padding':'30px 20px 20px' 
                     }
                     );
-                $('.show-form .createForm').fadeIn(200);
-                $('.showContent').hide();
+                    $('.show-form .createForm').fadeIn(200);
+                    $('.showContent').hide();
+                    $('.ui-resizable-n').show();
                 }
                 $('.toogleContent i').toggleClass('fa-chevron-down');
                 $('.toogleContent i').toggleClass('fa-chevron-up');    
