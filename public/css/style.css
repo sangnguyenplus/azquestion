@@ -230,33 +230,11 @@ span.star i {color: #3498db;}
 /* S I G N U P  &  S I G N I N  F O R M  S T Y L E  */
 /* ---------------------------------------- */
 .social-login a{margin-right: 1%; margin-bottom: 10px;}
-.form-signup-wrapper ::-webkit-input-placeholder {color:    #000;}
-.form-signup-wrapper  :-moz-placeholder {color: #000;opacity:  1;}
-.form-signup-wrapper  ::-moz-placeholder {color: #000;opacity:  1;}
-.form-signup-wrapper  :-ms-input-placeholder {color: #000;}
 .intro-content-wrapper{ padding: 40px; border-radius: 10px;min-height: 606px;}
-.group-btn-intro{margin-left: -9px;}
-p.intro-name label.error,p.intro-password label.error{position: absolute;left: 0;top: 30px;color: red;font-size: 11px; font-family: 'RobotoBold'}
-p.intro-name input,p.intro-password input{width: 100%;background: none;box-shadow: none;border: none;border-bottom: 1px solid #000;padding: 10px 30px 5px 0;outline-style: none;color: #000; margin-bottom: 15px; border-top: none !important; border-left: none !important; border-right: none !important; }
-.your-password , .your-email, .your-name{position:relative;}
-.your-password i, .your-email i, .your-name i{position: absolute;right: 0;top: 0;color: #000;}
-.your-remember.clicked i {color: #000;}
-.your-remember, .your-fogot-pass{color: #000;font-size: 13px;margin-top:5px;display:block;-webkit-transition: all 0.5s ease;-moz-transition: all 0.5s ease;-o-transition: all 0.5s ease;-ms-transition: all 0.5s ease;transition: all 0.5s ease;}
-.your-remember i{margin-right:5px;}
-.your-remember:hover,
-.your-remember.clicked,
-.your-fogot-pass:hover{color: #1d9977;}
-.your-submit button{color: #000;float: right;-webkit-transition: all 0.5s ease;-moz-transition: all 0.5s ease;-o-transition: all 0.5s ease;-ms-transition: all 0.5s ease;transition: all 0.5s ease;cursor: pointer;}
-.your-submit button:hover {color:#000;border: 1px solid #f39c12;}
-.terms-intro{color: #000;font-size: 13px;margin-top:10px;}
-.social-login{margin-bottom: 20px;}
-.social-login h4{color: #000;padding-left: 5px;font-size: 13px;font-family: 'RobotoBold';border-left: 3px solid #f39c12;}
-
-.group-btn-intro span{display:inline-block;margin:0 20px;color: #000;}
-.to_register{color: #000;font-size: 13px;font-family: 'RobotoBold';text-transform:uppercase;border-left:3px solid transparent;padding-left:5px;-webkit-transition: all 0.5s ease;-moz-transition: all 0.5s ease;-o-transition: all 0.5s ease;-ms-transition: all 0.5s ease;transition: all 0.5s ease;}
-.to_register.active, .to_register:hover{color:#1d9977;border-color:#f39c12;}
+.terms-intro{color: #000;font-size: 13px;margin-top:10px;margin-left: 9px;}
+.intro-content-wrapper .title{color: #000;padding-left: 10px;font-size: 18px;font-family: 'RobotoBold';border-left: 3px solid #1d9977; text-transform: uppercase;}
+.intro-content-wrapper h4.title{font-size: 14px; margin-left: 10px;}
 #register,#login{width:100%;margin: 15px 0;-webkit-animation-name: fadeInLeft;-moz-animation-name: fadeInLeft;-ms-animation-name: fadeInLeft;-o-animation-name: fadeInLeft;animation-name: fadeInLeft;-webkit-animation-delay: .1s;-moz-animation-delay: .1s;-o-animation-delay: .1s;-ms-animation-delay: .1s;animation-delay: .1s;}
-
 .animate{-webkit-animation-duration: 0.5s;-webkit-animation-timing-function: ease;-webkit-animation-fill-mode: both;-moz-animation-duration: 0.5s;-moz-animation-timing-function: ease;-moz-animation-fill-mode: both;-o-animation-duration: 0.5s;-o-animation-timing-function: ease;-o-animation-fill-mode: both;-ms-animation-duration: 0.5s;-ms-animation-timing-function: ease;-ms-animation-fill-mode: both;animation-duration: 0.5s;animation-timing-function: ease;animation-fill-mode: both;}
 @-webkit-keyframes fadeInLeft {
 	0% {opacity: 0;-webkit-transform: translateX(-20px);}

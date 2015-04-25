@@ -6,24 +6,7 @@ tags-input .tags .tag-item{background: #16775c;border: 1px solid #16775c;}
 tags-input .tags.focused{border: 1px solid #16775c;box-shadow: none;}
 tags-input .tags .input{border: none !important;}
 
-input.ng-dirty{border-bottom: 1px solid yellow;}
-input.ng-invalid.ng-dirty{border: 1px solid red;}
-input.ng-valid.ng-dirty{border: 1px solid green;}
-input.ng-invalid-minlength.ng-dirty{border: 1px solid blue;}
-input.ng-invalid-maxlength.ng-dirty{border: 1px solid blue;}
-input.ng-dirty + label + i{color: yellow;}
-input.ng-invalid.ng-dirty + label +  i{color: red;}
-input.ng-valid.ng-dirty + label +  i{color:green;}
-input.ng-invalid.ng-dirty + label + label + i{color: red;}
-input.ng-valid.ng-dirty + label + label + i{color:green;}
-input.ng-invalid-minlength.ng-dirty + label + label +  label +  i{color:blue;}
-input.ng-invalid-maxlength.ng-dirty + label + label +  label +  i{color:blue;}
-input.ng-valid.ng-dirty + label + label +  label +  i{color:green;}
-
-input.ng-invalid.ng-dirty +span i{color: red;}
-input.ng-invalid.ng-dirty +span{border:1px solid red; border-left: none;}
-input.ng-valid.ng-dirty +span i{color: green;}
-input.ng-valid.ng-dirty +span{border:1px solid green; border-left: none;}
+md-input-container.md-default-theme .md-input{border-left: none; border-right: none; border-top: none;}
 
 .ui-view-container {position: relative;}
 [ui-view].ng-enter, [ui-view].ng-leave {position: absolute;left: 0;right: 0;-webkit-transition:all .5s ease-in-out;-moz-transition:all .5s ease-in-out;-o-transition:all .5s ease-in-out;transition:all .5s ease-in-out;}
@@ -445,3 +428,15 @@ border: 1px solid #578824 !important;
 #mirror, .preview{width: 100% !important;}
 md-progress-circular{margin: auto;}
 a{outline: none !important;}
+
+.tabsdemoDynamicHeight md-content {
+  background-color: transparent !important; }
+  .tabsdemoDynamicHeight md-content md-tabs {
+    background: #f6f6f6;
+    border: 1px solid #e1e1e1; }
+    .tabsdemoDynamicHeight md-content md-tabs md-tabs-canvas {
+      background: white; }
+.list-user-question li{padding: 15px 0; display: block;}
+.list-user-question li a{padding-left: 15px; color: #222; font-size: 14px; display: block;}
+
+.list-user-question li:nth-child(2n+1){background: #f7f7f7;}

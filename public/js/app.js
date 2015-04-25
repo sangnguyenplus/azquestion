@@ -16,6 +16,7 @@ var app=angular.module('AZQuestion', [
   'luegg.directives',
   'ngEmoticons',
   'ngMaterial',
+  'ngMessages',
   'appRoutes',
   'appDirectives',
   'appFilters',
