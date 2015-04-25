@@ -1,6 +1,9 @@
 Mạng xã hội hỏi đáp
 Demo: https://azquestion.com
 
+Material
+https://material.angularjs.org
+
 Lưu ý khi đưa file lên server:
 - Sửa cấu hình auth qua mạng xã hội config/auth.js
 - Sửa file gửi đường dẫn kích hoạt tài khoản app/routes/login.js

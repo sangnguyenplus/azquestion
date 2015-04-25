@@ -87,12 +87,14 @@ angular.module('appFilters', [])
 .filter('countByQuestion', function () {
   return function (items, question) {
     var number=0;
+    if(items){
       for (var i = 0; i < items.length; i++) {
         var item = items[i];
         if (item.questionId==question) {
           number++;
         }
     }
+  }
     return number;
   };
 })

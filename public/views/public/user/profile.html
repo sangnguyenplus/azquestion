@@ -26,8 +26,8 @@
      </div>
       <ul>
          <li class="name" > <span ng-bind="userInfo.displayName"></span> 
-          <i class="fa fa-circle status online" tooltip="Đang online" ng-if="listOnline|checkOnline: userInfo.userId.displayName"></i> 
-          <i class="fa fa-circle status offline" tooltip="Đang offline" ng-if="!(listOnline|checkOnline: userInfo.userId.displayName)"></i> </li>
+          <i class="fa fa-circle status online" tooltip="Đang online" ng-if="listOnline|checkOnline: userInfo.displayName"></i> 
+            <i class="fa fa-circle status offline" tooltip="Đang offline" ng-if="!(listOnline|checkOnline: userInfo.displayName)"></i> </li>
          <li class="location" ng-if="userInfo.location!=null"><i class="fa fa-map-marker"></i> <span ng-bind="userInfo.location"></span></li>
          <li class="location" ng-if="userInfo.location==null"><i class="fa fa-map-marker"></i> Chưa cập nhật</li>
          <li class="email"><i class="fa fa-envelope"></i> <span ng-bind="userInfo.email"></span></li>

@@ -15,6 +15,7 @@ var app=angular.module('AZQuestion', [
   'btford.socket-io',
   'luegg.directives',
   'ngEmoticons',
+  'ngMaterial',
   'appRoutes',
   'appDirectives',
   'appFilters',

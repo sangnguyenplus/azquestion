@@ -20,7 +20,7 @@ angular.module('QuestionCtrl',[])
                                 if(listFinal.indexOf(ltitle[i])==-1)
                                     listFinal.push(ltitle[i]);
                         }
-                    });  
+                    });
                 $('.createForm').fadeOut(500);
                 $('.loading.suggest').fadeIn(500);
                 $timeout(function()
@@ -31,7 +31,7 @@ angular.module('QuestionCtrl',[])
                 $rootScope.listSuggest=listFinal;
                 $('.loading.suggest').fadeOut();
                 },1000);
-                
+
         };
         // Toogle Content
         $scope.toogleContent=function()
@@ -58,7 +58,7 @@ angular.module('QuestionCtrl',[])
                 {
                     $('.show-form').css({
                         'height':'477px',
-                        'padding':'30px 20px 20px' 
+                        'padding':'30px 20px 20px'
                     }
                     );
                     $('.show-form .createForm').fadeIn(200);
@@ -66,9 +66,9 @@ angular.module('QuestionCtrl',[])
                     $('.ui-resizable-n').show();
                 }
                 $('.toogleContent i').toggleClass('fa-chevron-down');
-                $('.toogleContent i').toggleClass('fa-chevron-up');    
+                $('.toogleContent i').toggleClass('fa-chevron-up');
             }
-            
+
 
         };
         /*Khi form nhấn submit thì sẽ gửi giữ liệu tới api/questions*/
@@ -207,7 +207,7 @@ angular.module('QuestionCtrl',[])
                                         userTitle:data.title,
                                         questionIds:id});
                                     }
-                                    
+
                                 })
                                 .error(function(){
                                 console.log("error");
@@ -542,7 +542,7 @@ $scope.loading=true;
                                             }
                                             else
                                             {
-                                                
+
                                                 if($cookieStore.get('currentUser')._id != data.userId._id)
                                                 {
                                                     Notifi.create({userRecive:data.userId._id,
@@ -552,7 +552,7 @@ $scope.loading=true;
                                                     socket.emit('createAnswer',{userSendName:$cookieStore.get('currentUser').displayName,
                                                             userReciveId:data.userId._id,
                                                             userTitle:data.title,userQuestionId:data._id});
-                                                }          
+                                                }
                                                 else
                                                 {
                                                     if($cookieStore.get('currentUser')._id != item)
@@ -565,9 +565,9 @@ $scope.loading=true;
                                                             userReciveId:item,
                                                             userTitle:data.title,userQuestionId:data._id});
                                                 }
-                                                
+
                                             }
-                                                          
+
                                             }
                                         }
                                     });
