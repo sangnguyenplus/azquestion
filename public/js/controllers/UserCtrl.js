@@ -141,7 +141,7 @@ angular.module('UserCtrl',[])
           console.log('error');
         });
 }])
-.controller('ListUserController',['$scope', 'User', 'Badge', function($scope, User, Badge) {
+.controller('ListUserController',['$scope', 'User', 'Badge','$mdDialog', function($scope, User, Badge, $mdDialog) {
      /*Lấy toàn bộ thành viên*/
      $scope.loading=true;
      $scope.allUser=[];

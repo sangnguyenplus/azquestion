@@ -19,33 +19,28 @@
    </div>
 </div>
 <div class="main-user-list">
-   <ul id="main_users_list" class="row">
-      <li class="user-item col-md-4 col-xs-6" ng-repeat="u in allUser | filter:search:strict">
-         <span class="user-avatar">
-         <img ng-src="{{u.avatar}}" class="avatar" alt="{{u.displayName}}">
-         </span>
-         <div class="left-info">
-            <a ui-sref="profile({ id:u._id, slug: (u.displayName | friendlyUrl)+'.html' })"><span class="display_name" ng-bind="u.displayName"></span></a> 
-            <i class="fa fa-circle status online" tooltip="Đang online" ng-if="listOnline|checkOnline: u.displayName"></i> 
-            <i class="fa fa-circle status offline" tooltip="Đang offline" ng-if="!(listOnline|checkOnline: u.displayName)"></i> <br>
-            <span class="location" ng-if="u.location!=null">
-            <i class="fa fa-map-marker"></i> <span ng-bind="u.location"></span></span>
-             <span class="location" ng-if="u.location==null">
-            <i class="fa fa-map-marker"></i> Chưa rõ</span>
-            <div class="question-cat">
-               <div ng-show="{{u.role!='admin'}}">
-                  <strong ng-repeat="b in listBadge | getBadge: u.reputation">
-                     <span title="{{u.reputation}}" ng-bind="b.name" class="user-badge" style="background-color:{{b.color}};"></span>
-                  </strong>
-                  <span class="points"><span ng-bind="u.reputation"></span> Điểm </span>
-               </div>
-               <div ng-show="{{u.role=='admin'}}">
-                  <span  class="user-badge" style="background-color:#CA1C23;">Administrator</span>
-                  <span class="points"><span ng-bind="u.reputation"></span> Điểm </span>
-               </div>
-            </div>
+<md-list>
+  <md-list-item ng-repeat="u in allUser | filter:search:strict">
+    <img alt="{{ u.displayName }}" ng-src="{{ u.avatar }}" class="md-avatar" />
+    <p>
+      <a ui-sref="profile({ id:u._id, slug: (u.displayName | friendlyUrl)+'.html' })">{{ u.displayName }}</a> 
+      <i class="fa fa-circle status online" tooltip="Đang online" ng-if="listOnline|checkOnline: u.displayName"></i> 
+      <i class="fa fa-circle status offline" tooltip="Đang offline" ng-if="!(listOnline|checkOnline: u.displayName)"></i>
+      <div class="question-cat">
+         <div ng-show="{{u.role!='admin'}}">
+            <strong ng-repeat="b in listBadge | getBadge: u.reputation">
+               <span title="{{u.reputation}}" ng-bind="b.name" class="user-badge" style="background-color:{{b.color}};"></span>
+            </strong>
+            <span class="points"><span ng-bind="u.reputation"></span> Điểm </span>
          </div>
-      </li>
-   </ul>
+         <div ng-show="{{u.role=='admin'}}">
+            <span  class="user-badge" style="background-color:#CA1C23;">Administrator</span>
+            <span class="points"><span ng-bind="u.reputation"></span> Điểm </span>
+         </div>
+      </div>
+   </p>
+    <md-icon ng-if="u._id!=currentUser._id" md-svg-icon="message" ng-click="chat({_id:u._id, username: u.displayName})" aria-label="Open Chat" class="md-secondary md-hue-3" ng-class="{'md-primary': (listOnline|checkOnline: u.displayName)}"></md-icon>
+  </md-list-item>
+</md-list>
 </div>
 </div>

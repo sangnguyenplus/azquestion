@@ -23,13 +23,12 @@ angular.module('QuestionCtrl',[])
                     });
                 $('.createForm').fadeOut(500);
                 $('.loading.suggest').fadeIn(500);
-                $timeout(function()
-                {
+                $timeout(function(){
                     $rootScope.suggestTag=$scope.formData.tag;
-                $rootScope.suggestTitle=$scope.formData.title;
-                $rootScope.suggestContent=$scope.formData.content;
-                $rootScope.listSuggest=listFinal;
-                $('.loading.suggest').fadeOut();
+                    $rootScope.suggestTitle=$scope.formData.title;
+                    $rootScope.suggestContent=$scope.formData.content;
+                    $rootScope.listSuggest=listFinal;
+                    $('.loading.suggest').fadeOut();
                 },1000);
 
         };
@@ -74,22 +73,22 @@ angular.module('QuestionCtrl',[])
         /*Khi form nhấn submit thì sẽ gửi giữ liệu tới api/questions*/
         $scope.createQuestion = function() {
                 $scope.Proccess=true;
-                        Question.create({title:$scope.suggestTitle, content:$scope.suggestContent, tag:$scope.suggestTag})
-                                .success(function(data) {
-                                        $scope.formData = {};
-                                        $scope.form.$setPristine();
-                                        $scope.Proccess=false;
-                                        $('.show-form').fadeOut();
-                                        if(!data.status){
-                                            flash.success="Câu hỏi của bạn đã được gửi và đang chờ quản trị viên xét duyệt. Cám ơn bạn đã đăng bài.";
-                                            $state.go("home");
-                                        }
-                                        else{
-                                            flash.success="Đăng câu hỏi thành công!";
-                                            $location.path('/cau-hoi/chi-tiet/'+data._id+'/success');
-                                        }
-                                        socket.emit('new question');
-                                });
+                Question.create({title:$scope.suggestTitle, content:$scope.suggestContent, tag:$scope.suggestTag})
+                        .success(function(data) {
+                                $scope.formData = {};
+                                $scope.form.$setPristine();
+                                $scope.Proccess=false;
+                                $('.show-form').fadeOut();
+                                if(!data.status){
+                                    flash.success="Câu hỏi của bạn đã được gửi và đang chờ quản trị viên xét duyệt. Cám ơn bạn đã đăng bài.";
+                                    $state.go("home");
+                                }
+                                else{
+                                    flash.success="Đăng câu hỏi thành công!";
+                                    $location.path('/cau-hoi/chi-tiet/'+data._id+'/success');
+                                }
+                                socket.emit('new question');
+                        });
         };
         $scope.upload=function () {
             /*begin modal*/
@@ -185,193 +184,6 @@ angular.module('QuestionCtrl',[])
 
         $scope.listAllVote=[];
         $http.get('api/user/vote/all').success(function(all){$scope.listAllVote=all;}).error(function(){console.log('error');});
-        $scope.voteUp=function(id){
-        $http.get('/loggedin').success(function(isLogin){
-            if(isLogin!=='0'){
-                $http.get('api/question/vote_up/'+id)
-                    .success(function(data){
-                        if(parseInt(data)==1)
-                            flash.success="Bạn đã BỎ thích câu hỏi này!";
-                        else
-                            {
-                                $http.get('api/question/detail/'+ id)
-                                .success(function(data){
-                                    if($cookieStore.get('currentUser')._id!=data.userId._id)
-                                    {
-                                        Notifi.create({userRecive:data.userId._id,
-                                        userSend:$cookieStore.get('currentUser')._id,
-                                        content:$cookieStore.get('currentUser').displayName+' đã thích câu hỏi '+data.title,
-                                        questionId:id});
-                                    socket.emit('voteup',{userSendName:$cookieStore.get('currentUser').displayName,
-                                        userReciveId:data.userId._id,
-                                        userTitle:data.title,
-                                        questionIds:id});
-                                    }
-
-                                })
-                                .error(function(){
-                                console.log("error");
-                                });
-                                flash.success="Bạn đã thích câu hỏi này!";
-                            }
-                        Question.get()
-                            .success(function(question){
-                                $scope.listQuestion= question;
-                                $http.get('api/questiontag/getall').success(function(tag){
-                                    $scope.listTag=tag;
-                                })
-                                .error(function(){
-                                    console.log('error');
-                                });
-                            });
-                        $http.get('api/question/detail/'+ id)
-                            .success(function(data){
-                                $scope.questionDetail=data;
-                                $scope.formAnswer.question_id=data._id;
-                            })
-                            .error(function(){
-                            console.log("error");
-                        });
-                        $http.get('api/user/vote')
-                            .success(function(vote){
-                                $scope.listVote=vote;
-                            })
-                            .error(function() {
-                                console.log('error');
-                            });
-                        $http.get('api/user/vote/all').success(function(all){$scope.listAllVote=all;}).error(function(){console.log('error');});
-                    })
-                    .error(function(){
-                        console.log('error');
-                    });
-            }
-
-            else{
-                flash.error='Bạn cần đăng nhập để bình chọn !';
-            }
-        });
-    };
-    $scope.voteDown=function(id){
-        $http.get('/loggedin').success(function(data){
-            if(data!=='0'){
-                $http.get('api/question/vote_down/'+id)
-                    .success(function(data){
-                         if(parseInt(data)==1)
-                            flash.success="Bạn đã BỎ không thích câu hỏi này!";
-                        else
-                            flash.success="Bạn không thích câu hỏi này!";
-                        Question.get()
-                            .success(function(data){
-                                $scope.listQuestion= data;
-                                console.log(data);
-                                $http.get('api/questiontag/getall').success(function(data){
-                                    $scope.listTag=data;
-                                })
-                                .error(function(){
-                                    console.log('error');
-                                });
-                            });
-                        $http.get('api/question/detail/'+ id)
-                            .success(function(data){
-                                $scope.questionDetail=data;
-                                $scope.formAnswer.question_id=data._id;
-                            })
-                            .error(function(){
-                            console.log("error");
-                        });
-                        $http.get('api/user/vote')
-                            .success(function(vote){
-                                $scope.listVote=vote;
-                            })
-                            .error(function() {
-                                console.log('error');
-                            });
-                            $http.get('api/user/vote/all').success(function(all){$scope.listAllVote=all;}).error(function(){console.log('error');});
-                    })
-                    .error(function(){
-                        console.log('error');
-                    });
-            }
-            else{
-                flash.error='Bạn cần đăng nhập để bình chọn !';
-            }
-        });
-    };
-
-    $scope.listFavorite=[];
-    $scope.listVote=[];
-    if($rootScope.currentUser){
-        $http.get('api/user/favorite')
-        .success(function(data){
-            $scope.listFavorite=data;
-        })
-        .error(function() {
-            console.log('error');
-        });
-        $http.get('api/user/vote')
-        .success(function(vote){
-            $scope.listVote=vote;
-        })
-        .error(function(){
-            console.log('error');
-        });
-    }
-    $scope.listAllFavorite=[];
-    $http.get('api/user/favorite/all').success(function(all){$scope.listAllFavorite=all;}).error(function(){console.log('error');});
-    $scope.Favorite=function(id){
-        $http.get('/loggedin').success(function(data){
-            if(data!=='0'){
-                $http.get('api/question/favorite/'+id)
-                    .success(function(favorite){
-
-                        if(parseInt(favorite)==1)
-                            flash.success="Bỏ theo dõi thành công!";
-                        else
-                        {
-                            $http.get('api/question/detail/'+ id)
-                            .success(function(data){
-                                Notifi.create({userRecive:data.userId._id,
-                                    userSend:$cookieStore.get('currentUser')._id,
-                                    content:$cookieStore.get('currentUser').displayName+' đã theo dõi câu hỏi '+data.title,
-                                    questionId:id});
-                                socket.emit('Favorite',{userSendName:$cookieStore.get('currentUser').displayName,
-                                    userReciveId:data.userId._id,
-                                    userTitle:data.title,
-                                    questionIds:id});
-                            })
-                            .error(function(){
-                               console.log("error");
-                            });
-                            flash.success="Bạn đã theo dõi câu hỏi này!";
-                        }
-                        Question.get()
-                            .success(function(question){
-                                $scope.listQuestion= question;
-                                $http.get('api/questiontag/getall').success(function(tag){
-                                    $scope.listTag=tag;
-                                })
-                                .error(function(){
-                                    console.log('error');
-                                });
-                            });
-                        $http.get('api/user/favorite')
-                            .success(function(data){
-                                $scope.listFavorite=data;
-                            })
-                            .error(function() {
-                                console.log('error');
-                            });
-                        $http.get('api/user/favorite/all').success(function(all){$scope.listAllFavorite=all;}).error(function(){console.log('error');});
-                    })
-                    .error(function(){
-                        console.log('error');
-                    });
-            }
-            else{
-                flash.error='Bạn cần đăng nhập để bình chọn !';
-            }
-        });
-    };
     $scope.listAllAnswer=[];
     $http.get('api/answer').success(function(answer){$scope.listAllAnswer=answer;}).error(function(){console.log('error');});
 
@@ -453,8 +265,8 @@ angular.module('QuestionCtrl',[])
         });
 
 }])
-.controller('DetailQuestionController',['$scope','$cookieStore','$http', '$state','$stateParams','$location','flash', 'Question', 'Answer','$modal','appAlert','socket','Notifi',
-    function($scope,$cookieStore,$http, $state,$stateParams,$location,flash, Question, Answer,$modal,appAlert, socket,Notifi) {
+.controller('DetailQuestionController',['$scope','$rootScope','$cookieStore','$http', '$state','$stateParams','$location','flash', 'Question', 'Answer','$modal','appAlert','socket','Notifi',
+    function($scope, $rootScope,$cookieStore,$http, $state,$stateParams,$location,flash, Question, Answer,$modal,appAlert, socket,Notifi) {
 /*Chi tiết câu hỏi*/
 $scope.loading=true;
     $scope.formAnswer = {};
@@ -647,6 +459,193 @@ $scope.loading=true;
                     $scope.Proccess=false;
             }
         };
+        $scope.voteUp=function(id){
+        $http.get('/loggedin').success(function(data){
+            if(data!=='0'){
+                $http.get('api/question/vote_up/'+id)
+                    .success(function(data){
+                        if(parseInt(data)==1)
+                            flash.success="Bạn đã BỎ thích câu hỏi này!";
+                        else
+                            {
+                                $http.get('api/question/detail/'+ id)
+                                .success(function(data){
+                                    if($cookieStore.get('currentUser')._id!=data.userId._id)
+                                    {
+                                        Notifi.create({userRecive:data.userId._id,
+                                        userSend:$cookieStore.get('currentUser')._id,
+                                        content:$cookieStore.get('currentUser').displayName+' đã thích câu hỏi '+data.title,
+                                        questionId:id});
+                                    socket.emit('voteup',{userSendName:$cookieStore.get('currentUser').displayName,
+                                        userReciveId:data.userId._id,
+                                        userTitle:data.title,
+                                        questionIds:id});
+                                    }
+
+                                })
+                                .error(function(){
+                                console.log("error");
+                                });
+                                flash.success="Bạn đã thích câu hỏi này!";
+                            }
+                        Question.get()
+                            .success(function(question){
+                                $scope.listQuestion= question;
+                                $http.get('api/questiontag/getall').success(function(tag){
+                                    $scope.listTag=tag;
+                                })
+                                .error(function(){
+                                    console.log('error');
+                                });
+                            });
+                        $http.get('api/question/detail/'+ id)
+                            .success(function(data){
+                                $scope.questionDetail=data;
+                                $scope.formAnswer.question_id=data._id;
+                            })
+                            .error(function(){
+                            console.log("error");
+                        });
+                        $http.get('api/user/vote')
+                            .success(function(vote){
+                                $scope.listVote=vote;
+                            })
+                            .error(function() {
+                                console.log('error');
+                            });
+                        $http.get('api/user/vote/all').success(function(all){$scope.listAllVote=all;}).error(function(){console.log('error');});
+                    })
+                    .error(function(){
+                        console.log('error');
+                    });
+            }
+
+            else{
+                flash.error='Bạn cần đăng nhập để bình chọn !';
+            }
+        });
+    };
+    $scope.voteDown=function(id){
+        $http.get('/loggedin').success(function(data){
+            if(data!=='0'){
+                $http.get('api/question/vote_down/'+id)
+                    .success(function(data){
+                         if(parseInt(data)==1)
+                            flash.success="Bạn đã BỎ không thích câu hỏi này!";
+                        else
+                            flash.success="Bạn không thích câu hỏi này!";
+                        Question.get()
+                            .success(function(data){
+                                $scope.listQuestion= data;
+                                console.log(data);
+                                $http.get('api/questiontag/getall').success(function(data){
+                                    $scope.listTag=data;
+                                })
+                                .error(function(){
+                                    console.log('error');
+                                });
+                            });
+                        $http.get('api/question/detail/'+ id)
+                            .success(function(data){
+                                $scope.questionDetail=data;
+                                $scope.formAnswer.question_id=data._id;
+                            })
+                            .error(function(){
+                            console.log("error");
+                        });
+                        $http.get('api/user/vote')
+                            .success(function(vote){
+                                $scope.listVote=vote;
+                            })
+                            .error(function() {
+                                console.log('error');
+                            });
+                            $http.get('api/user/vote/all').success(function(all){$scope.listAllVote=all;}).error(function(){console.log('error');});
+                    })
+                    .error(function(){
+                        console.log('error');
+                    });
+            }
+            else{
+                flash.error='Bạn cần đăng nhập để bình chọn !';
+            }
+        });
+    };
+
+    $scope.listFavorite=[];
+    $scope.listVote=[];
+    if($rootScope.currentUser){
+        $http.get('api/user/favorite')
+        .success(function(data){
+            $scope.listFavorite=data;
+        })
+        .error(function() {
+            console.log('error');
+        });
+        $http.get('api/user/vote')
+        .success(function(vote){
+            $scope.listVote=vote;
+        })
+        .error(function(){
+            console.log('error');
+        });
+    }
+    $scope.listAllFavorite=[];
+    $http.get('api/user/favorite/all').success(function(all){$scope.listAllFavorite=all;}).error(function(){console.log('error');});
+    $scope.Favorite=function(id){
+        $http.get('/loggedin').success(function(data){
+            if(data!=='0'){
+                $http.get('api/question/favorite/'+id)
+                    .success(function(favorite){
+
+                        if(parseInt(favorite)==1)
+                            flash.success="Bỏ theo dõi thành công!";
+                        else
+                        {
+                            $http.get('api/question/detail/'+ id)
+                            .success(function(data){
+                                Notifi.create({userRecive:data.userId._id,
+                                    userSend:$cookieStore.get('currentUser')._id,
+                                    content:$cookieStore.get('currentUser').displayName+' đã theo dõi câu hỏi '+data.title,
+                                    questionId:id});
+                                socket.emit('Favorite',{userSendName:$cookieStore.get('currentUser').displayName,
+                                    userReciveId:data.userId._id,
+                                    userTitle:data.title,
+                                    questionIds:id});
+                            })
+                            .error(function(){
+                               console.log("error");
+                            });
+                            flash.success="Bạn đã theo dõi câu hỏi này!";
+                        }
+                        Question.get()
+                            .success(function(question){
+                                $scope.listQuestion= question;
+                                $http.get('api/questiontag/getall').success(function(tag){
+                                    $scope.listTag=tag;
+                                })
+                                .error(function(){
+                                    console.log('error');
+                                });
+                            });
+                        $http.get('api/user/favorite')
+                            .success(function(data){
+                                $scope.listFavorite=data;
+                            })
+                            .error(function() {
+                                console.log('error');
+                            });
+                        $http.get('api/user/favorite/all').success(function(all){$scope.listAllFavorite=all;}).error(function(){console.log('error');});
+                    })
+                    .error(function(){
+                        console.log('error');
+                    });
+            }
+            else{
+                flash.error='Bạn cần đăng nhập để bình chọn !';
+            }
+        });
+    };
 }])
 .controller('CountQuestionController',['$scope','$http', 'Question', function($scope,$http, Question) {
     /*Đếm số câu hỏi trong hệ thống*/
@@ -669,7 +668,7 @@ $scope.loading=true;
       console.log('error');
     });
 }])
-.controller('QuestionDetail',['$scope','$http', '$state','$stateParams','flash', 'Question', function ($scope,$http, $state,$stateParams,flash, Question) {
+.controller('QuestionDetail',['$scope','$http', '$state','$stateParams','flash', 'Question', '$mdBottomSheet', function ($scope,$http, $state,$stateParams,flash, Question, $mdBottomSheet) {
     var question_id =$stateParams.id;
     $http.get('api/question/detail/'+ question_id)
         .success(function(data){
@@ -708,4 +707,52 @@ $scope.loading=true;
                     $scope.Proccess=false;
             }
     };
-}]);
+}])
+.controller('BottomSheetExample', function($scope, $timeout, $mdBottomSheet) {
+  $scope.alert = '';
+  $scope.showGridBottomSheet = function($event) {
+    $scope.alert = '';
+    $mdBottomSheet.show({
+      template: '<md-bottom-sheet class="md-grid bottomSheetdemoBasicUsage ">'+
+                  '<md-list>'+
+                    '<md-list-item ng-repeat="item in items">'+
+                      '<md-button class="md-grid-item-content" ng-click="listItemClick($index)">'+
+                        '<md-icon md-svg-src="{{item.icon}}"></md-icon>'+
+                        '<div class="md-grid-text"> {{ item.name }} </div>'+
+                      '</md-button>'+
+                    '</md-list-item>'+
+                  '</md-list>'+
+                '</md-bottom-sheet>',
+      controller: 'GridBottomSheetCtrl',
+      targetEvent: $event
+    }).then(function(clickedItem) {
+      $scope.alert = clickedItem.name + ' clicked!';
+    });
+  };
+})
+.controller('ListBottomSheetCtrl', function($scope, $mdBottomSheet) {
+  $scope.items = [
+    { name: 'Share', icon: 'share-arrow' },
+    { name: 'Upload', icon: 'upload' },
+    { name: 'Copy', icon: 'copy' },
+    { name: 'Print this page', icon: 'print' },
+  ];
+  $scope.listItemClick = function($index) {
+    var clickedItem = $scope.items[$index];
+    $mdBottomSheet.hide(clickedItem);
+  };
+})
+.controller('GridBottomSheetCtrl', function($scope, $mdBottomSheet) {
+  $scope.items = [
+    { name: 'Hangout', icon: 'hangout' },
+    { name: 'Mail', icon: 'mail' },
+    { name: 'Message', icon: 'message' },
+    { name: 'Copy', icon: 'copy2' },
+    { name: 'Facebook', icon: 'facebook' },
+    { name: 'Twitter', icon: 'twitter' },
+  ];
+  $scope.listItemClick = function($index) {
+    var clickedItem = $scope.items[$index];
+    $mdBottomSheet.hide(clickedItem);
+  };
+})

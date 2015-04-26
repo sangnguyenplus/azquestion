@@ -6,9 +6,9 @@
 </div>
    <div id="question_content" ng-hide="loading" class="row question-main-content question-item background-main-content" style="padding-top: 0;">
     <div class="inner_question_content">
-    
+
       <!-- Vote section -->
-      <div class="q-left-content  text-center">
+      <div class="q-left-content text-center">
          <ul class="vote">
             <li ng-class="{voted: (currentUser && (listVote | checkVoteUp: questionDetail._id))}">
               <span class="fa fa-chevron-circle-up" tooltip="{{(currentUser && (listVote | checkVoteUp: questionDetail._id))?'Bỏ thích':'Thích'}}" tooltip-placement="right" ng-click="voteUp(questionDetail._id)"></span>
@@ -47,7 +47,7 @@
            <li ng-repeat="tag in TagQuestion" popover-placement="right" popover="{{tag.tagId.description}}" popover-trigger="mouseenter"><a class="q-tag" style="font-size:13px;" ui-sref="questions_tag({id: tag.tagId._id, slug: (tag.tagId.tagName | friendlyUrl)+'.html'})" ><i class="fa fa-tags"></i> <span ng-bind="tag.tagId.tagName"></span></a></li>
         </ul>
          <div>
-          <div class="q-footer">
+          <div class="q-footer" >
               <button class="btn btn-sm btn-submit"  ng-show="currentUser._id!=questionDetail.userId._id" type="button" ng-click="chat({_id:questionDetail.userId._id, username: questionDetail.userId.displayName})" title="Trò chuyện với người đăng câu hỏi"><i class="fa fa-comment"></i><span > Chat</span></button>
               <button class="btn btn-sm btn-submit" ng-click="showForm('create_answer_form')" type="button" title="Trả lời câu hỏi này"><i class="fa fa-reply"></i><span> Trả lời</span></button>
               <a class="btn btn-sm btn-submit" href="http://www.facebook.com/sharer.php?u={{FullPath}}" title="Chia sẻ với bạn bè trên Facebook" onclick="window.open(this.href,'targetWindow','toolbar=no,location=1,status=1,statusbar=1,menubar=no,scrollbars=yes,resizable=yes,width=1024,height=580');return false;" target="_blank"><i class="fa fa-facebook"></i> Chia sẻ</a>
@@ -57,10 +57,21 @@
              <span ng-show="currentUser._id==questionDetail.userId._id && a.userId.reputation>500">
                <button class="btn btn-sm btn-submit" type="button" title="Delete" ng-click="deleteQuestion(questionDetail._id,'/')"><i class="fa fa-trash-o"></i><span > Xóa</span></button>
              </span>
+              <span ng-controller="BottomSheetExample">
+              <md-button class="md-raised md-primary" ng-click="showGridBottomSheet($event)">
+                  Tác vụ
+                </md-button>
+              </span>
+              <br/>
+              <b layout="row" layout-align="center center" layout-margin>
+                {{alert}}
+              </b>
+            </span>
+         </div>
           </div>
           <!-- / q-footer -->
            <div class="user">
-            <img src="{{questionDetail.userId.avatar}}" alt="{{questionDetail.userId.displayName}}" />
+            <img src="{{questionDetail.userId.avatar}}" alt="{{questionDetail.userId.displayName}}" class="md-avatar" />
             <label><a ui-sref="profile({id:questionDetail.userId._id})" ng-bind="questionDetail.userId.displayName"></a></label>
             <span class="bg">
                 <i class="fa fa-circle status online" tooltip="Đang online" ng-if="listOnline|checkOnline: questionDetail.userId.displayName"></i>
@@ -69,7 +80,6 @@
           </div>
           <!-- / user -->
           <div class="clearfix"></div>
-         </div>
          <!-- / info -->
          </div>
          <div class="clearfix"></div>
@@ -118,11 +128,11 @@
                     </div>
                     <!-- / q-footer -->
                      <div class="user">
-                      <img src="{{a.userId.avatar}}" alt="{{a.userId.displayName}}" />
+                      <img src="{{a.userId.avatar}}" alt="{{a.userId.displayName}}" class="md-avatar" />
                       <label><a ui-sref="profile({id:a.userId._id, slug: (a.userId.displayName | friendlyUrl)+'.html'})" ng-bind="a.userId.displayName"></a></label>
                       <span class="bg">
-                        <i class="fa fa-circle status online" tooltip="Đang online" ng-if="listOnline|checkOnline: a.userId.displayName"></i> 
-                        <i class="fa fa-circle status offline" tooltip="Đang offline" ng-if="!(listOnline|checkOnline: a.userId.displayName)"></i> 
+                        <i class="fa fa-circle status online" tooltip="Đang online" ng-if="listOnline|checkOnline: a.userId.displayName"></i>
+                        <i class="fa fa-circle status offline" tooltip="Đang offline" ng-if="!(listOnline|checkOnline: a.userId.displayName)"></i>
                       Điểm <span ng-bind="a.userId.reputation"></span>
                       </span>
                     </div>
@@ -187,7 +197,7 @@
       </div>
 
       <!-- Modal form Edit Question -->
-      <div class="show-form edit_question_form">
+      <div class="show-form edit_question_form"  ng-controller="QuestionController">
         <form name="edit_question_form" ng-submit="editQuestion()" novalidate>
           <div class="row">
             <div class="form-group col-xs-12">

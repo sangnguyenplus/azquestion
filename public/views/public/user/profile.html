@@ -16,7 +16,7 @@
 </div>
 <!-- END SELECT-CATEGORY -->
 <div class="row user-statistic">
-   <div class="col-md-12 col-sm-12 col-xs-12 user-info">
+   <div class="col-md-6 col-sm-6 col-xs-12 user-info">
      <div class="picture-account text-center">
          <span><img ng-src="{{userInfo.avatar}}" class="avatar img-thumbnail" alt="{{userInfo.displayName}}" ></span><br><br>
             <strong ng-if="userInfo.role=='user'" ng-repeat="badge in listBadge | getBadge: userInfo.reputation">
@@ -34,7 +34,7 @@
          <li><i class="fa fa-suitcase"></i> <span ng-bind="userInfo.website"></span></li>
       </ul>
    </div>
-   <div class="col-md-12 user-post-count">
+   <div class="col-md-6 col-sm-6 col-xs-12 user-post-count">
       <div class="row">
          <div class="col-md-4 col-xs-4 question-cat">
             <p class="badge-count">Điểm uy tín <br><span class="points-count" ng-bind="userInfo.reputation"></span>
@@ -47,9 +47,9 @@
             <p class="answers-count">Trả lời<br><span ng-bind="numberAnswer"></span></p>
          </div>
          <div class="clearfix"></div>
-         <hr>
       </div>
    </div>
+   <div class="clearfix"></div>
    <div class="col-md-12 list-question-by-user">
    <md-content class="md-padding">
     <md-tabs md-dynamic-height md-border-bottom>
@@ -75,6 +75,7 @@
             <ul class="list-user-question">
                <li ng-repeat="a in listAnswer | orderBy:['-creationDate']|startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit">
                   <a ui-sref="question-detail({id:a.questionId._id, slug: (a.questionId.title | friendlyUrl)+'.html'})"> <span ng-bind="a.questionId.title"></span> <span style="padding-right: 15px;" class="pull-right" ><small ng-bind="a.questionId.creationDate | fromNow"></small></span></a>
+                  <p class="answer-content" ng-bind="a.content.slice(0, 450)"></p>
                </li>
             </ul>
             <pagination total-items="listAnswer.length" ng-model="currentPage" max-size="itemsPerPage" class="pagination-sm" boundary-links="false" rotate="false" num-pages="numPages" previous-text="←" next-text="→"></pagination>

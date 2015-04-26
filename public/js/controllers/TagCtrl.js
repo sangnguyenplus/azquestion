@@ -10,8 +10,21 @@ angular.module('TagCtrl',[])
     $scope.currentPage = 1; /*//current page*/
     $scope.maxSize = 5; /*//pagination max size*/
     $scope.entryLimit = 8; /*//max rows for data table*/
-    /*Biến lưu trữ dữ liệu form*/
-	$scope.formData = {};
+}])
+.controller('ListTagController',['$scope','Tag', function($scope,Tag) {
+    /*Lấy toàn bộ tag*/
+    $scope.loading=true;
+    $scope.allTag=[];
+    Tag.get()
+        .success(function(data){
+            $scope.allTag=data;
+            $scope.loading=false;
+        })
+        .error(function(){
+            console.log('Request Failed');
+        });
+        /*Biến lưu trữ dữ liệu form*/
+    $scope.formData = {};
 
     /*Khi form nhấn submit thì sẽ gửi giữ liệu tới api/tag*/
     $scope.createTag= function() {
@@ -32,12 +45,12 @@ angular.module('TagCtrl',[])
                                     $scope.allTag = data;
                             })
                             .error(function() {
-                            	flash.error="Tag này đã được sử dụng.";
-			                    $scope.Proccess=false;
+                                flash.error="Tag này đã được sử dụng.";
+                                $scope.Proccess=false;
                             });
             }
             else{
-            	 	flash.error="Bạn cần điền đầy đủ các mục.";
+                    flash.error="Bạn cần điền đầy đủ các mục.";
                     $scope.Proccess=false;
             }
     };
@@ -53,19 +66,6 @@ angular.module('TagCtrl',[])
         }
     });
     };
-}])
-.controller('ListTagController',['$scope','Tag', function($scope,Tag) {
-    /*Lấy toàn bộ tag*/
-    $scope.loading=true;
-    $scope.allTag=[];
-    Tag.get()
-        .success(function(data){
-            $scope.allTag=data;
-            $scope.loading=false;
-        })
-        .error(function(){
-            console.log('Request Failed');
-        });
 }])
 .controller('PopularTagController',['$scope','Tag', function($scope,Tag) {
     /*Lấy tag phổ biến*/

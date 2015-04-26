@@ -45,15 +45,15 @@
          </form>
       </div>
    <!-- END MAIN-TAGS-LIST -->
-        <div class="modal fade add-tag-box" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal fade add-tag-box" tabindex="-1" role="dialog" aria-hidden="true" ng-controller="ListTagController">
          <div class="modal-dialog">
             <div class="modal-content" style="margin-top: 150px;">
+            <form name="form" class="form-horizontal" novalidate>
               <div>
                  <button type="button" class="close" style="margin-right: 11px;" data-dismiss="modal" aria-hidden="true">×</button>
                  <h4 class="text-center" style="color: #16775c;">THÊM TAG MỚI</h4>
               </div>
                <div class="modal-body">
-                   <form name="form" class="form-horizontal" novalidate>
                      <div class="form-group">
                          <label for="name" class="col-sm-2 control-label required">Tên</label>
                          <div class="col-sm-10">
@@ -66,12 +66,12 @@
                              <textarea name="description" class="form-control" id="description" placeholder="Mô tả" ng-model="formData.description"></textarea>
                          </div>
                      </div>
-                 </form>
                </div>
                <div class="modal-footer">
-                 <button type="button" ng-click="createTag()" class="btn btn-submit"><small><span ng-show="!Proccess"><i class="fa fa-plus"></i></span><span ng-show="Proccess" ><i class="fa fa-spinner fa-spin"></i></span></small> Thêm mới</button>
+                 <button type="button" ng-click="createTag()"  class="btn btn-submit"><small><span ng-show="!Proccess"><i class="fa fa-plus"></i></span><span ng-show="Proccess" ><i class="fa fa-spinner fa-spin"></i></span></small> Thêm mới</button>
                  <button  type="button" data-dismiss="modal" aria-hidden="true" class="btn btn-default">Hủy bỏ</button>
                </div>
+             </form>
             </div>
          </div>
    </div>

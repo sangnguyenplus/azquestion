@@ -22,16 +22,16 @@
              <div class="form-group">
                  <label for="score" class="col-sm-4 control-label required">Nhóm thành viên</label>
                  <div class="col-sm-8">
-                     <select name="select-group" class="form-control" ng-model="formData.role">
-                       <option value="user" ng-selected="formData.role=='user'">Thành viên</option>
-                       <option value="admin" ng-selected="formData.role=='admin'">Quản trị viên</option>
-                     </select>
+                      <md-select name="myModel" placeholder="Pick" ng-model="formData.role" style="padding-top:0" required>
+                        <md-option value="user"  ng-selected="formData.role=='user'">Thành viên</md-option>
+                        <md-option value="admin"  ng-selected="formData.role=='admin'">Quản trị viên</md-option>
+                      </md-select>
                  </div>
              </div>
              <div class="form-group">
                 <label class="col-sm-4 control-label">&nbsp;</label>
                 <div class="col-sm-8">
-                 <button type="submit" ng-click="updatePermission()" class="btn btn-submit"><small><span ng-show="!Proccess"><i class="fa fa-edit"></i></span><span ng-show="Proccess" ><i class="fa fa-spinner fa-spin"></i></span></small> Cập nhật</button>
+                 <md-button type="submit" ng-click="updatePermission()" ng-disabled="!formData.role" class="md-raised md-primary"><small><span ng-show="!Proccess"><i class="fa fa-edit"></i></span><span ng-show="Proccess" ><i class="fa fa-spinner fa-spin"></i></span></small> Cập nhật</md-button>
                </div>
              </div>
          </form>

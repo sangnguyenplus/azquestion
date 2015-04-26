@@ -46,10 +46,6 @@ Version: 1.0
 
 }
 
-::-webkit-input-placeholder {color: #8b97b1;}
-:-moz-placeholder {color: #8b97b1;opacity:  1;}
-::-moz-placeholder {color: #8b97b1;opacity:  1;}
-:-ms-input-placeholder {color: #8b97b1;}
 html{min-height: 100%;position: relative;}
 body {color: #333;font-size: 13px; font-family: 'RobotoRegular'; background: #f1f1f1 !important; padding-bottom: 60px;}
 .container{max-width: 1200px;}
@@ -61,6 +57,7 @@ pre code{display: inline;max-width: initial;padding: 0;margin: 0;overflow: initi
 
 label,b, strong, h1, h2, h3, h4, h5, h6{font-family: 'RobotoBold'; font-weight: normal;}
 i{font-family: 'RobotoItalic'}
+span, a, button, input{outline: none !important;}
 
 .btn{outline: none !important}
 
@@ -211,7 +208,7 @@ body.author .main-questions-list .blog-wrapper {border:none;}
 .user-controls ul {margin-top: 25px;font-size: 14px;text-align: right;}
 .user-controls ul li {display: inline-block;margin-left: 20px;}
 .user-statistic {min-height: 140px;margin: 0;margin-bottom: 20px;}
-.user-post-count {margin: 40px 0 40px 10px;color: #78829d}
+.user-post-count {margin-top: 15px; color: #78829d}
 .user-info {margin-top: 10px;padding-left: 20px;}
 .user-info .picture-account {float: left;width: 100px;}
 .user-info span img{width: 100px;}
@@ -317,7 +314,7 @@ webkit-box-shadow: 2px 2px 4px rgba(0,0,0,0.5);}
 .main-tag-list .tags-list div.tag-item p {font-size: 12px;line-height: 20px;margin-top:5px;}
 .main-tag-list .tags-list div.cat-item a{border: none;background: 0;padding: 0;font-size: 15px;color: #3498db;}
 
-a.q-tag {text-transform: lowercase; font-size: 13px; color: #555;background: #f5f5f5;display: inline-block;padding: 3px 5px 3px 5px;}
+a.q-tag {text-transform: lowercase; font-size: 13px; color: #555;background: #f5f5f5;display: inline-block;padding: 0 5px; border-radius: 5px;}
 a.q-tag:hover{color: #fff;background: #1d9977;text-decoration: none;-webkit-transition: all 0.3s ease;-moz-transition: all 0.3s ease;-o-transition: all 0.3s ease;-ms-transition: all 0.3s ease;transition: all 0.3s ease;}
 a.q-tag:hover i{color: #fff;}
 a.q-tag i{color: #1d9977;margin-right: 5px;display: inline-block;}

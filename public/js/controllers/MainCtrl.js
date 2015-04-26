@@ -23,6 +23,10 @@ angular.module('MainCtrl',[])
 				    minHeight: 350,
 				    maxHeight: 555
 				});
+	         $('body').css('height', $(window).height());
+	         $(window).scroll(function(){
+	         	$('body').css('height', $(window).height() + $(window).scrollTop());
+	         });
 	    });
 
 		$scope.fbLike="https://www.facebook.com/toiyeulaptrinhfanpage";

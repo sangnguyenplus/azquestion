@@ -124,3 +124,35 @@ app.run([
 app.factory('socket', function (socketFactory) {
   return socketFactory();
 });
+
+app.config(function($mdIconProvider) {
+    $mdIconProvider
+      .icon('share-arrow', 'images/icons/share-arrow.svg', 24)
+      .icon('upload', 'images/icons/upload.svg', 24)
+      .icon('copy', 'images/icons/copy.svg', 24)
+      .icon('print', 'images/icons/print.svg', 24)
+      .icon('hangout', 'images/icons/hangout.svg', 24)
+      .icon('mail', 'images/icons/mail.svg', 24)
+      .icon('message', 'images/icons/message.svg', 24)
+      .icon('copy2', 'images/icons/copy2.svg', 24)
+      .icon('facebook', 'images/icons/facebook.svg', 24)
+      .icon('twitter', 'images/icons/twitter.svg', 24)
+      .defaultIconSet('images/icons/core-icons.svg', 24);
+  })
+.run(function($http, $templateCache) {
+    var urls = [
+      'images/icons/share-arrow.svg',
+      'images/icons/upload.svg',
+      'images/icons/copy.svg',
+      'images/icons/print.svg',
+      'images/icons/hangout.svg',
+      'images/icons/mail.svg',
+      'images/icons/message.svg',
+      'images/icons/copy2.svg',
+      'images/icons/facebook.svg',
+      'images/icons/twitter.svg'
+    ];
+    angular.forEach(urls, function(url) {
+      $http.get(url, {cache: $templateCache});
+    });
+  });
