@@ -55,10 +55,7 @@
              <th>STT</th>
              <th>Tên danh hiệu</th>
              <th>Số điểm</th>
-             <th>Đăng câu hỏi/trả lời</th>
-             <th>Đánh giá</th>
-             <th>Sửa/xóa câu hỏi</th>
-             <th>Sửa/xóa trả lời</th>
+             <th>Mô tả</th>
          </tr>
      </thead>
      <tbody>
@@ -66,16 +63,7 @@
           <td>{{$index+1}}</td>
           <td><a href="#"><span ng-bind="b.name" class="user-badge" style="background: {{b.color}}"></span></a></td>
           <td ng-bind="b.score"></td>
-          <td><i class="fa fa-check text-success"></i></td>
-          <td><i class="fa fa-check text-success"></i></td>
-          <td>
-             <i class="fa fa-check text-success" ng-if="b.score>499"></i>
-             <i class="fa fa-times text-danger" ng-if="b.score<500"></i>
-          </td>
-          <td>
-             <i class="fa fa-check text-success" ng-if="b.score>1499"></i>
-             <i class="fa fa-times text-danger" ng-if="b.score<1500"></i>
-          </td>
+          <td ng-bind="b.description"></td>
          </tr>
      </tbody>
    </table>
@@ -87,16 +75,13 @@
    .table th:nth-child(1),
    .table td:nth-child(1),
    .table th:nth-child(3),
-   .table td:nth-child(3),
-   .table th:nth-child(4),
-   .table td:nth-child(4),
-   .table th:nth-child(5),
-   .table td:nth-child(5),
-   .table th:nth-child(6),
-   .table td:nth-child(6),
-   .table th:nth-child(7),
-   .table td:nth-child(7) {
+   .table td:nth-child(3) {
     text-align: center;
-    width: auto;
+    max-width: 100px;
+   }
+   .table th:nth-child(4),
+   .table td:nth-child(4){
+      text-align: left;
+      width: auto;
    }
 </style>

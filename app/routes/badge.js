@@ -23,6 +23,7 @@ module.exports = function (app, passport) {
 			Badge.create({
 				name : req.body.name,
 				score : req.body.score,
+				description : req.body.description,
 				color: req.body.color,
 				creationDate: new Date(),
 				lastEditDate: new Date(),
@@ -81,6 +82,7 @@ module.exports = function (app, passport) {
 			else{*/
 				data.name=req.body.name;
 				data.score = req.body.score;
+				data.description = req.body.description;
 				data.color= req.body.color;
 				data.lastEditDate= new Date();
 				data.save(function(err, b){
