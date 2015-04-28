@@ -1,33 +1,46 @@
 <div ng-controller="QuestionController">
-<div class="text-center" style="padding-top: 80px; min-height: 700px; background-color: #fff;" ng-show="loading">
-  <md-progress-circular class="md-hue-2" md-mode="indeterminate"></md-progress-circular>
-<p>Đang tải dữ liệu</p>
+  <div class="text-center" style="padding-top: 80px; min-height: 700px; background-color: #fff;" ng-show="loading">
+    <md-progress-circular class="md-hue-2" md-mode="indeterminate"></md-progress-circular>
+    <p>Đang tải dữ liệu</p>
+    </div>
   </div>
-</div>
-   <div id="question_content" ng-hide="loading" class="row question-main-content question-item background-main-content" style="padding-top: 0;">
+  <div id="question_content" ng-hide="loading" class="row question-main-content question-item background-main-content" style="padding-top: 0;">
     <div class="inner_question_content">
 
       <!-- Vote section -->
       <div class="q-left-content text-center">
          <ul class="vote">
             <li ng-class="{voted: (currentUser && (listVote | checkVoteUp: questionDetail._id))}">
-              <span class="fa fa-chevron-circle-up" tooltip="{{(currentUser && (listVote | checkVoteUp: questionDetail._id))?'Bỏ thích':'Thích'}}" tooltip-placement="right" ng-click="voteUp(questionDetail._id)"></span>
+              <span class="fa fa-chevron-circle-up" ng-click="voteUp(questionDetail._id)">
+                <md-tooltip md-direction="right">{{(currentUser && (listVote | checkVoteUp: questionDetail._id))?'Bỏ thích':'Thích'}}</md-tooltip>
+              </span>
             </li>
             <li>
                 <h3  ng-bind="questionDetail.score"></h3>
             </li>
             <li ng-class="{voted: (currentUser && (listVote | checkVoteDown: questionDetail._id))}">
-              <span class="fa fa-chevron-circle-down" tooltip="{{(currentUser && (listVote | checkVoteDown: questionDetail._id))?'Bỏ không thích':'Không thích'}}" tooltip-placement="right" ng-click="voteDown(questionDetail._id)"></span>
+              <span class="fa fa-chevron-circle-down" ng-click="voteDown(questionDetail._id)">
+                <md-tooltip md-direction="right">{{(currentUser && (listVote | checkVoteDown: questionDetail._id))?'Bỏ không thích':'Không thích'}}</md-tooltip>
+              </span>
             </li>
             <li ng-if="currentUser._id!=questionDetail.userId._id"  ng-class="{active: (currentUser && (listFavorite | checkFavorite: questionDetail._id))}">
-                <span class="fa fa-star" tooltip="{{(currentUser && (listFavorite | checkFavorite: questionDetail._id))?'Bỏ theo dõi câu hỏi này':'Theo dõi câu hỏi này'}}" ng-click="Favorite(questionDetail._id)" tooltip-placement="right"></span>
+                <span class="fa fa-star" ng-click="Favorite(questionDetail._id)">
+                  <md-tooltip md-direction="right">{{(currentUser && (listFavorite | checkFavorite: questionDetail._id))?'Bỏ theo dõi câu hỏi này':'Theo dõi câu hỏi này'}}</md-tooltip>
+                </span>
             </li>
          </ul>
       </div>
       <!--// Vote section -->
       <div class="q-right-content">
          <div class="question-content">
-         <h3 class="q-title pull-left" ><span ng-if="questionDetail.isResolved"><span tooltip="Đã có câu trả lời chính xác" class="qa-status resolved"></span></span> <span ng-bind="questionDetail.title"></span></h3>
+           <h3 class="q-title pull-left">
+              <span ng-if="questionDetail.isResolved">
+                <span class="qa-status resolved">
+                  <md-tooltip md-direction="top">Đã có câu trả lời chính xác</md-tooltip>
+                </span>
+              </span>
+               <span ng-bind="questionDetail.title"></span>
+            </h3>
          <div class="btn-group pull-right" style="top:-5px">
           <i class="fa fa-angle-down dropdown-toggle btn-action-caret" data-toggle="dropdown" aria-expanded="false"></i>
           <ul class="dropdown-menu menu-action" role="menu">
@@ -35,12 +48,12 @@
           </ul>
         </div>
         <div class="clearfix"></div>
-         <div class="info">
-                <i class="fa fa-signal"></i><span> Đánh giá: <span  ng-bind="listAllVote | countByQuestion: questionDetail._id"></span></span>
-                <i class="fa fa-star"></i><span> Theo dõi: <span  ng-bind="listAllFavorite | countByQuestion: questionDetail._id"></span></span>
-                <i class="fa fa-comments"></i><span> Trả lời: <span ng-bind="numberAnswer"></span></span>
-                <i class="fa fa-calendar"></i><span> <span ng-bind="questionDetail.creationDate| fromNow"></span></span>
-            </div>
+        <div class="info">
+          <i class="fa fa-signal"></i><span> Đánh giá: <span  ng-bind="listAllVote | countByQuestion: questionDetail._id"></span></span>
+          <i class="fa fa-star"></i><span> Theo dõi: <span  ng-bind="listAllFavorite | countByQuestion: questionDetail._id"></span></span>
+          <i class="fa fa-comments"></i><span> Trả lời: <span ng-bind="numberAnswer"></span></span>
+          <i class="fa fa-calendar"></i><span> <span ng-bind="questionDetail.creationDate| fromNow"></span></span>
+        </div>
          <hr>
          <div class="q-main" marked="questionDetail.content"><span ng-bind="questionDetail.content"></span></div>
          <ul class="question-tags">
@@ -48,34 +61,38 @@
         </ul>
          <div>
           <div class="q-footer" >
-              <button class="btn btn-sm btn-submit"  ng-show="currentUser._id!=questionDetail.userId._id" type="button" ng-click="chat({_id:questionDetail.userId._id, username: questionDetail.userId.displayName})" title="Trò chuyện với người đăng câu hỏi"><i class="fa fa-comment"></i><span > Chat</span></button>
-              <button class="btn btn-sm btn-submit" ng-click="showForm('create_answer_form')" type="button" title="Trả lời câu hỏi này"><i class="fa fa-reply"></i><span> Trả lời</span></button>
-              <a class="btn btn-sm btn-submit" href="http://www.facebook.com/sharer.php?u={{FullPath}}" title="Chia sẻ với bạn bè trên Facebook" onclick="window.open(this.href,'targetWindow','toolbar=no,location=1,status=1,statusbar=1,menubar=no,scrollbars=yes,resizable=yes,width=1024,height=580');return false;" target="_blank"><i class="fa fa-facebook"></i> Chia sẻ</a>
+              <button class="btn btn-sm btn-submit"  ng-show="currentUser._id!=questionDetail.userId._id" type="button" ng-click="chat({_id:questionDetail.userId._id, username: questionDetail.userId.displayName})" title="Trò chuyện với người đăng câu hỏi">
+                <i class="fa fa-comment"></i> Chat
+              </button>
+              <button class="btn btn-sm btn-submit" ng-click="showForm('create_answer_form')" type="button" title="Trả lời câu hỏi này">
+                <i class="fa fa-reply"></i> Trả lời
+              </button>
+              <a class="btn btn-sm btn-submit" href="http://www.facebook.com/sharer.php?u={{FullPath}}" title="Chia sẻ với bạn bè trên Facebook" onclick="window.open(this.href,'targetWindow','toolbar=no,location=1,status=1,statusbar=1,menubar=no,scrollbars=yes,resizable=yes,width=1024,height=580');return false;" target="_blank">
+                <i class="fa fa-facebook"></i> Chia sẻ
+              </a>
               <span ng-show="currentUser._id==questionDetail.userId._id">
-               <button class="btn btn-sm btn-submit" type="button" title="Edit" ng-click="showForm('edit_question_form')"><i class="fa fa-pencil"></i><span > Sửa</span></button>
-             </span>
-             <span ng-show="currentUser._id==questionDetail.userId._id && a.userId.reputation>500">
-               <button class="btn btn-sm btn-submit" type="button" title="Delete" ng-click="deleteQuestion(questionDetail._id,'/')"><i class="fa fa-trash-o"></i><span > Xóa</span></button>
-             </span>
-              <span ng-controller="BottomSheetExample">
-              <md-button class="md-raised md-primary" ng-click="showGridBottomSheet($event)">
-                  Tác vụ
-                </md-button>
+               <button class="btn btn-sm btn-submit" type="button" title="Edit" ng-click="showForm('edit_question_form')">
+                  <i class="fa fa-pencil"></i> Sửa
+               </button>
               </span>
-              <br/>
-              <b layout="row" layout-align="center center" layout-margin>
-                {{alert}}
-              </b>
-            </span>
+              <span ng-show="currentUser._id==questionDetail.userId._id && a.userId.reputation>500">
+                <button class="btn btn-sm btn-submit" type="button" title="Delete" ng-click="deleteQuestion(questionDetail._id,'/')">
+                  <i class="fa fa-trash-o"></i> Xóa
+                </button>
+              </span>
          </div>
           </div>
           <!-- / q-footer -->
            <div class="user">
             <img src="{{questionDetail.userId.avatar}}" alt="{{questionDetail.userId.displayName}}" class="md-avatar" />
-            <label><a ui-sref="profile({id:questionDetail.userId._id})" ng-bind="questionDetail.userId.displayName"></a></label>
+            <label><a ui-sref="profile({id:questionDetail.userId._id})">{{questionDetail.userId.displayName}} <i class="fa fa-shield" ng-if="questionDetail.userId.role=='admin'" title="Quản trị viên" alt="Quản trị viên"></i></a></label>
             <span class="bg">
-                <i class="fa fa-circle status online" tooltip="Đang online" ng-if="listOnline|checkOnline: questionDetail.userId.displayName"></i>
-                <i class="fa fa-circle status offline" tooltip="Đang offline" ng-if="!(listOnline|checkOnline: questionDetail.userId.displayName)"></i> Điểm <span ng-bind="questionDetail.userId.reputation"></span>
+                <i class="fa fa-circle status online" ng-if="listOnline|checkOnline: questionDetail.userId.displayName">
+                    <md-tooltip md-direction="top">Đang online</md-tooltip>
+                </i>
+                <i class="fa fa-circle status offline" ng-if="!(listOnline|checkOnline: questionDetail.userId.displayName)">
+                    <md-tooltip md-direction="top">Đang offline</md-tooltip>
+                </i> Điểm <span ng-bind="questionDetail.userId.reputation"></span>
             </span>
           </div>
           <!-- / user -->
@@ -94,16 +111,22 @@
                <!-- vote group -->
                <ul class="vote">
                   <li ng-class="{voted: (currentUser && (listVote | checkAnswerVoteUp: a._id))}">
-                    <span class="fa fa-chevron-circle-up" tooltip="{{(currentUser && (listVote | checkAnswerVoteUp: a._id))?'Bỏ thích':'Thích'}}" tooltip-placement="right" ng-click="voteUp(a._id, questionDetail._id)"></span>
+                    <span class="fa fa-chevron-circle-up" ng-click="voteUp(a._id, questionDetail._id)">
+                      <md-tooltip md-direction="right">{{(currentUser && (listVote | checkAnswerVoteUp: a._id))?'Bỏ thích':'Thích'}}</md-tooltip>
+                    </span>
                   </li>
                   <li>
                       <h3 ng-bind="a.score"></h3>
                   </li>
                   <li ng-class="{voted: (currentUser && (listVote | checkAnswerVoteDown: a._id))}">
-                    <span class="fa fa-chevron-circle-down" tooltip="{{(currentUser && (listVote | checkAnswerVoteDown: a._id))?'Bỏ thích':'Thích'}}" tooltip-placement="right" ng-click="voteDown(a._id, questionDetail._id)"></span>
+                    <span class="fa fa-chevron-circle-down" ng-click="voteDown(a._id, questionDetail._id)">
+                      <md-tooltip md-direction="right">{{(currentUser && (listVote | checkAnswerVoteDown: a._id))?'Bỏ thích':'Thích'}}</md-tooltip>
+                    </span>
                   </li>
                   <li ng-if="questionDetail.isResolved!=true" ng-show="(currentUser._id==questionDetail.userId._id && currentUser._id!=a.userId._id) && !a.isAcepted">
-                      <span class="fa fa-check" tooltip="Câu trả lời chính xác" tooltip-placement="right" ng-click="acepted(a._id)"></span>
+                      <span class="fa fa-check" ng-click="acepted(a._id)">
+                        <md-tooltip md-direction="right">Câu trả lời chính xác</md-tooltip>
+                      </span>
                   </li>
                   <li ng-show="a.isAcepted" class="active" >
                     <span class="fa fa-check" tooltip="Câu trả lời chính xác" style="cursor: auto" tooltip-placement="right"></span>
@@ -117,23 +140,40 @@
                    <div>
                      <div class="q-footer">
                        <p><span><i class="fa fa-calendar"></i> <small ng-bind="a.creationDate | fromNow"></small></span></p>
-                        <button class="btn btn-sm btn-submit" ng-show="currentUser._id!=a.userId._id" type="button" ng-click="chat({_id:a.userId._id, username: a.userId.displayName})"><i class="fa fa-comment"></i><span > Chat</span></button>
+                        <button class="btn btn-sm btn-submit" ng-show="currentUser._id!=a.userId._id" type="button" ng-click="chat({_id:a.userId._id, username: a.userId.displayName})">
+                          <i class="fa fa-comment"></i> Chat
+                        </button>
                         <span ng-show="currentUser._id==a.userId._id">
-                         <button class="btn btn-sm btn-submit" type="button" title="Edit" ng-click="showForm('create_answer_form')"><i class="fa fa-pencil"></i><span > Sửa</span></button>
+                          <button class="btn btn-sm btn-submit" type="button" title="Edit" ng-click="showForm('create_answer_form')">
+                            <i class="fa fa-pencil"></i> Sửa
+                          </button>
                        </span>
-                       <span ng-show="currentUser._id==a.userId._id && a.userId.reputation>1500">
-                         <button class="btn btn-sm btn-submit" type="button" title="Delete" ng-click="deleteAnswer(a._id,'/')"><i class="fa fa-trash-o"></i><span > Xóa</span></button>
+                       <span ng-show="currentUser._id==a.userId._id">
+                         <button class="btn btn-sm btn-submit" type="button" title="Delete" ng-click="deleteAnswer(a._id,'/')">
+                            <i class="fa fa-trash-o"></i> Xóa
+                         </button>
                        </span>
-                       <button class="btn btn-sm btn-submit"  ng-show="currentUser._id!=a.userId._id" type="button" ng-click="reportAnswer(a._id)" tooltip="Báo cáo vi phạm câu trả lời này" tooltip-placement="top"><i class="fa fa-flag"></i></button>
+                       <button class="btn btn-sm btn-submit"  ng-show="currentUser._id!=a.userId._id" type="button" ng-click="reportAnswer(a._id)">
+                          <i class="fa fa-flag"></i>
+                          <md-tooltip md-direction="top">Báo cáo vi phạm câu trả lời này</md-tooltip>
+                        </button>
                     </div>
                     <!-- / q-footer -->
                      <div class="user">
                       <img src="{{a.userId.avatar}}" alt="{{a.userId.displayName}}" class="md-avatar" />
-                      <label><a ui-sref="profile({id:a.userId._id, slug: (a.userId.displayName | friendlyUrl)+'.html'})" ng-bind="a.userId.displayName"></a></label>
+                      <label>
+                        <a ui-sref="profile({id:a.userId._id, slug: (a.userId.displayName | friendlyUrl)+'.html'})">
+                          {{a.userId.displayName}} <i class="fa fa-shield" ng-if="a.userId.role=='admin'" title="Quản trị viên" alt="Quản trị viên"></i>
+                        </a>
+                      </label>
                       <span class="bg">
-                        <i class="fa fa-circle status online" tooltip="Đang online" ng-if="listOnline|checkOnline: a.userId.displayName"></i>
-                        <i class="fa fa-circle status offline" tooltip="Đang offline" ng-if="!(listOnline|checkOnline: a.userId.displayName)"></i>
-                      Điểm <span ng-bind="a.userId.reputation"></span>
+                        <i class="fa fa-circle status online" ng-if="listOnline|checkOnline: a.userId.displayName">
+                          <md-tooltip md-direction="top">Đang online</md-tooltip>
+                        </i>
+                        <i class="fa fa-circle status offline" ng-if="!(listOnline|checkOnline: a.userId.displayName)">
+                            <md-tooltip md-direction="top">Đang offline</md-tooltip>
+                        </i>
+                        Điểm <span ng-bind="a.userId.reputation"></span>
                       </span>
                     </div>
                     <!-- / user -->
@@ -233,4 +273,3 @@
         </form>
       </div>
       <!-- / modal edit -->
-    </div>

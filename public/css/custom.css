@@ -156,7 +156,10 @@ sup.star{color: #f39c12;}
 .q-main{min-height: 335px;}
 .q-right-content{overflow: hidden;word-wrap: break-word;padding-right: 15px;padding-left: 15px;}
 .q-title{margin-top: 0; color:#1d9977;width: 95%;overflow: hidden;}
-.q-footer{float: left; margin-top: 20px;}
+.q-footer{float: left;
+  position: relative;
+  width: 70%;
+  min-height: 83px;}
 .q-info{float: right;}
 
 .modal-dialog{margin-top: 100px;}
@@ -173,13 +176,10 @@ div.info{font-size: 12px;}
 div.info span span {color: #fa6500;}
 
 .question-item .user {float: right;padding: 10px;background: #eee;}
-.question-item .user img {float: left;margin-right: 10px;width: 50px;margin-top: 0;box-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-filter: filter: progid:DXImageTransform.Microsoft.Shadow(direction=135,strength=3, color=#808080);
-moz-box-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-webkit-box-shadow: 2px 2px 4px rgba(0,0,0,0.5);}
+.question-item .user img {float: left;margin-right: 10px;width: 50px;margin-top: 0;}
 .question-item .user span {font-size: 11px;display: block;}
 .question-item .user label {line-height: 12px;}
-.question-item .user label a{font-size: 12px;text-overflow: ellipsis;display: block;white-space: nowrap;width: 110px;}
+.question-item .user label a{font-size: 12px;text-overflow: ellipsis; display: block; white-space: nowrap;width: 110px;}
 .question-item .user span.bg i:nth-child(2n+1) {margin-right: 5px;}
 .question-item .user span.bg span{display: inline;}
 
