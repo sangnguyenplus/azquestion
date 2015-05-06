@@ -20,9 +20,9 @@
                         <md-input-container>
                             <label>Tên hiển thị</label>
                             <input required name="username" ng-model="userData.displayName" autocomplete="off">
-                            <div ng-messages="form.username.$error" ng-if="form.username.$dirty" md-minlength="8" md-maxlength="25">
+                            <div ng-messages="form.username.$error" ng-if="form.username.$dirty"  md-maxlength="25" minlength="8">
                               <div ng-message="required">Tên không được bỏ trống.</div>
-                              <div ng-message="md-minlength">Tên phải dài hơn 8 ký tự</div>
+                              <div ng-message="minlength">Tên phải dài hơn 8 ký tự</div>
                               <div ng-message="md-maxlength">Tên phải ngắn hơn 25 ký tự</div>
                             </div>
                         </md-input-container>
@@ -33,10 +33,10 @@
                         <div class="col-md-6 col-sm-6 col-xs-12">
                         <md-input-container>
                             <label>Mật khẩu</label>
-                            <input type="password" required name="password" ng-model="userData.password">
-                            <div ng-messages="form.password.$error" ng-if="form.password.$dirty" md-minlength="8" md-maxlength="25">
+                            <input type="password" required name="password" ng-model="userData.password"  md-maxlength="25" minlength="8">
+                            <div ng-messages="form.password.$error" ng-if="form.password.$dirty">
                               <div ng-message="required">Mật khẩu không được bỏ trống.</div>
-                              <div ng-message="md-minlength">Mật khẩu phải dài hơn 8 ký tự</div>
+                              <div ng-message="minlength">Mật khẩu phải dài hơn 8 ký tự</div>
                               <div ng-message="md-maxlength">Mật khẩu phải ngắn hơn 25 ký tự</div>
                             </div>
                         </md-input-container>
