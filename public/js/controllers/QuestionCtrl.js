@@ -6,7 +6,6 @@ angular.module('QuestionCtrl',[])
         $scope.FullPath=$location.absUrl();
         $scope.showSuggest = function(){
                 // Suggest Title
-                tag=$scope.formData.tag;
                 listFinal=[];
                     // Title
                     $http.get('api/title/search/'+$scope.formData.title).success(function(ltitle)
@@ -20,17 +19,27 @@ angular.module('QuestionCtrl',[])
                                 if(listFinal.indexOf(ltitle[i])==-1)
                                     listFinal.push(ltitle[i]);
                         }
+                        $timeout(function(){
+                        $rootScope.suggestTag=$scope.formData.tag;
+                        $rootScope.suggestTitle=$scope.formData.title;
+                        $rootScope.suggestContent=$scope.formData.content;
+                        $rootScope.listSuggest=listFinal;
+                        $('.loading.suggest').fadeOut();
+                    },1000);
+                        if(listFinal.length != 0)
+                        {
+                            $('.createForm').hide();
+                            $('.loading.suggest').show();    
+                        }
+                        else
+                        {
+                            $rootScope.suggestTag=$scope.formData.tag;
+                            $rootScope.suggestTitle=$scope.formData.title;
+                            $rootScope.suggestContent=$scope.formData.content;
+                            $scope.createQuestion();
+                        }
                     });
-                $('.createForm').fadeOut(500);
-                $('.loading.suggest').fadeIn(500);
-                $timeout(function(){
-                    $rootScope.suggestTag=$scope.formData.tag;
-                    $rootScope.suggestTitle=$scope.formData.title;
-                    $rootScope.suggestContent=$scope.formData.content;
-                    $rootScope.listSuggest=listFinal;
-                    $('.loading.suggest').fadeOut();
-                },1000);
-
+                
         };
         // Toogle Content
         $scope.toogleContent=function()
@@ -75,7 +84,6 @@ angular.module('QuestionCtrl',[])
                 $scope.Proccess=true;
                 Question.create({title:$scope.suggestTitle, content:$scope.suggestContent, tag:$scope.suggestTag})
                         .success(function(data) {
-                                $scope.formData = {};
                                 $scope.form.$setPristine();
                                 $scope.Proccess=false;
                                 $('.show-form').fadeOut();
@@ -89,6 +97,14 @@ angular.module('QuestionCtrl',[])
                                 }
                                 socket.emit('new question');
                         });
+                        
+                $rootScope.suggestTag=null;
+                $rootScope.suggestTitle=null;
+                $rootScope.suggestContent=null;
+                
+                $scope.formData.title=null;
+                $scope.formData.tag=null;
+                $scope.formData.content=null;    
         };
         $scope.upload=function () {
             /*begin modal*/

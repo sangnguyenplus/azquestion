@@ -51,7 +51,7 @@
         <div class="suggestQuestion">
           <h3 class="title">Câu hỏi liên quan hiện có trong hệ thống</h3>
           <ul ng-repeat="value in listSuggest | limitTo:5" ng-if="value.title!=null">
-            <li><a ng-bind="value.title"></a></li>
+            <li><a ui-sref="question-detail({id:value._id,slug:'success'})" target="_blank" ng-bind="value.title"></a></li>
           </ul> 
           </div>
         </div>
