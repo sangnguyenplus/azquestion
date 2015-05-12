@@ -9,7 +9,7 @@ var schema = mongoose.Schema({
    questionId: 		{type: ObjectId, ref: 'Question'},
    answerId: 		{type: ObjectId, ref: 'Answer'},
    type:    		{type:'String', required: true},
-   count: 			{type: 'Number', default: 1},
+   content: 		{type: 'String', default: null},
    status:        	{type: 'Boolean', default:false},
    creationDate: 	{type: 'Date', default: Date.now}
 });

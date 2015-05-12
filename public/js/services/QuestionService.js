@@ -17,8 +17,11 @@ angular.module('QuestionService', [])
 		approve : function(id) {
 			return $http.get('/api/question/approve/' + id);
 		},
-		report : function(id){
+		checkReport : function(id){
 			return $http.get('/api/question/report/'+id);
+		},
+		report : function(data){
+			return $http.post('/api/question/report/create', data);
 		}
 	};
 }]);

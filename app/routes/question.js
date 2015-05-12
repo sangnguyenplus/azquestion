@@ -54,7 +54,9 @@ module.exports = function (app, passport) {
      });
 	//Lấy câu hỏi nổi bật - show ở trang chủ
 	app.get('/api/question/popular', function(req, res) {
-        Question.find({status:true}).populate({path: 'userId', select: 'avatar',options: { limit: 5 }})
+        Question.find({status:true}).where('creationDate').gt(new Date()-3600*1000*24*7).populate({path: 'userId', select: 'avatar',options: { limit: 5 }})
+        .select('title creationDate userId')
+        .sort('-score')
         .exec(function(err, questions){
         	if (err)
 				res.send(err)
@@ -551,37 +553,22 @@ module.exports = function (app, passport) {
 		Report.findOne( { $and: [ { questionId: id }, { userReported: req.user._id } ] } ).exec(function(err,data){
 			if(err)
 				res.send(err);
-			if(data==null){
-				Report.findOne({ 'questionId' :  id }, function(err, existReport) {
-		        // nếu có lỗi thì trả về lỗi.
-		        if (err)
-		            return done(err);
+			res.json(data);
+		});
 
-		        if (existReport){
-		        	existReport.count +=1;
-		        	existReport.save(function(err, report){
-		        		if(err)
-		        			res.send(err);
-		        		res.json(report);
-		        	});
-		        }
-
-		        else{
-					Report.create({
-						userReported : req.user._id,
-						questionId : id,
-						type: 'question',
-						creationDate: new Date(),
-					}, function(err, report) {
-						if (err)
-							res.send(err);
-						res.json(report);
-					});
-				}
-				});
-			}
-			else
-				res.send({reported: "true"});
+	});
+	app.post('/api/question/report/create', function(req, res,done) {
+		Report.create({
+			userReported : req.user._id,
+			userId: req.body.userId,
+			questionId : req.body.questionId,
+			content: req.body.content,
+			type: 'question',
+			creationDate: new Date(),
+		}, function(err, report) {
+			if (err)
+				res.send(err);
+			res.json(report);
 		});
 
 	});

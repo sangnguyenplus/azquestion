@@ -29,7 +29,7 @@ angular.module('QuestionCtrl',[])
                         if(listFinal.length != 0)
                         {
                             $('.createForm').hide();
-                            $('.loading.suggest').show();    
+                            $('.loading.suggest').show();
                         }
                         else
                         {
@@ -39,7 +39,7 @@ angular.module('QuestionCtrl',[])
                             $scope.createQuestion();
                         }
                     });
-                
+
         };
         // Toogle Content
         $scope.toogleContent=function()
@@ -97,14 +97,14 @@ angular.module('QuestionCtrl',[])
                                 }
                                 socket.emit('new question');
                         });
-                        
+
                 $rootScope.suggestTag=null;
                 $rootScope.suggestTitle=null;
                 $rootScope.suggestContent=null;
-                
+
                 $scope.formData.title=null;
                 $scope.formData.tag=null;
-                $scope.formData.content=null;    
+                $scope.formData.content=null;
         };
         $scope.upload=function () {
             /*begin modal*/
@@ -202,52 +202,6 @@ angular.module('QuestionCtrl',[])
         $http.get('api/user/vote/all').success(function(all){$scope.listAllVote=all;}).error(function(){console.log('error');});
     $scope.listAllAnswer=[];
     $http.get('api/answer').success(function(answer){$scope.listAllAnswer=answer;}).error(function(){console.log('error');});
-
-    $scope.reportQuestion = function(id){
-        $http.get('/loggedin').success(function(data){
-            if(data!=='0'){
-                appAlert.confirm({title:"Xác nhận",message:"Bạn chắc chắn muốn báo cáo câu hỏi này vi phạm?"},function(isOk){
-                    if(isOk){
-                    Question.report(id)
-                        .success(function(data){
-                            if(data.reported)
-                                flash.error= "Bạn đã báo cáo câu hỏi này vi phạm rồi!";
-                            else
-                            {
-                                $http.get('api/question/detail/'+ id)
-                                .success(function(data){
-                                    $http.get('api/admin').success(function(user)
-                                    {
-                                        for(var i in user)
-                                        {
-                                            var item=user[i];
-                                            Notifi.create({userRecive:item._id,
-                                            userSend:$cookieStore.get('currentUser')._id,
-                                            content:$cookieStore.get('currentUser').displayName+' báo cáo vi phạm câu hỏi '+data.title,
-                                            questionId:id});
-                                            socket.emit('reportQuestion',{userSendName:$cookieStore.get('currentUser').displayName,
-                                            userReciveId:data.userId._id,
-                                            userTitle:data.title,
-                                            questionIds:id});
-                                        }
-                                    });
-                                })
-                                .error(function(){
-                                   console.log("error");
-                                });
-                                flash.success="Báo cáo vi phạm thành công!";
-                            }
-                        })
-                        .error(function(){
-                            console.log('error');
-                        });
-                    }
-                });
-            }
-            else
-                flash.error = "Bạn cần đăng nhập để báo cáo vi phạm";
-        });
-    };
 }])
 .controller('ListQuestionController', ['$scope','$rootScope','$http','flash','$location', 'Question',function($scope,$rootScope, $http,flash,$location, Question) {
     $scope.loading=true;
@@ -660,6 +614,50 @@ $scope.loading=true;
             else{
                 flash.error='Bạn cần đăng nhập để bình chọn !';
             }
+        });
+    };
+    $scope.reportQuestion = function(id, user){
+        $http.get('/loggedin').success(function(data){
+            if(data!=='0'){
+                    Question.checkReport(id)
+                        .success(function(data){
+                            if(data!=null)
+                                flash.error= "Bạn đã báo cáo câu hỏi này vi phạm rồi!";
+                            else{
+                                appAlert.report({title:"Xác nhận",message:"Bạn chắc chắn muốn báo cáo câu hỏi này vi phạm?"},function(isOk){
+                                    if(isOk){
+                                        Question.report({questionId: id, userId: user, content: $('#reportContent').val()})
+                                            .success(function(){
+                                                $http.get('api/question/detail/'+ id)
+                                                    .success(function(data){
+                                                        $http.get('api/admin').success(function(user)
+                                                        {
+                                                            for(var i in user)
+                                                            {
+                                                                var item=user[i];
+                                                                Notifi.create({userRecive:item._id,
+                                                                userSend:$cookieStore.get('currentUser')._id,
+                                                                content:$cookieStore.get('currentUser').displayName+' báo cáo vi phạm câu hỏi '+data.title,
+                                                                questionId:id});
+                                                                socket.emit('reportQuestion',{userSendName:$cookieStore.get('currentUser').displayName,
+                                                                userReciveId:data.userId._id,
+                                                                userTitle:data.title,
+                                                                questionIds:id});
+                                                            }
+                                                        });
+                                                    })
+                                                    .error(function(){
+                                                       console.log("error");
+                                                    });
+                                            });
+                                        flash.success="Báo cáo vi phạm thành công!";
+                                    }
+                                });
+                            }
+                        });
+            }
+            else
+                flash.error = "Bạn cần đăng nhập để báo cáo vi phạm";
         });
     };
 }])

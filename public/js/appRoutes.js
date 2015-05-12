@@ -111,7 +111,7 @@ angular.module('appRoutes',[]).config(['$stateProvider', '$urlRouterProvider','$
 		templateUrl : 'views/public/user/profile.html',
 		controller :'ProfileUserController',
       	title: 'Chi tiết tài khoản',
-      	access: { requiredLogin: true }
+      	access: { requiredLogin: false }
 	})
 	.state('forgot_password', {
 		url: "/thanh-vien/quen-mat-khau.html",

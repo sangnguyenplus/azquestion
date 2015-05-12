@@ -16,9 +16,8 @@
                  <thead>
                      <tr>
                          <th>STT</th>
-                         <th>Người báo cáo</th>
-                         <th>Bài viết</th>
-                         <th>Loại</th>
+                         <th>Nội dung vi phạm</th>
+                         <th>Người vi phạm</th>
                          <th>Ngày tạo</th>
                          <th>Xóa</th>
                      </tr>
@@ -26,9 +25,8 @@
                  <tbody>
                      <tr ng-repeat="item in listReport | orderBy: '-creationDate'|startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit">
                       <td>{{$index+1}}</td>
-                      <td><a ui-sref="system-report-detail({id:item._id})" ng-bind="item.userReported.displayName"></a></td>
-                      <td ng-bind="item.questionId.title" class="hidden-xs"></td>
-                      <td ng-bind="item.type"></td>
+                      <td ng-bind="item.content" class="hidden-xs"></td>
+                      <td><a ui-sref="profile({id:item.userId._id})" target="_blank" ng-bind="item.userId.displayName"></a></td>
                       <td ng-bind="item.creationDate| toDate | date:'dd/MM/yyyy'"></td>
                       <td><button type="button" ng-click="deleteReport(a._id,'system/reports')" class="btn btn-danger"><i class="fa fa-trash-o"></i> Xóa</button></td>
                      </tr>

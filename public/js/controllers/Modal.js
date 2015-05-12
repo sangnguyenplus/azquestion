@@ -21,6 +21,17 @@ controller('modal.alert',['$scope', '$modalInstance','data', function($scope, $m
     $modalInstance.dismiss('cancel');
   };
 }])
+.controller('modal.report',['$scope', '$modalInstance','data',function($scope, $modalInstance,data)
+{
+    $scope.data=data;
+    $scope.ok = function () {
+    $modalInstance.close();
+  };
+
+  $scope.cancel = function () {
+    $modalInstance.dismiss('cancel');
+  };
+}])
 .controller('modal.uploadImage',['$scope', '$modalInstance','$upload',function($scope, $modalInstance,$upload)
 {
   $scope.uploadper=0;

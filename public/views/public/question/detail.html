@@ -44,7 +44,7 @@
          <div class="btn-group pull-right" style="top:-5px">
           <i class="fa fa-angle-down dropdown-toggle btn-action-caret" data-toggle="dropdown" aria-expanded="false"></i>
           <ul class="dropdown-menu menu-action" role="menu">
-            <li><a style="cursor: pointer" ng-click="reportQuestion(questionDetail._id)">Báo cáo vi phạm</a></li>
+            <li><a style="cursor: pointer" ng-click="reportQuestion(questionDetail._id, questionDetail.userId._id)">Báo cáo vi phạm</a></li>
           </ul>
         </div>
         <div class="clearfix"></div>
@@ -153,7 +153,7 @@
                             <i class="fa fa-trash-o"></i> Xóa
                          </button>
                        </span>
-                       <button class="btn btn-sm btn-submit"  ng-show="currentUser._id!=a.userId._id" type="button" ng-click="reportAnswer(a._id)">
+                       <button class="btn btn-sm btn-submit"  ng-show="currentUser._id!=a.userId._id" type="button" ng-click="reportAnswer(a._id, a.userId._id)">
                           <i class="fa fa-flag"></i>
                           <md-tooltip md-direction="top">Báo cáo vi phạm câu trả lời này</md-tooltip>
                         </button>
