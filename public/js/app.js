@@ -124,3 +124,16 @@ app.run([
 app.factory('socket', function (socketFactory) {
   return socketFactory();
 });
+
+app.config(function($mdIconProvider) {
+    $mdIconProvider
+      .icon('message', 'images/icons/message.svg', 24)
+  })
+.run(function($http, $templateCache) {
+    var urls = [
+      'images/icons/message.svg',
+    ];
+    angular.forEach(urls, function(url) {
+      $http.get(url, {cache: $templateCache});
+    });
+  });

@@ -479,3 +479,4 @@ a{outline: none !important;}
 
 .answer-content{max-width: 70%; padding: 0 15px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;}
 md-tabs md-content.md-default-theme{padding-left: 0;}
+md-icon.md-default-theme.md-hue-3{outline: none;}
