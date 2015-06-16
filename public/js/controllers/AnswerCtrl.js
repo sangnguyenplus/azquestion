@@ -8,11 +8,11 @@ angular.module('AnswerCtrl',[])
     $scope.entryLimit = 10;
 	$http.get('api/answer/getAll')
 		.success(function(list){
-			$scope.listAnswer=list;
+			$rootScope.listAnswer=list;
 		})
 		.error(function(){
 			console.log('error');
-		});
+		});		
 	$scope.deleteAnswer = function(id, path) {
         appAlert.confirm({title:"Xóa",message:"Bạn chắc chắn muốn xóa câu trả lời này ?"},function(isOk){
             if(isOk){
@@ -28,6 +28,8 @@ angular.module('AnswerCtrl',[])
 							.error(function(){
 								console.log('error');
 							});
+							socket.emit('total answer');
+							socket.emit('new answer');
                     });
                 }
             });
@@ -47,6 +49,7 @@ angular.module('AnswerCtrl',[])
 						        });
 		        		});
 		        	flash.success = "Bạn đã đánh dấu câu trả lời chính xác!";
+		        	socket.emit('new answer');
 		        }
 		    });
         };
@@ -170,13 +173,23 @@ angular.module('AnswerCtrl',[])
 		});
 }])
 
-.controller('CountAnswerController',['$scope','$http', 'Answer', function($scope,$http, Answer) {
+.controller('CountAnswerController',['$scope','socket','$rootScope','$http', 'Answer', function($scope,socket,$rootScope,$http, Answer) {
     /*Đếm số câu trả lời trong hệ thống*/
     $http.get('api/answer/count')
     .success(function(data){
-        $scope.countAnswer=data;
+        $rootScope.countAnswer=data;
     })
     .error(function(){
         console.log("error");
+    });
+    socket.on('total answer',function()
+    {
+    	$http.get('api/answer/count')
+	    .success(function(data){
+	        $rootScope.countAnswer=data;
+	    })
+	    .error(function(){
+	        console.log("error");
+	    });
     });
 }]);

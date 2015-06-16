@@ -364,6 +364,8 @@ $scope.loading=true;
                                     $scope.Proccess=false;
                                     $('.show-form').fadeOut();
                                     flash.success="Gửi trả lời thành công!";
+                                    socket.emit('new answer');
+                                    socket.emit('total answer');
                                     $http.get('api/findAnswers/'+ question_id)
                                         .success(function(data){
                                           $scope.listAnswerQuestion=data;
@@ -377,7 +379,7 @@ $scope.loading=true;
                                         })
                                         .error(function(){
                                             console.log('error');
-                                        });
+                                        });                                              
                             });
             }
             else{
@@ -385,6 +387,7 @@ $scope.loading=true;
                     $scope.Proccess=false;
             }
         };
+         
     $scope.deleteAnswer = function(id) {
         appAlert.confirm({title:"Xóa",message:"Bạn chắc chắn muốn xóa câu trả lời này ?"},function(isOk){
             if(isOk){
@@ -399,6 +402,7 @@ $scope.loading=true;
                             .error(function(){
                             console.log("error");
                             });
+                            socket.emit('total answer');
                     });
                 }
             });
@@ -414,6 +418,37 @@ $scope.loading=true;
         .error(function(){
             console.log('error');
         });
+        socket.on('new answer',function()
+        {            
+            $http.get('api/findAnswers/'+ question_id)
+            .success(function(data){
+                $scope.listAnswerQuestion=data;
+            })
+            .error(function(){
+                console.log("error");
+            });
+            $http.get('api/answer/count/'+question_id)
+            .success(function(data){
+                $scope.numberAnswer=data;
+            })
+            .error(function(){
+                console.log('error');
+            });
+            $http.get('api/user/vote')
+            .success(function(vote){
+                $scope.listVote=vote;
+            })
+            .error(function() {
+                console.log('error');
+            });
+            $http.get('api/user/vote/all')
+            .success(function(all){
+                $scope.listAllVote=all;
+            })
+            .error(function(){
+                console.log('error');
+            });
+        }); 
         $scope.editQuestion = function(){
             $scope.Proccess=true;
             if (!$.isEmptyObject($scope.questionData)) {
@@ -661,15 +696,29 @@ $scope.loading=true;
         });
     };
 }])
-.controller('CountQuestionController',['$scope','$http', 'Question', function($scope,$http, Question) {
+.controller('CountQuestionController',['$scope','socket','$rootScope','$http', 'Question', function($scope,socket,$rootScope,$http, Question) {
     /*Đếm số câu hỏi trong hệ thống*/
     $http.get('api/question/count')
     .success(function(data){
-        $scope.countQuestion=data;
+        $rootScope.countQuestion=data;
+
     })
     .error(function(){
         console.log("error");
     });
+    // Total Question
+        socket.on('new question',function()
+        {
+            console.log('Emit Total Question');
+            $http.get('api/question/count')
+            .success(function(data){
+                $rootScope.countQuestion=data;
+                console.log(data);
+            })
+            .error(function(){
+                console.log("error");
+            });
+        });    
 }])
 .controller('PopularQuestionController',['$scope','$http', 'Question', function($scope,$http, Question) {
 /*Lấy câu hỏi phổ biến*/

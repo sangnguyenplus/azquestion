@@ -11,7 +11,7 @@ angular.module('TagCtrl',[])
     $scope.maxSize = 5; /*//pagination max size*/
     $scope.entryLimit = 8; /*//max rows for data table*/
 }])
-.controller('ListTagController',['$scope','Tag', function($scope,Tag) {
+.controller('ListTagController',['$scope','Tag','socket','flash','appAlert', function($scope,Tag,socket,flash,appAlert) {
     /*Lấy toàn bộ tag*/
     $scope.loading=true;
     $scope.allTag=[];
@@ -48,6 +48,7 @@ angular.module('TagCtrl',[])
                                 flash.error="Tag này đã được sử dụng.";
                                 $scope.Proccess=false;
                             });
+                            socket.emit('total tag');
             }
             else{
                     flash.error="Bạn cần điền đầy đủ các mục.";
@@ -63,6 +64,7 @@ angular.module('TagCtrl',[])
                         $scope.allTag = data;
                         flash.success="Xóa thành công!";
                 });
+                socket.emit('total tag');
         }
     });
     };
@@ -153,13 +155,23 @@ angular.module('TagCtrl',[])
             }
     };
 }])
-.controller('CountTagController',['$scope','$http', 'Tag', function($scope,$http, Tag) {
+.controller('CountTagController',['$scope','$rootScope','socket','$http', 'Tag', function($scope,$rootScope,socket,$http, Tag) {
     /*Đếm số câu hỏi trong hệ thống*/
     $http.get('api/tag/count')
     .success(function(data){
-        $scope.countTag=data;
+        $rootScope.countTag=data;
     })
     .error(function(){
         console.log("error");
+    });
+    socket.on('total tag',function()
+    {
+        $http.get('api/tag/count')
+        .success(function(data){
+            $rootScope.countTag=data;
+        })
+        .error(function(){
+            console.log("error");
+        });
     });
 }]);

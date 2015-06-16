@@ -183,4 +183,16 @@ io.on('connection', function (socket) {
   socket.on('reportQuestion', function(data){
     socket.broadcast.emit('reportQuestion', data);
   });
+  // Total answer
+  socket.on('total answer', function(){
+    io.sockets.emit('total answer');
+  });
+  // Total tag
+  socket.on('total tag', function(){
+    io.sockets.emit('total tag');
+  });
+  // New answer
+  socket.on('new answer', function(){
+    io.sockets.emit('new answer');
+  });
 });
