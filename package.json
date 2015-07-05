@@ -4,6 +4,7 @@
   "author": "SangNguyen",
   "main": "server.js",
   "dependencies": {
+	"bower": "*",
     "async": "^0.9.0",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "~1.4.2",
@@ -39,7 +40,7 @@
   "scripts": {
     "start": "grunt dev",
     "test": "grunt test",
-    "postinstall": "bower install"
+    "postinstall": "./node_modules/bower/bin/bower install"
   },
   "engines": {
     "node": "0.10.x",
