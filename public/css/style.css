@@ -46,7 +46,7 @@ Version: 1.0
 
 }
 
-html{min-height: 100%;position: relative;}
+html{min-height: 100%;position: relative;background: #f1f1f1;}
 body {color: #333;font-size: 13px; font-family: 'RobotoRegular'; background: #f1f1f1 !important; padding-bottom: 60px;}
 .container{max-width: 1200px;}
 a{outline: none;text-decoration: none !important;color: #1d9977}
