@@ -2,15 +2,15 @@ angular.module('BadgeCtrl',[])
 
 .controller('BadgeController',['$scope','$rootScope','$cookieStore','$state', '$http','flash','$modal','appAlert', 'Badge', function($scope,$rootScope,$cookieStore,$state, $http,flash,$modal,appAlert, Badge) {
     $scope.loading=true;
-	Badge.get()
-		.success(function(data){
-			$scope.listBadge=data;
+    Badge.get()
+        .success(function(data){
+            $scope.listBadge=data;
             $scope.loading=false;
-		})
-		.error(function() {
-			console.log('error');
-		});
-	$scope.createBadge= function() {
+        })
+        .error(function() {
+            console.log('error');
+        });
+    $scope.createBadge= function() {
             $scope.Proccess=true;
             /*Kiểm tra dữ liệu rỗng nếu form rỗng thì không làm gì cả*/
             if (!$.isEmptyObject($scope.formData)) {
@@ -28,12 +28,12 @@ angular.module('BadgeCtrl',[])
 
                             })
                             .error(function() {
-                            	flash.error="Danh hiệu này đã được sử dụng.";
-			                    $scope.Proccess=false;
+                                flash.error="Danh hiệu này đã được sử dụng.";
+                                $scope.Proccess=false;
                             });
             }
             else{
-            	 	flash.error="Bạn cần điền đầy đủ các mục.";
+                    flash.error="Bạn cần điền đầy đủ các mục.";
                     $scope.Proccess=false;
             }
     };

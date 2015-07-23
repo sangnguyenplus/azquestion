@@ -2,13 +2,13 @@ angular.module('SystemCtrl',[])
 
 .controller('SystemController',['$scope','$rootScope','$cookieStore','$state', '$http','flash','$modal','appAlert', 'System', function($scope,$rootScope,$cookieStore,$state, $http,flash,$modal,appAlert, System) {
     $scope.loading=true;
-	System.get().success(function(data){
-		$scope.systemData=data;
+    System.get().success(function(data){
+        $scope.systemData=data;
         $scope.loading=false;
-	});
+    });
 
-	$scope.editSystemSetting=function(){
-		if (!$.isEmptyObject($scope.systemData)) {
+    $scope.editSystemSetting=function(){
+        if (!$.isEmptyObject($scope.systemData)) {
 
                     System.edit($scope.systemData)
                             .success(function(data) {
@@ -21,5 +21,5 @@ angular.module('SystemCtrl',[])
                     flash.error="Bạn phải điền đầy đủ nội dung.";
                     $scope.Proccess=false;
             }
-	};
+    };
 }]);
