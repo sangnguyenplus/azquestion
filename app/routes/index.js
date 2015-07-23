@@ -10,14 +10,14 @@ var notifi = require('./notifi');
 var report = require('./report');
 /*var CronJob = require('cron').CronJob;
 try {
-   new CronJob('00 13 17 * * * *', function() {
-   console.log('You will see this message every 17:06 in Vietnam');
-  }, function () {
-  },
-  true,
-  'Asia/Ho_Chi_Minh'
+     new CronJob('00 13 17 * * * *', function() {
+     console.log('You will see this message every 17:06 in Vietnam');
+    }, function () {
+    },
+    true,
+    'Asia/Ho_Chi_Minh'
 )} catch(ex) {
-    console.log("cron pattern not valid");
+        console.log("cron pattern not valid");
 }*/
 
 
@@ -26,27 +26,27 @@ var mongoose = require('mongoose');
 
 module.exports = function (app, passport) {
 
-  // Quản lý câu hỏi
-  question(app);
-  //Quản lý thành viên
-  user(app);
-  //Quản lý các câu trả lời
-  answer(app);
-  //Quản lý việc đăng ký, đăng nhập, đăng xuất của thành viên.
-  login(app,passport);
-  //Quản lý tag
-  tag(app);
-  //Quản lý danh hiệu
-  badge(app);
-  //Quản lý các thông tin cấu hình trên hệ thống
-  system(app);
-  chat(app);
-  notifi(app);
-  report(app);
+    // Quản lý câu hỏi
+    question(app);
+    //Quản lý thành viên
+    user(app);
+    //Quản lý các câu trả lời
+    answer(app);
+    //Quản lý việc đăng ký, đăng nhập, đăng xuất của thành viên.
+    login(app,passport);
+    //Quản lý tag
+    tag(app);
+    //Quản lý danh hiệu
+    badge(app);
+    //Quản lý các thông tin cấu hình trên hệ thống
+    system(app);
+    chat(app);
+    notifi(app);
+    report(app);
 
 
-  //Tất cả request phải đi qua trang index.html để xử lý.
-  app.get('*', function(req, res){
-    res.sendfile('public/index.html');
-  });
+    //Tất cả request phải đi qua trang index.html để xử lý.
+    app.get('*', function(req, res){
+        res.sendfile('public/index.html');
+    });
 };

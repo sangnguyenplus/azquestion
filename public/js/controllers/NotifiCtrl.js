@@ -5,37 +5,37 @@ angular.module('NotifiCtrl',[])
 
     $scope.updatecount=function()
     {
-    	$http.get('api/notifi/update').success(function(data)
-    	{
-    		$http.get('api/notifi/count/'+$cookieStore.get('currentUser')._id)
+        $http.get('api/notifi/update').success(function(data)
+        {
+            $http.get('api/notifi/count/'+$cookieStore.get('currentUser')._id)
             .success(function(data)
             {
                 $scope.sfc=data;
             });
-    	})
-		.error(function()
-		{
-		  	console.log("error");
-		});
+        })
+        .error(function()
+        {
+            console.log("error");
+        });
     }
     // Xử lý Socket
     // Vote Up
     socket.on('voteup',function(data)
     {
-    	if($cookieStore.get('currentUser')._id == data.userReciveId)
-    	{
-    		flash.success="<a href='cau-hoi/chi-tiet/"+data.questionIds+"/'>"+data.userSendName+" đã thích câu hỏi "+data.userTitle+"</a>";
-    	}
-    	$http.get('api/notifi/detail/'+$cookieStore.get('currentUser')._id)
-    	.success(function(data)
-    	{
-    		$scope.listNotifi=data;
-    	});
-    	$http.get('api/notifi/count/'+$cookieStore.get('currentUser')._id)
-	    .success(function(data)
-	    {
-	    	$scope.sfc=data;
-	    });
+        if($cookieStore.get('currentUser')._id == data.userReciveId)
+        {
+            flash.success="<a href='cau-hoi/chi-tiet/"+data.questionIds+"/'>"+data.userSendName+" đã thích câu hỏi "+data.userTitle+"</a>";
+        }
+        $http.get('api/notifi/detail/'+$cookieStore.get('currentUser')._id)
+        .success(function(data)
+        {
+            $scope.listNotifi=data;
+        });
+        $http.get('api/notifi/count/'+$cookieStore.get('currentUser')._id)
+        .success(function(data)
+        {
+            $scope.sfc=data;
+        });
     });
     // createAnswer
     socket.on('createAnswer',function(data)
@@ -143,14 +143,14 @@ angular.module('NotifiCtrl',[])
         });
     });
     // Get Notification
-  	$http.get('api/notifi/detail/'+$cookieStore.get('currentUser')._id)
+    $http.get('api/notifi/detail/'+$cookieStore.get('currentUser')._id)
     .success(function(data)
     {
-    	$scope.listNotifi=data;
+        $scope.listNotifi=data;
     });
     $http.get('api/notifi/count/'+$cookieStore.get('currentUser')._id)
     .success(function(data)
     {
-    	$scope.sfc=data;
+        $scope.sfc=data;
     });
 }]);
