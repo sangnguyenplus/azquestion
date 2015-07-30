@@ -379,7 +379,7 @@ $scope.loading=true;
                                         })
                                         .error(function(){
                                             console.log('error');
-                                        });                                              
+                                        });
                             });
             }
             else{
@@ -387,7 +387,7 @@ $scope.loading=true;
                     $scope.Proccess=false;
             }
         };
-         
+
     $scope.deleteAnswer = function(id) {
         appAlert.confirm({title:"Xóa",message:"Bạn chắc chắn muốn xóa câu trả lời này ?"},function(isOk){
             if(isOk){
@@ -419,7 +419,7 @@ $scope.loading=true;
             console.log('error');
         });
         socket.on('new answer',function()
-        {            
+        {
             $http.get('api/findAnswers/'+ question_id)
             .success(function(data){
                 $scope.listAnswerQuestion=data;
@@ -448,7 +448,7 @@ $scope.loading=true;
             .error(function(){
                 console.log('error');
             });
-        }); 
+        });
         $scope.editQuestion = function(){
             $scope.Proccess=true;
             if (!$.isEmptyObject($scope.questionData)) {
@@ -718,7 +718,7 @@ $scope.loading=true;
             .error(function(){
                 console.log("error");
             });
-        });    
+        });
 }])
 .controller('PopularQuestionController',['$scope','$http', 'Question', function($scope,$http, Question) {
 /*Lấy câu hỏi phổ biến*/
