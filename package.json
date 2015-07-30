@@ -4,10 +4,10 @@
   "author": "SangNguyen",
   "main": "server.js",
   "dependencies": {
-	"bower": "*",
     "async": "^0.9.0",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "~1.4.2",
+    "bower": "*",
     "connect-busboy": "0.0.1",
     "connect-flash": "~0.1.1",
     "connect-multiparty": "^1.2.4",
@@ -30,7 +30,7 @@
     "passport-local": "~0.1.6",
     "rand-token": "^0.2.1",
     "socket.io": "0.9.16",
-    "validator": "~1.1.1"
+    "validator": "^3.43.0"
   },
   "repository": {
     "type": "git",
