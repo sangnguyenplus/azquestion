@@ -1,5 +1,6 @@
 angular.module('appServices', [])
-.service('DataAccess',['$http', '$q', function($http, $q) {
+
+.service('DataAccess', ['$http', '$q', function($http, $q) {
     var files = {};
 
     this.loadTag = function(name) {
@@ -22,39 +23,42 @@ angular.module('appServices', [])
         return deferred.promise;
     };
 }])
-.service('appAlert',['$modal','$http', function($modal,$http) {
-    this.alert=function(data,callback) {
+
+.service('appAlert', ['$modal', '$http', function($modal, $http) {
+    this.alert = function(data, callback) {
         /*begin modal*/
         var modalInstance = $modal.open({
             templateUrl: '/views/modal/alert.html',
             controller: 'modal.alert',
             backdrop:'static',
-            /*scope:$scope,*/
             resolve: {
                 data: function () {
                     return data;
                 }
             }
         });
+
         modalInstance.result.then(function () {
+            // do something
         }, function () {
+            // do something
         });
         /*end modal*/
     };
 
-    this.confirm=function(data,callback) {
+    this.confirm = function(data, callback) {
         /*begin modal*/
         var modalInstance = $modal.open({
             templateUrl: '/views/modal/confirm.html',
             controller: 'modal.confirm',
             backdrop:'static',
-            /*scope:$scope,*/
             resolve: {
                 data: function () {
                     return data;
                 }
             }
         });
+
         modalInstance.result.then(function () {
             return callback(true);
         }, function () {
@@ -62,19 +66,19 @@ angular.module('appServices', [])
         });
         /*end modal*/
     };
-    this.report=function(data,callback) {
+    this.report = function(data,callback) {
         /*begin modal*/
         var modalInstance = $modal.open({
             templateUrl: '/views/modal/report.html',
             controller: 'modal.report',
             backdrop:'static',
-            /*scope:$scope,*/
             resolve: {
                 data: function () {
                     return data;
                 }
             }
         });
+
         modalInstance.result.then(function () {
             return callback(true);
         }, function () {

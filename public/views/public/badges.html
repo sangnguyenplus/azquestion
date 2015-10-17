@@ -1,87 +1,86 @@
 <div class="text-center" style="padding-top: 80px; min-height: 700px; background-color: #fff;" ng-show="loading">
-<md-progress-circular class="md-hue-2" md-mode="indeterminate"></md-progress-circular>
-<p>Đang tải dữ liệu</p>
+    <md-progress-circular class="md-hue-2" md-mode="indeterminate"></md-progress-circular>
+    <p>Đang tải dữ liệu</p>
 </div>
 <div class="background-main-content" ng-hide="loading">
-   <div class="row select-category">
-<div class="col-md-12 current-category">
-   <span><i class="fa fa-trophy"></i> Danh hiệu</span>
+    <div class="row select-category">
+        <div class="col-md-12 current-category">
+            <span><i class="fa fa-trophy"></i> Danh hiệu</span>
+        </div>
+    </div>
+    <!-- END SELECT-CATEGORY -->
+    <div class="row points-system">
+        <div class="col-md-12">
+            <h3>Hệ thống điểm</h3>
+            <p>Bạn sẽ được nhận điểm khi thực hiện một số việc dưới đây.</p>
+        </div>
+        <div class="clearfix"></div>
+        <ul class="points-define">
+            <li class="col-md-3 col-xs-6">
+                <div>
+                    <span class="points-count">+2</span>
+                    <span class="star"><i class="fa fa-star"></i><br>Tạo câu hỏi mới</span>
+                </div>
+            </li>
+            <li class="col-md-3 col-xs-6">
+                <div>
+                    <span class="points-count">+1</span>
+                    <span class="star"><i class="fa fa-star"></i><br>Câu hỏi được thích</span>
+                </div>
+            </li>
+            <li class="col-md-3 col-xs-6">
+                <div>
+                    <span class="points-count">+1</span>
+                    <span class="star"><i class="fa fa-star"></i><br>Trả lời được thích</span>
+                </div>
+            </li>
+            <li class="col-md-3 col-xs-6">
+                <div>
+                    <span class="points-count">+5</span>
+                    <span class="star"><i class="fa fa-star"></i><br>Câu trả lời chính xác</span>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <!-- END POINTS-SYSTEM -->
+    <div class="row badges-system">
+        <div class="col-md-12">
+            <h3>Hệ thống danh hiệu</h3>
+            <p>Danh hiệu thể hiện mức độ uy tín của bạn và tùy thuộc vào số điểm bạn đang có.</p>
+        </div>
+        <div class="col-xs-12">
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>STT</th>
+                        <th>Tên danh hiệu</th>
+                        <th>Số điểm</th>
+                        <th>Mô tả</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="b in listBadge | orderBy:'score'">
+                        <td>{{$index+1}}</td>
+                        <td><a href="#"><span ng-bind="b.name" class="user-badge" style="background: {{b.color}}"></span></a></td>
+                        <td ng-bind="b.score"></td>
+                        <td ng-bind="b.description"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
-</div>
-<!-- END SELECT-CATEGORY -->
-<div class="row points-system">
-<div class="col-md-12">
-   <h3>Hệ thống điểm</h3>
-   <p>Bạn sẽ được nhận điểm khi thực hiện một số việc dưới đây.</p>
-</div>
-<div class="clearfix"></div>
-<ul class="points-define">
-   <li class="col-md-3 col-xs-6">
-      <div>
-         <span class="points-count">+2</span>
-         <span class="star"><i class="fa fa-star"></i><br>Tạo câu hỏi mới</span>
-      </div>
-   </li>
-   <li class="col-md-3 col-xs-6">
-      <div>
-         <span class="points-count">+1</span>
-         <span class="star"><i class="fa fa-star"></i><br>Câu hỏi được thích</span>
-      </div>
-   </li>
-   <li class="col-md-3 col-xs-6">
-      <div>
-         <span class="points-count">+1</span>
-         <span class="star"><i class="fa fa-star"></i><br>Trả lời được thích</span>
-      </div>
-   </li>
-   <li class="col-md-3 col-xs-6">
-      <div>
-         <span class="points-count">+5</span>
-         <span class="star"><i class="fa fa-star"></i><br>Câu trả lời chính xác</span>
-      </div>
-   </li>
-</ul>
-</div>
-<!-- END POINTS-SYSTEM -->
-<div class="row badges-system">
-<div class="col-md-12">
-   <h3>Hệ thống danh hiệu</h3>
-   <p>Danh hiệu thể hiện mức độ uy tín của bạn và tùy thuộc vào số điểm bạn đang có.</p>
-</div>
-<div class="col-xs-12">
-   <table class="table table-bordered table-hover">
-     <thead>
-         <tr>
-             <th>STT</th>
-             <th>Tên danh hiệu</th>
-             <th>Số điểm</th>
-             <th>Mô tả</th>
-         </tr>
-     </thead>
-     <tbody>
-         <tr ng-repeat="b in listBadge | orderBy:'score'">
-          <td>{{$index+1}}</td>
-          <td><a href="#"><span ng-bind="b.name" class="user-badge" style="background: {{b.color}}"></span></a></td>
-          <td ng-bind="b.score"></td>
-          <td ng-bind="b.description"></td>
-         </tr>
-     </tbody>
-   </table>
-</div>
-</div>
-</div>
-
 <style>
-   .table th:nth-child(1),
-   .table td:nth-child(1),
-   .table th:nth-child(3),
-   .table td:nth-child(3) {
-    text-align: center;
-    max-width: 100px;
-   }
-   .table th:nth-child(4),
-   .table td:nth-child(4){
-      text-align: left;
-      width: auto;
-   }
+.table th:nth-child(1),
+.table td:nth-child(1),
+.table th:nth-child(3),
+.table td:nth-child(3) {
+text-align: center;
+max-width: 100px;
+}
+.table th:nth-child(4),
+.table td:nth-child(4){
+text-align: left;
+width: auto;
+}
 </style>

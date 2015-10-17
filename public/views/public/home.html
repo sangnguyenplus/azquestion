@@ -1,45 +1,45 @@
 <div class="text-center" style="padding-top: 80px; min-height: 700px; background-color: #fff;" ng-show="loading">
-  <md-progress-circular class="md-hue-2" md-mode="indeterminate"></md-progress-circular>
-  <p>Đang tải dữ liệu</p>
+    <md-progress-circular class="md-hue-2" md-mode="indeterminate"></md-progress-circular>
+    <p>Đang tải dữ liệu</p>
 </div>
 <div class="home-content" ng-hide="loading" ng-controller="QuestionController">
-  <md-list>
+    <md-list>
     <md-list-item ng-repeat="q in listQuestion | orderBy:['-creationDate']|startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit">
-      <a class="md-displayname" ui-sref="profile({ id:q.userId._id, slug: (q.userId.displayName | friendlyUrl)+'.html' })">
+    <a class="md-displayname" ui-sref="profile({ id:q.userId._id, slug: (q.userId.displayName | friendlyUrl)+'.html' })">
         <img alt="{{ q.userId.displayName }}" ng-src="{{ q.userId.avatar }}" class="md-avatar" /> <br>
         <span ng-bind="q.userId.displayName"></span>
-      </a>
-      <div class="col-xs-6 qmain">
+    </a>
+    <div class="col-xs-6 qmain">
         <span ng-if="q.isResolved">
-          <span class="qa-status resolved">
-            <md-tooltip md-direction="top">Đã có câu trả lời chính xác</md-tooltip>
-          </span>
+            <span class="qa-status resolved">
+                <md-tooltip md-direction="top">Đã có câu trả lời chính xác</md-tooltip>
+            </span>
         </span>
-         <a ui-sref="question-detail({id:q._id, slug: (q.title | friendlyUrl)+'.html'})" class="question-title" ng-bind="q.title"></a> <br>
+        <a ui-sref="question-detail({id:q._id, slug: (q.title | friendlyUrl)+'.html'})" class="question-title" ng-bind="q.title"></a> <br>
         <i class="fa fa-calendar"></i> <span ng-bind="q.creationDate| fromNow"></span> <br>
         <span class="list-tag" ng-repeat="tag in listTag" ng-if="tag.questionId==q._id">
-          <a class="q-tag" ui-sref="questions_tag({id: tag.tagId._id, slug: (tag.tagId.tagName | friendlyUrl)+'.html'})">
-          <i class="fa fa-tags"></i>
-           <span ng-bind="tag.tagId.tagName"></span>
-          </a>
+            <a class="q-tag" ui-sref="questions_tag({id: tag.tagId._id, slug: (tag.tagId.tagName | friendlyUrl)+'.html'})">
+                <i class="fa fa-tags"></i>
+                <span ng-bind="tag.tagId.tagName"></span>
+            </a>
         </span> <br>
-      </div>
-      <div class="col-xs-6 info">
-          <div class="col-xs-4">
+    </div>
+    <div class="col-xs-6 info">
+        <div class="col-xs-4">
             <strong><span  ng-bind="listAllVote | countByQuestion: q._id"></span></strong><br>
             <span>Đánh giá</span>
-          </div>
-          <div class="col-xs-4">
+        </div>
+        <div class="col-xs-4">
             <strong><span  ng-bind="listAllFavorite | countByQuestion: q._id"></span></strong><br>
             <span>Theo dõi</span>
-          </div>
-          <div class="col-xs-4">
+        </div>
+        <div class="col-xs-4">
             <strong><span ng-bind="listAllAnswer | countByQuestion: q._id"></span></strong><br>
             <span>Trả lời</span>
-          </div>
-      </div>
+        </div>
+    </div>
     </md-list-item>
-  </md-list>
-  <pagination total-items="listQuestion.length" ng-model="currentPage" max-size="itemsPerPage" class="pagination-sm" boundary-links="false" rotate="false" num-pages="numPages" previous-text="←" next-text="→"></pagination>
-  <!-- / pagination -->
+    </md-list>
+<pagination total-items="listQuestion.length" ng-model="currentPage" max-size="itemsPerPage" class="pagination-sm" boundary-links="false" rotate="false" num-pages="numPages" previous-text="←" next-text="→"></pagination>
+<!-- / pagination -->
 </div>

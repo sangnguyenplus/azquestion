@@ -1,46 +1,45 @@
 <div class="text-center" style="padding-top: 80px; min-height: 700px; background-color: #fff;" ng-show="loading">
-<md-progress-circular class="md-hue-2" md-mode="indeterminate"></md-progress-circular>
-<p>Đang tải dữ liệu</p>
+    <md-progress-circular class="md-hue-2" md-mode="indeterminate"></md-progress-circular>
+    <p>Đang tải dữ liệu</p>
 </div>
 <div class="background-main-content" ng-hide="loading">
-<div class="row select-category">
-   <div class="current-category col-md-12">
-      <div class="pull-left"><span><i class="fa fa-user"></i> Thành viên</span></div>
-      <div class="pull-right">
-        <div class="input-group pull-right">
-      <input type="text" class="form-control" ng-model="search.displayName" placeholder="Tìm kiếm">
-      <span class="input-group-btn">
-        <button class="btn btn-submit" type="button"><i class="fa fa-search"></i></button>
-      </span>
-    </div><!-- /input-group -->
-
-      </div>
-      <div class="clearfix"></div>
-   </div>
-</div>
-<div class="main-user-list">
-<md-list>
-  <md-list-item ng-repeat="u in allUser | filter:search:strict">
-    <img alt="{{ u.displayName }}" ng-src="{{ u.avatar }}" class="md-avatar" />
-    <p>
-      <a ui-sref="profile({ id:u._id, slug: (u.displayName | friendlyUrl)+'.html' })">{{ u.displayName }}</a> 
-      <i class="fa fa-circle status online" tooltip="Đang online" ng-if="listOnline|checkOnline: u.displayName"></i> 
-      <i class="fa fa-circle status offline" tooltip="Đang offline" ng-if="!(listOnline|checkOnline: u.displayName)"></i>
-      <div class="question-cat">
-         <div ng-show="{{u.role!='admin'}}">
-            <strong ng-repeat="b in listBadge | getBadge: u.reputation">
-               <span title="{{u.reputation}}" ng-bind="b.name" class="user-badge" style="background-color:{{b.color}};"></span>
-            </strong>
-            <span class="points"><span ng-bind="u.reputation"></span> Điểm </span>
-         </div>
-         <div ng-show="{{u.role=='admin'}}">
-            <span  class="user-badge" style="background-color:#CA1C23;">Administrator</span>
-            <span class="points"><span ng-bind="u.reputation"></span> Điểm </span>
-         </div>
-      </div>
-   </p>
-    <md-icon ng-if="u._id!=currentUser._id" md-svg-icon="message" ng-click="chat({_id:u._id, username: u.displayName})" aria-label="Open Chat" class="md-secondary md-hue-3" ng-class="{'md-primary': (listOnline|checkOnline: u.displayName)}"></md-icon>
-  </md-list-item>
-</md-list>
-</div>
-</div>
+    <div class="row select-category">
+        <div class="current-category col-md-12">
+            <div class="pull-left"><span><i class="fa fa-user"></i> Thành viên</span></div>
+            <div class="pull-right">
+                <div class="input-group pull-right">
+                    <input type="text" class="form-control" ng-model="search.displayName" placeholder="Tìm kiếm">
+                    <span class="input-group-btn">
+                        <button class="btn btn-submit" type="button"><i class="fa fa-search"></i></button>
+                    </span>
+                    </div><!-- /input-group -->
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        <div class="main-user-list">
+            <md-list>
+            <md-list-item ng-repeat="u in allUser | filter:search:strict">
+            <img alt="{{ u.displayName }}" ng-src="{{ u.avatar }}" class="md-avatar" />
+            <p>
+                <a ui-sref="profile({ id:u._id, slug: (u.displayName | friendlyUrl)+'.html' })">{{ u.displayName }}</a>
+                <i class="fa fa-circle status online" tooltip="Đang online" ng-if="listOnline|checkOnline: u.displayName"></i>
+                <i class="fa fa-circle status offline" tooltip="Đang offline" ng-if="!(listOnline|checkOnline: u.displayName)"></i>
+                <div class="question-cat">
+                    <div ng-show="{{u.role!='admin'}}">
+                        <strong ng-repeat="b in listBadge | getBadge: u.reputation">
+                        <span title="{{u.reputation}}" ng-bind="b.name" class="user-badge" style="background-color:{{b.color}};"></span>
+                        </strong>
+                        <span class="points"><span ng-bind="u.reputation"></span> Điểm </span>
+                    </div>
+                    <div ng-show="{{u.role=='admin'}}">
+                        <span  class="user-badge" style="background-color:#CA1C23;">Administrator</span>
+                        <span class="points"><span ng-bind="u.reputation"></span> Điểm </span>
+                    </div>
+                </div>
+            </p>
+            <md-icon ng-if="u._id!=currentUser._id" md-svg-icon="message" ng-click="chat({_id:u._id, username: u.displayName})" aria-label="Open Chat" class="md-secondary md-hue-3" ng-class="{'md-primary': (listOnline|checkOnline: u.displayName)}"></md-icon>
+            </md-list-item>
+            </md-list>
+        </div>
+    </div>

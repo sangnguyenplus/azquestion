@@ -1,36 +1,36 @@
 <div class="main-questions-list background-main-content" ng-controller="QuestionController">
-  <div class="col-xs-12 current-category">
-    <span><i class="fa fa-question"></i> Câu hỏi với từ khóa <strong ng-bind="tag"></strong></span>
-  </div>
-  <div class="clearfix"></div>
-  <div class="col-xs-12">
-    <div class="alert alert-warning" ng-if="listQuestion.length==0">Thẻ này chưa có bài viết nào.</div>
-  </div>
-  <ul id="main_questions_list" ng-if="listQuestion.length>0" class="tag_question">
-      <li class="question-item" ng-animate="'animate'" ng-repeat="q in listQuestion| orderBy:['-creationDate']|startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit">
-        <div class="q-right-content">
-         <div class="q-ltop-content">
-            <h4><a ui-sref="question-detail({id:q.questionId._id, slug: (q.questionId.title | friendlyUrl)+'.html' })" class="question-title" ng-bind="q.questionId.title"></a></h4>
-            <div class="info">
-              <i class="fa fa-signal"></i><span> Đánh giá: <span  ng-bind="listAllVote | countByQuestion: q.questionId._id"></span></span>
-              <i class="fa fa-star"></i><span> Quan tâm: <span  ng-bind="listAllFavorite | countByQuestion: q.questionId._id"></span></span>
-              <i class="fa fa-comments"></i><span> Trả lời: <span ng-bind="listAllAnswer | countByQuestion: q.questionId._id"></span></span>
-              <i class="fa fa-calendar"></i><span> <span ng-bind="q.questionId.creationDate| fromNow"></span></span>
-          </div>
-         </div>
-         <div class="q-lbtm-content">
-            <div class="question-cat">
-               <ul class="question-tags">
-                  <li ng-repeat="tag in q.tag"><a class="q-tag" href="#" ng-bind="tag.tagName"></a></li>
-               </ul>
-               <div class="clearfix"></div>
+    <div class="col-xs-12 current-category">
+        <span><i class="fa fa-question"></i> Câu hỏi với từ khóa <strong ng-bind="tag"></strong></span>
+    </div>
+    <div class="clearfix"></div>
+    <div class="col-xs-12">
+        <div class="alert alert-warning" ng-if="listQuestion.length==0">Thẻ này chưa có bài viết nào.</div>
+    </div>
+    <ul id="main_questions_list" ng-if="listQuestion.length>0" class="tag_question">
+        <li class="question-item" ng-animate="'animate'" ng-repeat="q in listQuestion| orderBy:['-creationDate']|startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit">
+            <div class="q-right-content">
+                <div class="q-ltop-content">
+                    <h4><a ui-sref="question-detail({id:q.questionId._id, slug: (q.questionId.title | friendlyUrl)+'.html' })" class="question-title" ng-bind="q.questionId.title"></a></h4>
+                    <div class="info">
+                        <i class="fa fa-signal"></i><span> Đánh giá: <span  ng-bind="listAllVote | countByQuestion: q.questionId._id"></span></span>
+                        <i class="fa fa-star"></i><span> Quan tâm: <span  ng-bind="listAllFavorite | countByQuestion: q.questionId._id"></span></span>
+                        <i class="fa fa-comments"></i><span> Trả lời: <span ng-bind="listAllAnswer | countByQuestion: q.questionId._id"></span></span>
+                        <i class="fa fa-calendar"></i><span> <span ng-bind="q.questionId.creationDate| fromNow"></span></span>
+                    </div>
+                </div>
+                <div class="q-lbtm-content">
+                    <div class="question-cat">
+                        <ul class="question-tags">
+                            <li ng-repeat="tag in q.tag"><a class="q-tag" href="#" ng-bind="tag.tagName"></a></li>
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
             </div>
-         </div>
-      </div>
-      <!-- end right content -->
-      <div class="clearfix"></div>
-    </li>
-  </ul>
+            <!-- end right content -->
+            <div class="clearfix"></div>
+        </li>
+    </ul>
 </div>
 <pagination total-items="totalItems" ng-model="currentPage" max-size="itemsPerPage" class="pagination-sm" boundary-links="false" rotate="false" num-pages="numPages" previous-text="←" next-text="→"></pagination>
 <!-- / pagination -->

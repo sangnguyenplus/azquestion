@@ -1,8 +1,7 @@
 <style>
-
 .table th:nth-child(3),
 .table td:nth-child(3){
-  text-align: left;
+text-align: left;
 }
 .table th:nth-child(8),
 .table td:nth-child(8),
@@ -15,53 +14,51 @@ width: 5em;
 }
 .table th:nth-child(5),
 .table td:nth-child(5){
-  width: 10em;
+width: 10em;
 }
 </style>
 <div class="background-main-content">
-<div class="row select-category">
-      <div class="col-xs-6 pull-left current-category">
-         <span><i class="fa fa-users"></i> Quản lý thành viên</span>
-      </div>
-      <div class="pull-right">
-        <a ui-sref="system" class="btn btn-submit btn-return"><i class="fa fa-mail-reply"></i> Quay lại Bảng điều khiển</a>
-      </div>
-      <div class="clearfix"></div>
-   <!-- END SELECT-CATEGORY -->
-   <div ng-controller="UserController">
-         <form id="system-form">
-
-         <div class="col-xs-12">
-             <table class="table table-bordered table-hover">
-                 <thead>
-                     <tr>
-                         <th>STT</th>
-                         <th>Tên hiển thị</th>
-                         <th>Email</th>
-                         <th>Điểm</th>
-                         <th>Nhóm</th>
-                         <th>Ngày tham gia</th>
-                         <th>Quyền hạn</th>
-                         <th>Xóa</th>
-                     </tr>
-                 </thead>
-                 <tbody>
-                     <tr ng-repeat="u in allUser">
-                      <td>{{$index+1}}</td>
-                      <td><a ui-sref="profile({ user_id:u._id })" ng-bind="u.displayName"></a></td>
-                      <td ng-bind="u.email"></td>
-                      <td ng-bind="u.reputation"></td>
-                      <td ng-if="u.role=='user'">Thành viên</td>
-                      <td ng-if="u.role=='admin'">Quản trị viên</td>
-                      <td ng-bind="u.creationDate| toDate | date:'dd/MM/yyyy'"></td>
-                      <td><a ui-sref="system-user-permission({id: u._id})" class="btn btn-submit">Phân quyền</a></td>
-                      <td><button type="button" ng-click="deleteUser(u._id,'system/users')" class="btn btn-danger"><i class="fa fa-trash-o"></i> Xóa</button></td>
-                     </tr>
-                 </tbody>
-             </table>
-         </div>
-
-         </form>
-   </div>
- </div>
+    <div class="row select-category">
+        <div class="col-xs-6 pull-left current-category">
+            <span><i class="fa fa-users"></i> Quản lý thành viên</span>
+        </div>
+        <div class="pull-right">
+            <a ui-sref="system" class="btn btn-submit btn-return"><i class="fa fa-mail-reply"></i> Quay lại Bảng điều khiển</a>
+        </div>
+        <div class="clearfix"></div>
+        <!-- END SELECT-CATEGORY -->
+        <div ng-controller="UserController">
+            <form id="system-form">
+                <div class="col-xs-12">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>STT</th>
+                                <th>Tên hiển thị</th>
+                                <th>Email</th>
+                                <th>Điểm</th>
+                                <th>Nhóm</th>
+                                <th>Ngày tham gia</th>
+                                <th>Quyền hạn</th>
+                                <th>Xóa</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="u in allUser">
+                                <td>{{$index+1}}</td>
+                                <td><a ui-sref="profile({ user_id:u._id })" ng-bind="u.displayName"></a></td>
+                                <td ng-bind="u.email"></td>
+                                <td ng-bind="u.reputation"></td>
+                                <td ng-if="u.role=='user'">Thành viên</td>
+                                <td ng-if="u.role=='admin'">Quản trị viên</td>
+                                <td ng-bind="u.creationDate| toDate | date:'dd/MM/yyyy'"></td>
+                                <td><a ui-sref="system-user-permission({id: u._id})" class="btn btn-submit">Phân quyền</a></td>
+                                <td><button type="button" ng-click="deleteUser(u._id,'system/users')" class="btn btn-danger"><i class="fa fa-trash-o"></i> Xóa</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>

@@ -1,29 +1,29 @@
 <div class="background-main-content">
-<div class="row select-category">
-      <div class="col-xs-6 pull-left current-category">
-         <span><i class="fa fa-comments"></i> Chi tiết trả lời</span>
-      </div>
-      <div class="pull-right">
-        <a ui-sref="system" class="btn btn-submit btn-return"><i class="fa fa-mail-reply"></i> Quay lại Bảng điều khiển</a>
-      </div>
-      <div class="clearfix"></div>
+    <div class="row select-category">
+        <div class="col-xs-6 pull-left current-category">
+            <span><i class="fa fa-comments"></i> Chi tiết trả lời</span>
+        </div>
+        <div class="pull-right">
+            <a ui-sref="system" class="btn btn-submit btn-return"><i class="fa fa-mail-reply"></i> Quay lại Bảng điều khiển</a>
+        </div>
+        <div class="clearfix"></div>
     </div>
-   <!-- END SELECT-CATEGORY -->
-         <div class="col-md-12" style="margin-top:40px;" ng-controller="AnswerDetail">
-            <div class="pull-left">
-              <img ng-src="{{answer.userId.avatar}}" alt="{{answer.userId.displayName}}" class="img-thumbnail" width="60">
-            </div>
-            <div class="pull-left" style="margin-left:10px;">
-              <p><strong ng-bind="answer.userId.displayName"></strong> (<span ng-bind="answer.userId.email"></span>)</p>
-              <p><i class="fa fa-calendar"></i> <span ng-bind="answer.creationDate| toDate | date:'dd/MM/yyyy - hh:mm:ss'"></span></p>
-            </div>
-            <div class="clearfix"></div>
-            <div style="background: #ededed;margin: 30px 0;padding: 20px;border-radius: 4px;">
-              <p marked="answer.content" ng-bind="answer.content"></p>
-            </div>
-            <div class="text-center">
-              <button type="button" ng-click="deleteAnswer(answer._id,'system/answers')" class="btn btn-danger"><i class="fa fa-trash-o"></i> Xóa</button>
-              <a class="btn btn-submit" ui-sref="system-answer"><i class="fa fa-reply"></i> Quay lại</a>
-            </div>
-         </div>
+    <!-- END SELECT-CATEGORY -->
+    <div class="col-md-12" style="margin-top:40px;" ng-controller="AnswerDetail">
+        <div class="pull-left">
+            <img ng-src="{{answer.userId.avatar}}" alt="{{answer.userId.displayName}}" class="img-thumbnail" width="60">
+        </div>
+        <div class="pull-left" style="margin-left:10px;">
+            <p><strong ng-bind="answer.userId.displayName"></strong> (<span ng-bind="answer.userId.email"></span>)</p>
+            <p><i class="fa fa-calendar"></i> <span ng-bind="answer.creationDate| toDate | date:'dd/MM/yyyy - hh:mm:ss'"></span></p>
+        </div>
+        <div class="clearfix"></div>
+        <div style="background: #ededed;margin: 30px 0;padding: 20px;border-radius: 4px;">
+            <p marked="answer.content" ng-bind="answer.content"></p>
+        </div>
+        <div class="text-center">
+            <button type="button" ng-click="deleteAnswer(answer._id,'system/answers')" class="btn btn-danger"><i class="fa fa-trash-o"></i> Xóa</button>
+            <a class="btn btn-submit" ui-sref="system-answer"><i class="fa fa-reply"></i> Quay lại</a>
+        </div>
+    </div>
 </div>

@@ -1,35 +1,35 @@
 <div class="background-main-content " ng-controller="UserController" >
-<div class="row user-statistic" style="padding-top: 20px; padding-bottom: 60px;">
-  <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-      <h3 class="text-center">Thay đổi mật khẩu</h3>
-      <div style="vertical-align:top;">
-         <form name="form" class="form-horizontal">
-            <div class="control-group">
-               <label class="control-label" for="NewPassword">Mật khẩu mới</label>
-               <div class="input-group">
-                  <input type="hidden" ng-model="formData.token">
-                  <input class="form-control" type="password" id="NewPassword" ng-model="formData.NewPassword" placeholder="Mật khẩu mới">
-                  <span class="input-group-addon">
-                  <span id="password-notify"><i class="fa fa-circle-o"></i></span>
-                  </span>
-               </div>
+    <div class="row user-statistic" style="padding-top: 20px; padding-bottom: 60px;">
+        <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+            <h3 class="text-center">Thay đổi mật khẩu</h3>
+            <div style="vertical-align:top;">
+                <form name="form" class="form-horizontal">
+                    <div class="control-group">
+                        <label class="control-label" for="NewPassword">Mật khẩu mới</label>
+                        <div class="input-group">
+                            <input type="hidden" ng-model="formData.token">
+                            <input class="form-control" type="password" id="NewPassword" ng-model="formData.NewPassword" placeholder="Mật khẩu mới">
+                            <span class="input-group-addon">
+                                <span id="password-notify"><i class="fa fa-circle-o"></i></span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="NewPasswordAgain">Xác nhận mật khẩu</label>
+                        <div class="input-group">
+                            <input class="form-control" type="password" id="NewPasswordAgain" name="re_password" password-match="formData.NewPassword" ng-model="formData.NewPasswordAgain" placeholder="Xác nhận mật khẩu">
+                            <span class="input-group-addon">
+                                <span id="password-notify"><i class="fa fa-circle-o"></i></span>
+                            </span>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="form-actions">
+                        <button type="submit" id="changePasswordBtn" ng-click="resetPassword()" class="btn btn-submit" ng-disabled="!form.$dirty || (form.$dirty && form.$invalid)"><i class="fa fa-spinner fa-spin" ng-show="Proccess" ></i> Đổi mật khẩu</button>
+                    </div>
+                </form>
             </div>
-            <div class="control-group">
-               <label class="control-label" for="NewPasswordAgain">Xác nhận mật khẩu</label>
-               <div class="input-group">
-                  <input class="form-control" type="password" id="NewPasswordAgain" name="re_password" password-match="formData.NewPassword" ng-model="formData.NewPasswordAgain" placeholder="Xác nhận mật khẩu">
-                  <span class="input-group-addon">
-                  <span id="password-notify"><i class="fa fa-circle-o"></i></span>
-                  </span>
-               </div>
-            </div>
-            <br>
-            <div class="form-actions">
-            <button type="submit" id="changePasswordBtn" ng-click="resetPassword()" class="btn btn-submit" ng-disabled="!form.$dirty || (form.$dirty && form.$invalid)"><i class="fa fa-spinner fa-spin" ng-show="Proccess" ></i> Đổi mật khẩu</button>
-            </div>
-         </form>
-      </div>
-   </div>
-</div>
-<!-- END USER-STATISTIC -->
+        </div>
+    </div>
+    <!-- END USER-STATISTIC -->
 </div>

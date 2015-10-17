@@ -1,51 +1,49 @@
 <div class="background-main-content">
-<div class="row select-category">
-      <div class="pull-left col-md-6 current-category">
-         <span><i class="fa fa-question"></i> Quản lý danh hiệu</span>
-      </div>
-      <div class="pull-right">
-        <a ui-sref="system" class="btn btn-submit btn-return"><i class="fa fa-mail-reply"></i> Quay lại Bảng điều khiển</a>
-      </div>
-      <div class="clearfix"></div>
+    <div class="row select-category">
+        <div class="pull-left col-md-6 current-category">
+            <span><i class="fa fa-question"></i> Quản lý danh hiệu</span>
+        </div>
+        <div class="pull-right">
+            <a ui-sref="system" class="btn btn-submit btn-return"><i class="fa fa-mail-reply"></i> Quay lại Bảng điều khiển</a>
+        </div>
+        <div class="clearfix"></div>
     </div>
-   <!-- END SELECT-CATEGORY -->
-   <div ng-controller="BadgeController">
-         <form id="system-form">
-
-         <div class="col-xs-12">
-            <a ui-sref="system-badge-add" class="btn btn-submit"><i class="fa fa-plus"></i> Thêm mới</a>
-             <table class="table table-bordered table-hover">
-                 <thead>
-                     <tr>
-                         <th>STT</th>
-                         <th>Tên danh hiệu</th>
-                         <th>Số điểm</th>
-                         <th>Ngày khởi tạo</th>
-                         <th>Cập nhật lần cuối</th>
-                         <th>Xóa</th>
-                     </tr>
-                 </thead>
-                 <tbody>
-                     <tr ng-repeat="b in listBadge | orderBy:'score'">
-                      <td>{{$index+1}}</td>
-                      <td><a ui-sref="system-badge-edit({id:b._id})"><span class="user-badge" style="background: {{b.color}}" ng-bind="b.name"></span></a></td>
-                      <td ng-bind="b.score"></td>
-                      <td ng-bind="b.creationDate| toDate | date:'dd/MM/yyyy'"></td>
-                      <td ng-bind="b.lastEditDate| toDate | date:'dd/MM/yyyy'"></td>
-                      <td><button type="button" ng-click="deleteBadge(b._id,'system/badges')" class="btn btn-danger"><i class="fa fa-trash-o"></i> Xóa</button></td>
-                     </tr>
-                 </tbody>
-             </table>
-         </div>
-
-         </form>
-         <!-- / system form -->
-   </div>
+    <!-- END SELECT-CATEGORY -->
+    <div ng-controller="BadgeController">
+        <form id="system-form">
+            <div class="col-xs-12">
+                <a ui-sref="system-badge-add" class="btn btn-submit"><i class="fa fa-plus"></i> Thêm mới</a>
+                <table class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>Tên danh hiệu</th>
+                            <th>Số điểm</th>
+                            <th>Ngày khởi tạo</th>
+                            <th>Cập nhật lần cuối</th>
+                            <th>Xóa</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="b in listBadge | orderBy:'score'">
+                            <td>{{$index+1}}</td>
+                            <td><a ui-sref="system-badge-edit({id:b._id})"><span class="user-badge" style="background: {{b.color}}" ng-bind="b.name"></span></a></td>
+                            <td ng-bind="b.score"></td>
+                            <td ng-bind="b.creationDate| toDate | date:'dd/MM/yyyy'"></td>
+                            <td ng-bind="b.lastEditDate| toDate | date:'dd/MM/yyyy'"></td>
+                            <td><button type="button" ng-click="deleteBadge(b._id,'system/badges')" class="btn btn-danger"><i class="fa fa-trash-o"></i> Xóa</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </form>
+        <!-- / system form -->
+    </div>
 </div>
 <style>
-    .table th:nth-child(6),
+.table th:nth-child(6),
 .table td:nth-child(6) {
- text-align: center;
- width: 5em;
+text-align: center;
+width: 5em;
 }
 </style>

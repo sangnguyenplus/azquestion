@@ -1,11 +1,11 @@
 angular.module('SystemService', [])
 
-.factory('System',['$http', function($http) {
+.factory('System', ['$http', function($http) {
     return {
-        get: function(){
+        get: function() {
             return $http.get('/api/system');
         },
-        edit : function(systemData) {
+        edit: function(systemData) {
             return $http.post('/api/system/about/edit', systemData);
         }
     };

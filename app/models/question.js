@@ -1,16 +1,15 @@
 var mongoose = require('mongoose');
 var ObjectId = mongoose.Schema.Types.ObjectId;
 
-
 // tạo cấu trúc db
 var schema = mongoose.Schema({
-   title:         {type: 'String', required: true,index:true},
+   title:         {type: 'String', required: true, index:true},
    content:       {type: 'String', required: true},
    userId:        {type: ObjectId, ref: 'User' },
-   viewCount:     {type:'Number',default:0},
-   score:         {type:'Number',default:0},
+   viewCount:     {type: 'Number', default:0},
+   score:         {type: 'Number', default:0},
    activeToken:   {type: 'String', default: null},
-   isResolved:    {type:'Boolean',default:false},
+   isResolved:    {type: 'Boolean',default:false},
    status:        {type: 'Boolean', default:false},
    creationDate:  {type: 'Date', required: true},
    lastEditDate:  {type: 'Date', default: Date.now},

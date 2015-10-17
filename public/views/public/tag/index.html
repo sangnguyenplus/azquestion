@@ -1,32 +1,31 @@
 <div class="text-center" style="padding-top: 80px; min-height: 700px; background-color: #fff;" ng-show="loading">
     <md-progress-circular class="md-hue-2" md-mode="indeterminate"></md-progress-circular>
-<p>Đang tải dữ liệu</p>
+    <p>Đang tải dữ liệu</p>
 </div>
 <div class="background-main-content" ng-hide="loading">
-<div class="row select-category">
-   <div class="current-category col-md-12">
-      <div class="pull-left"><span><i class="fa fa-tags"></i> Tags</span></div>
-      <div class="pull-right">
-        <div class="input-group pull-right">
-      <input type="text" class="form-control" ng-model="search.tagName" placeholder="Tìm kiếm">
-      <span class="input-group-btn">
-        <button class="btn btn-submit" type="button"><i class="fa fa-search"></i></button>
-      </span>
-    </div><!-- /input-group -->
-
-      </div>
-      <div class="clearfix"></div>
-   </div>
-</div>
-<!-- END SELECT-CATEGORY -->
-<div class="main-tag-list">
-   <div class="tags-list ">
-         <div class="tag-item col-md-4 col-sm-6 col-xs-12" ng-repeat="tag in allTag | filter:search:strict">
-            <p><a ui-sref="questions_tag({ id:tag._id, slug: (tag.tagName | friendlyUrl)+'.html' })" class="q-tag"><i class="fa fa-tag"></i><span  ng-bind="tag.tagName"></span> x <span ng-bind="tag.count"></span></a></p>
-            <p class="tag-description" ng-bind="tag.description"></p>
-         </div>
-   </div>
-   <div class="clearfix"></div>
-</div>
-<!-- END MAIN-TAGS-LIST -->
-</div>
+    <div class="row select-category">
+        <div class="current-category col-md-12">
+            <div class="pull-left"><span><i class="fa fa-tags"></i> Tags</span></div>
+            <div class="pull-right">
+                <div class="input-group pull-right">
+                    <input type="text" class="form-control" ng-model="search.tagName" placeholder="Tìm kiếm">
+                    <span class="input-group-btn">
+                        <button class="btn btn-submit" type="button"><i class="fa fa-search"></i></button>
+                    </span>
+                    </div><!-- /input-group -->
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        <!-- END SELECT-CATEGORY -->
+        <div class="main-tag-list">
+            <div class="tags-list ">
+                <div class="tag-item col-md-4 col-sm-6 col-xs-12" ng-repeat="tag in allTag | filter:search:strict">
+                    <p><a ui-sref="questions_tag({ id:tag._id, slug: (tag.tagName | friendlyUrl)+'.html' })" class="q-tag"><i class="fa fa-tag"></i><span  ng-bind="tag.tagName"></span> x <span ng-bind="tag.count"></span></a></p>
+                    <p class="tag-description" ng-bind="tag.description"></p>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <!-- END MAIN-TAGS-LIST -->
+    </div>

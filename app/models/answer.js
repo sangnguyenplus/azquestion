@@ -5,7 +5,7 @@ var schema = mongoose.Schema({
     questionId:     {type: ObjectId, ref: 'Question',index:true },
     userId:         {type: ObjectId, ref: 'User',index:true },
     content:        {type: 'String', required: true},
-    score:          {type:'Number',default:0},
+    score:          {type: 'Number', default:0},
     isAcepted:      {type: 'Boolean', default: false},
     creationDate:   {type: 'Date', default: Date.now},
     lastEditDate:   {type: 'Date', default: Date.now}

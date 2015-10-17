@@ -1,275 +1,273 @@
 <div ng-controller="QuestionController">
-  <div class="text-center" style="padding-top: 80px; min-height: 700px; background-color: #fff;" ng-show="loading">
-    <md-progress-circular class="md-hue-2" md-mode="indeterminate"></md-progress-circular>
-    <p>Đang tải dữ liệu</p>
+    <div class="text-center" style="padding-top: 80px; min-height: 700px; background-color: #fff;" ng-show="loading">
+        <md-progress-circular class="md-hue-2" md-mode="indeterminate"></md-progress-circular>
+        <p>Đang tải dữ liệu</p>
     </div>
-  </div>
-  <div id="question_content" ng-hide="loading" class="row question-main-content question-item background-main-content" style="padding-top: 0;">
+</div>
+<div id="question_content" ng-hide="loading" class="row question-main-content question-item background-main-content" style="padding-top: 0;">
     <div class="inner_question_content">
-
-      <!-- Vote section -->
-      <div class="q-left-content text-center">
-         <ul class="vote">
-            <li ng-class="{voted: (currentUser && (listVote | checkVoteUp: questionDetail._id))}">
-              <span class="fa fa-chevron-circle-up" ng-click="voteUp(questionDetail._id)">
-                <md-tooltip md-direction="right">{{(currentUser && (listVote | checkVoteUp: questionDetail._id))?'Bỏ thích':'Thích'}}</md-tooltip>
-              </span>
-            </li>
-            <li>
-                <h3  ng-bind="questionDetail.score"></h3>
-            </li>
-            <li ng-class="{voted: (currentUser && (listVote | checkVoteDown: questionDetail._id))}">
-              <span class="fa fa-chevron-circle-down" ng-click="voteDown(questionDetail._id)">
-                <md-tooltip md-direction="right">{{(currentUser && (listVote | checkVoteDown: questionDetail._id))?'Bỏ không thích':'Không thích'}}</md-tooltip>
-              </span>
-            </li>
-            <li ng-if="currentUser._id!=questionDetail.userId._id"  ng-class="{active: (currentUser && (listFavorite | checkFavorite: questionDetail._id))}">
-                <span class="fa fa-star" ng-click="Favorite(questionDetail._id)">
-                  <md-tooltip md-direction="right">{{(currentUser && (listFavorite | checkFavorite: questionDetail._id))?'Bỏ theo dõi câu hỏi này':'Theo dõi câu hỏi này'}}</md-tooltip>
-                </span>
-            </li>
-         </ul>
-      </div>
-      <!--// Vote section -->
-      <div class="q-right-content">
-         <div class="question-content">
-           <h3 class="q-title pull-left">
-              <span ng-if="questionDetail.isResolved">
-                <span class="qa-status resolved">
-                  <md-tooltip md-direction="top">Đã có câu trả lời chính xác</md-tooltip>
-                </span>
-              </span>
-               <span ng-bind="questionDetail.title"></span>
-            </h3>
-         <div class="btn-group pull-right" style="top:-5px">
-          <i class="fa fa-angle-down dropdown-toggle btn-action-caret" data-toggle="dropdown" aria-expanded="false"></i>
-          <ul class="dropdown-menu menu-action" role="menu">
-            <li><a style="cursor: pointer" ng-click="reportQuestion(questionDetail._id, questionDetail.userId._id)">Báo cáo vi phạm</a></li>
-          </ul>
-        </div>
-        <div class="clearfix"></div>
-        <div class="info">
-          <i class="fa fa-signal"></i><span> Đánh giá: <span  ng-bind="listAllVote | countByQuestion: questionDetail._id"></span></span>
-          <i class="fa fa-star"></i><span> Theo dõi: <span  ng-bind="listAllFavorite | countByQuestion: questionDetail._id"></span></span>
-          <i class="fa fa-comments"></i><span> Trả lời: <span ng-bind="numberAnswer"></span></span>
-          <i class="fa fa-calendar"></i><span> <span ng-bind="questionDetail.creationDate| fromNow"></span></span>
-        </div>
-         <hr>
-         <div class="q-main" marked="questionDetail.content"><span ng-bind="questionDetail.content"></span></div>
-         <ul class="question-tags">
-           <li ng-repeat="tag in TagQuestion" popover-placement="right" popover="{{tag.tagId.description}}" popover-trigger="mouseenter"><a class="q-tag" style="font-size:13px;" ui-sref="questions_tag({id: tag.tagId._id, slug: (tag.tagId.tagName | friendlyUrl)+'.html'})" ><i class="fa fa-tags"></i> <span ng-bind="tag.tagId.tagName"></span></a></li>
-        </ul>
-         <div>
-          <div class="q-footer" >
-              <button class="btn btn-sm btn-submit"  ng-show="currentUser._id!=questionDetail.userId._id" type="button" ng-click="chat({_id:questionDetail.userId._id, username: questionDetail.userId.displayName})" title="Trò chuyện với người đăng câu hỏi">
-                <i class="fa fa-comment"></i> Chat
-              </button>
-              <button class="btn btn-sm btn-submit" ng-click="showForm('create_answer_form')" type="button" title="Trả lời câu hỏi này">
-                <i class="fa fa-reply"></i> Trả lời
-              </button>
-              <a class="btn btn-sm btn-submit" href="http://www.facebook.com/sharer.php?u={{FullPath}}" title="Chia sẻ với bạn bè trên Facebook" onclick="window.open(this.href,'targetWindow','toolbar=no,location=1,status=1,statusbar=1,menubar=no,scrollbars=yes,resizable=yes,width=1024,height=580');return false;" target="_blank">
-                <i class="fa fa-facebook"></i> Chia sẻ
-              </a>
-              <span ng-show="currentUser._id==questionDetail.userId._id">
-               <button class="btn btn-sm btn-submit" type="button" title="Edit" ng-click="showForm('edit_question_form')">
-                  <i class="fa fa-pencil"></i> Sửa
-               </button>
-              </span>
-              <span ng-show="currentUser._id==questionDetail.userId._id && a.userId.reputation>500">
-                <button class="btn btn-sm btn-submit" type="button" title="Delete" ng-click="deleteQuestion(questionDetail._id,'/')">
-                  <i class="fa fa-trash-o"></i> Xóa
-                </button>
-              </span>
-         </div>
-          </div>
-          <!-- / q-footer -->
-           <div class="user">
-            <img src="{{questionDetail.userId.avatar}}" alt="{{questionDetail.userId.displayName}}" class="md-avatar" />
-            <label><a ui-sref="profile({id:questionDetail.userId._id})">{{questionDetail.userId.displayName}} <i class="fa fa-shield" ng-if="questionDetail.userId.role=='admin'" title="Quản trị viên" alt="Quản trị viên"></i></a></label>
-            <span class="bg">
-                <i class="fa fa-circle status online" ng-if="listOnline|checkOnline: questionDetail.userId.displayName">
-                    <md-tooltip md-direction="top">Đang online</md-tooltip>
-                </i>
-                <i class="fa fa-circle status offline" ng-if="!(listOnline|checkOnline: questionDetail.userId.displayName)">
-                    <md-tooltip md-direction="top">Đang offline</md-tooltip>
-                </i> Điểm <span ng-bind="questionDetail.userId.reputation"></span>
-            </span>
-          </div>
-          <!-- / user -->
-          <div class="clearfix"></div>
-         <!-- / info -->
-         </div>
-         <div class="clearfix"></div>
-         </div>
-      </div>
-      <div ng-controller="AnswerController">
-            <h3 class="countAnswer">{{listAnswerQuestion.length}} câu trả lời</h3>
-            <!-- ANSWERS LOOP -->
-            <div ng-if="listAnswerQuestion.length>0">
-            <div class="question-item answer-item" ng-repeat="a in listAnswerQuestion |orderBy:['-isAcepted','creationDate']|startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit" >
-               <div class="q-left-content text-center">
-               <!-- vote group -->
-               <ul class="vote">
-                  <li ng-class="{voted: (currentUser && (listVote | checkAnswerVoteUp: a._id))}">
-                    <span class="fa fa-chevron-circle-up" ng-click="voteUp(a._id, questionDetail._id)">
-                      <md-tooltip md-direction="right">{{(currentUser && (listVote | checkAnswerVoteUp: a._id))?'Bỏ thích':'Thích'}}</md-tooltip>
+        <!-- Vote section -->
+        <div class="q-left-content text-center">
+            <ul class="vote">
+                <li ng-class="{voted: (currentUser && (listVote | checkVoteUp: questionDetail._id))}">
+                    <span class="fa fa-chevron-circle-up" ng-click="voteUp(questionDetail._id)">
+                        <md-tooltip md-direction="right">{{(currentUser && (listVote | checkVoteUp: questionDetail._id))?'Bỏ thích':'Thích'}}</md-tooltip>
                     </span>
-                  </li>
-                  <li>
-                      <h3 ng-bind="a.score"></h3>
-                  </li>
-                  <li ng-class="{voted: (currentUser && (listVote | checkAnswerVoteDown: a._id))}">
-                    <span class="fa fa-chevron-circle-down" ng-click="voteDown(a._id, questionDetail._id)">
-                      <md-tooltip md-direction="right">{{(currentUser && (listVote | checkAnswerVoteDown: a._id))?'Bỏ thích':'Thích'}}</md-tooltip>
+                </li>
+                <li>
+                    <h3  ng-bind="questionDetail.score"></h3>
+                </li>
+                <li ng-class="{voted: (currentUser && (listVote | checkVoteDown: questionDetail._id))}">
+                    <span class="fa fa-chevron-circle-down" ng-click="voteDown(questionDetail._id)">
+                        <md-tooltip md-direction="right">{{(currentUser && (listVote | checkVoteDown: questionDetail._id))?'Bỏ không thích':'Không thích'}}</md-tooltip>
                     </span>
-                  </li>
-                  <li ng-if="questionDetail.isResolved!=true" ng-show="(currentUser._id==questionDetail.userId._id && currentUser._id!=a.userId._id) && !a.isAcepted">
-                      <span class="fa fa-check" ng-click="acepted(a._id)">
-                        <md-tooltip md-direction="right">Câu trả lời chính xác</md-tooltip>
-                      </span>
-                  </li>
-                  <li ng-show="a.isAcepted" class="active" >
-                    <span class="fa fa-check" tooltip="Câu trả lời chính xác" style="cursor: auto" tooltip-placement="right"></span>
-                  </li>
-               </ul>
-            </div>
-            <!--// Vote section -->
-               <div class="q-right-content">
-                  <div class="question-content">
-                     <p marked="a.content"><span  ng-bind="a.content"></span></p>
-                   <div>
-                     <div class="q-footer">
-                       <p><span><i class="fa fa-calendar"></i> <small ng-bind="a.creationDate | fromNow"></small></span></p>
-                        <button class="btn btn-sm btn-submit" ng-show="currentUser._id!=a.userId._id" type="button" ng-click="chat({_id:a.userId._id, username: a.userId.displayName})">
-                          <i class="fa fa-comment"></i> Chat
+                </li>
+                <li ng-if="currentUser._id!=questionDetail.userId._id"  ng-class="{active: (currentUser && (listFavorite | checkFavorite: questionDetail._id))}">
+                    <span class="fa fa-star" ng-click="Favorite(questionDetail._id)">
+                        <md-tooltip md-direction="right">{{(currentUser && (listFavorite | checkFavorite: questionDetail._id))?'Bỏ theo dõi câu hỏi này':'Theo dõi câu hỏi này'}}</md-tooltip>
+                    </span>
+                </li>
+            </ul>
+        </div>
+        <!--// Vote section -->
+        <div class="q-right-content">
+            <div class="question-content">
+                <h3 class="q-title pull-left">
+                <span ng-if="questionDetail.isResolved">
+                    <span class="qa-status resolved">
+                        <md-tooltip md-direction="top">Đã có câu trả lời chính xác</md-tooltip>
+                    </span>
+                </span>
+                <span ng-bind="questionDetail.title"></span>
+                </h3>
+                <div class="btn-group pull-right" style="top:-5px">
+                    <i class="fa fa-angle-down dropdown-toggle btn-action-caret" data-toggle="dropdown" aria-expanded="false"></i>
+                    <ul class="dropdown-menu menu-action" role="menu">
+                        <li><a style="cursor: pointer" ng-click="reportQuestion(questionDetail._id, questionDetail.userId._id)">Báo cáo vi phạm</a></li>
+                    </ul>
+                </div>
+                <div class="clearfix"></div>
+                <div class="info">
+                    <i class="fa fa-signal"></i><span> Đánh giá: <span  ng-bind="listAllVote | countByQuestion: questionDetail._id"></span></span>
+                    <i class="fa fa-star"></i><span> Theo dõi: <span  ng-bind="listAllFavorite | countByQuestion: questionDetail._id"></span></span>
+                    <i class="fa fa-comments"></i><span> Trả lời: <span ng-bind="numberAnswer"></span></span>
+                    <i class="fa fa-calendar"></i><span> <span ng-bind="questionDetail.creationDate| fromNow"></span></span>
+                </div>
+                <hr>
+                <div class="q-main" marked="questionDetail.content"><span ng-bind="questionDetail.content"></span></div>
+                <ul class="question-tags">
+                    <li ng-repeat="tag in TagQuestion" popover-placement="right" popover="{{tag.tagId.description}}" popover-trigger="mouseenter"><a class="q-tag" style="font-size:13px;" ui-sref="questions_tag({id: tag.tagId._id, slug: (tag.tagId.tagName | friendlyUrl)+'.html'})" ><i class="fa fa-tags"></i> <span ng-bind="tag.tagId.tagName"></span></a></li>
+                </ul>
+                <div>
+                    <div class="q-footer" >
+                        <button class="btn btn-sm btn-submit"  ng-show="currentUser._id!=questionDetail.userId._id" type="button" ng-click="chat({_id:questionDetail.userId._id, username: questionDetail.userId.displayName})" title="Trò chuyện với người đăng câu hỏi">
+                        <i class="fa fa-comment"></i> Chat
                         </button>
-                        <span ng-show="currentUser._id==a.userId._id">
-                          <button class="btn btn-sm btn-submit" type="button" title="Edit" ng-click="showForm('create_answer_form')">
-                            <i class="fa fa-pencil"></i> Sửa
-                          </button>
-                       </span>
-                       <span ng-show="currentUser._id==a.userId._id">
-                         <button class="btn btn-sm btn-submit" type="button" title="Delete" ng-click="deleteAnswer(a._id,'/')">
-                            <i class="fa fa-trash-o"></i> Xóa
-                         </button>
-                       </span>
-                       <button class="btn btn-sm btn-submit"  ng-show="currentUser._id!=a.userId._id" type="button" ng-click="reportAnswer(a._id, a.userId._id)">
-                          <i class="fa fa-flag"></i>
-                          <md-tooltip md-direction="top">Báo cáo vi phạm câu trả lời này</md-tooltip>
+                        <button class="btn btn-sm btn-submit" ng-click="showForm('create_answer_form')" type="button" title="Trả lời câu hỏi này">
+                        <i class="fa fa-reply"></i> Trả lời
                         </button>
-                    </div>
-                    <!-- / q-footer -->
-                     <div class="user">
-                      <img src="{{a.userId.avatar}}" alt="{{a.userId.displayName}}" class="md-avatar" />
-                      <label>
-                        <a ui-sref="profile({id:a.userId._id, slug: (a.userId.displayName | friendlyUrl)+'.html'})">
-                          {{a.userId.displayName}} <i class="fa fa-shield" ng-if="a.userId.role=='admin'" title="Quản trị viên" alt="Quản trị viên"></i>
+                        <a class="btn btn-sm btn-submit" href="http://www.facebook.com/sharer.php?u={{FullPath}}" title="Chia sẻ với bạn bè trên Facebook" onclick="window.open(this.href,'targetWindow','toolbar=no,location=1,status=1,statusbar=1,menubar=no,scrollbars=yes,resizable=yes,width=1024,height=580');return false;" target="_blank">
+                            <i class="fa fa-facebook"></i> Chia sẻ
                         </a>
-                      </label>
-                      <span class="bg">
-                        <i class="fa fa-circle status online" ng-if="listOnline|checkOnline: a.userId.displayName">
-                          <md-tooltip md-direction="top">Đang online</md-tooltip>
-                        </i>
-                        <i class="fa fa-circle status offline" ng-if="!(listOnline|checkOnline: a.userId.displayName)">
-                            <md-tooltip md-direction="top">Đang offline</md-tooltip>
-                        </i>
-                        Điểm <span ng-bind="a.userId.reputation"></span>
-                      </span>
+                        <span ng-show="currentUser._id==questionDetail.userId._id">
+                            <button class="btn btn-sm btn-submit" type="button" title="Edit" ng-click="showForm('edit_question_form')">
+                            <i class="fa fa-pencil"></i> Sửa
+                            </button>
+                        </span>
+                        <span ng-show="currentUser._id==questionDetail.userId._id && a.userId.reputation>500">
+                            <button class="btn btn-sm btn-submit" type="button" title="Delete" ng-click="deleteQuestion(questionDetail._id,'/')">
+                            <i class="fa fa-trash-o"></i> Xóa
+                            </button>
+                        </span>
                     </div>
-                    <!-- / user -->
-                    <div class="clearfix"></div>
-                   </div>
-                   <!-- / info -->
-                  </div>
-               </div>
-               <div class="clearfix"></div>
-               <div>
-         </div>
-            <!-- END REPLY-ITEM -->
-         <!-- ANSWERS LOOP -->
-       </div>
-       <hr>
-        <pagination total-items="listAnswerQuestion.length" ng-model="currentPage" max-size="itemsPerPage" class="pagination-sm" boundary-links="false" rotate="false" num-pages="numPages" previous-text="←" next-text="→"></pagination>
-                <!-- / pagination -->
-      </div>
-       </div>
+                </div>
+                <!-- / q-footer -->
+                <div class="user">
+                    <img src="{{questionDetail.userId.avatar}}" alt="{{questionDetail.userId.displayName}}" class="md-avatar" />
+                    <label><a ui-sref="profile({id:questionDetail.userId._id})">{{questionDetail.userId.displayName}} <i class="fa fa-shield" ng-if="questionDetail.userId.role=='admin'" title="Quản trị viên" alt="Quản trị viên"></i></a></label>
+                    <span class="bg">
+                        <i class="fa fa-circle status online" ng-if="listOnline|checkOnline: questionDetail.userId.displayName">
+                        <md-tooltip md-direction="top">Đang online</md-tooltip>
+                        </i>
+                        <i class="fa fa-circle status offline" ng-if="!(listOnline|checkOnline: questionDetail.userId.displayName)">
+                        <md-tooltip md-direction="top">Đang offline</md-tooltip>
+                        </i> Điểm <span ng-bind="questionDetail.userId.reputation"></span>
+                    </span>
+                </div>
+                <!-- / user -->
+                <div class="clearfix"></div>
+                <!-- / info -->
+            </div>
+            <div class="clearfix"></div>
+        </div>
     </div>
-      <div style="background: #fff; padding: 20px;">
-      <div class="pull-left">
-        <button class="btn btn-sm btn-submit" type="button" style="cursor: pointer" ng-click="reportQuestion(questionDetail._id)"><i class="fa fa-exclamation-triangle"></i><span > Báo cáo vi phạm</span></button>
-      </div>
-      <div class="pull-right">
-        <button class="btn btn-sm btn-submit" ng-click="showForm('create_answer_form')" type="button"><i class="fa fa-reply"></i><span > Trả lời</span></button>
-      </div>
-      <div class="clearfix"></div>
-      </div>
-   <!-- END QUESTION-MAIN-CONTENT -->
-    <!-- Modal form Reply -->
-      <div class="show-form create_answer_form" ng-controller="QuestionController"> 
-       <div class="showContent" ng-click="toogleContent()"><p>Câu trả lời đang được soạn. Nhấn vào để tiếp tục</p></div>
-        <button class="toogleContent" ng-click="toogleContent()"><i class="fa fa-chevron-down"></i></button>
-        <form name="create_answer_form" ng-submit="createAnswer()" novalidate>
-          <div class="row">
-            <input type="hidden" ng-value="formAnswer.question_id">
-            <div class="form-group col-xs-12">
-              <input type="text" id="title" class="form-control" value="{{questionDetail.title}}" ng-disabled="true">
+    <div ng-controller="AnswerController">
+        <h3 class="countAnswer">{{listAnswerQuestion.length}} câu trả lời</h3>
+        <!-- ANSWERS LOOP -->
+        <div ng-if="listAnswerQuestion.length>0">
+            <div class="question-item answer-item" ng-repeat="a in listAnswerQuestion |orderBy:['-isAcepted','creationDate']|startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit" >
+                <div class="q-left-content text-center">
+                    <!-- vote group -->
+                    <ul class="vote">
+                        <li ng-class="{voted: (currentUser && (listVote | checkAnswerVoteUp: a._id))}">
+                            <span class="fa fa-chevron-circle-up" ng-click="voteUp(a._id, questionDetail._id)">
+                                <md-tooltip md-direction="right">{{(currentUser && (listVote | checkAnswerVoteUp: a._id))?'Bỏ thích':'Thích'}}</md-tooltip>
+                            </span>
+                        </li>
+                        <li>
+                            <h3 ng-bind="a.score"></h3>
+                        </li>
+                        <li ng-class="{voted: (currentUser && (listVote | checkAnswerVoteDown: a._id))}">
+                            <span class="fa fa-chevron-circle-down" ng-click="voteDown(a._id, questionDetail._id)">
+                                <md-tooltip md-direction="right">{{(currentUser && (listVote | checkAnswerVoteDown: a._id))?'Bỏ thích':'Thích'}}</md-tooltip>
+                            </span>
+                        </li>
+                        <li ng-if="questionDetail.isResolved!=true" ng-show="(currentUser._id==questionDetail.userId._id && currentUser._id!=a.userId._id) && !a.isAcepted">
+                            <span class="fa fa-check" ng-click="acepted(a._id)">
+                                <md-tooltip md-direction="right">Câu trả lời chính xác</md-tooltip>
+                            </span>
+                        </li>
+                        <li ng-show="a.isAcepted" class="active" >
+                            <span class="fa fa-check" tooltip="Câu trả lời chính xác" style="cursor: auto" tooltip-placement="right"></span>
+                        </li>
+                    </ul>
+                </div>
+                <!--// Vote section -->
+                <div class="q-right-content">
+                    <div class="question-content">
+                        <p marked="a.content"><span  ng-bind="a.content"></span></p>
+                        <div>
+                            <div class="q-footer">
+                                <p><span><i class="fa fa-calendar"></i> <small ng-bind="a.creationDate | fromNow"></small></span></p>
+                                <button class="btn btn-sm btn-submit" ng-show="currentUser._id!=a.userId._id" type="button" ng-click="chat({_id:a.userId._id, username: a.userId.displayName})">
+                                <i class="fa fa-comment"></i> Chat
+                                </button>
+                                <span ng-show="currentUser._id==a.userId._id">
+                                    <button class="btn btn-sm btn-submit" type="button" title="Edit" ng-click="showForm('create_answer_form')">
+                                    <i class="fa fa-pencil"></i> Sửa
+                                    </button>
+                                </span>
+                                <span ng-show="currentUser._id==a.userId._id">
+                                    <button class="btn btn-sm btn-submit" type="button" title="Delete" ng-click="deleteAnswer(a._id,'/')">
+                                    <i class="fa fa-trash-o"></i> Xóa
+                                    </button>
+                                </span>
+                                <button class="btn btn-sm btn-submit"  ng-show="currentUser._id!=a.userId._id" type="button" ng-click="reportAnswer(a._id, a.userId._id)">
+                                <i class="fa fa-flag"></i>
+                                <md-tooltip md-direction="top">Báo cáo vi phạm câu trả lời này</md-tooltip>
+                                </button>
+                            </div>
+                            <!-- / q-footer -->
+                            <div class="user">
+                                <img src="{{a.userId.avatar}}" alt="{{a.userId.displayName}}" class="md-avatar" />
+                                <label>
+                                    <a ui-sref="profile({id:a.userId._id, slug: (a.userId.displayName | friendlyUrl)+'.html'})">
+                                        {{a.userId.displayName}} <i class="fa fa-shield" ng-if="a.userId.role=='admin'" title="Quản trị viên" alt="Quản trị viên"></i>
+                                    </a>
+                                </label>
+                                <span class="bg">
+                                    <i class="fa fa-circle status online" ng-if="listOnline|checkOnline: a.userId.displayName">
+                                    <md-tooltip md-direction="top">Đang online</md-tooltip>
+                                    </i>
+                                    <i class="fa fa-circle status offline" ng-if="!(listOnline|checkOnline: a.userId.displayName)">
+                                    <md-tooltip md-direction="top">Đang offline</md-tooltip>
+                                    </i>
+                                    Điểm <span ng-bind="a.userId.reputation"></span>
+                                </span>
+                            </div>
+                            <!-- / user -->
+                            <div class="clearfix"></div>
+                        </div>
+                        <!-- / info -->
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <div>
+                </div>
+                <!-- END REPLY-ITEM -->
+                <!-- ANSWERS LOOP -->
             </div>
-          </div>
-          <div class="row" style="margin-bottom: 10px;">
-            <div class="col-md-6 col-sm-12">
-              <h4 class="preview-title">Khung soạn thảo câu trả lời <span class="pull-right" data-toggle="modal" data-target="#myModal" style="cursor: pointer; color: #1d9977"><i class="fa fa-question"></i> Hướng dẫn</span></h4>
-              <textarea class="form-control" rows="12" ng-model="formAnswer.content" required="required" style="resize:none"></textarea>
-            </div>
-            <div class="col-md-6  hidden-sm hidden-xs">
-              <h4 class="preview-title">Chế độ xem trước</h4>
-              <div class="preview">
+            <hr>
+        <pagination total-items="listAnswerQuestion.length" ng-model="currentPage" max-size="itemsPerPage" class="pagination-sm" boundary-links="false" rotate="false" num-pages="numPages" previous-text="←" next-text="→"></pagination>
+        <!-- / pagination -->
+    </div>
+</div>
+</div>
+<div style="background: #fff; padding: 20px;">
+<div class="pull-left">
+    <button class="btn btn-sm btn-submit" type="button" style="cursor: pointer" ng-click="reportQuestion(questionDetail._id)"><i class="fa fa-exclamation-triangle"></i><span > Báo cáo vi phạm</span></button>
+</div>
+<div class="pull-right">
+    <button class="btn btn-sm btn-submit" ng-click="showForm('create_answer_form')" type="button"><i class="fa fa-reply"></i><span > Trả lời</span></button>
+</div>
+<div class="clearfix"></div>
+</div>
+<!-- END QUESTION-MAIN-CONTENT -->
+<!-- Modal form Reply -->
+<div class="show-form create_answer_form" ng-controller="QuestionController">
+<div class="showContent" ng-click="toogleContent()"><p>Câu trả lời đang được soạn. Nhấn vào để tiếp tục</p></div>
+<button class="toogleContent" ng-click="toogleContent()"><i class="fa fa-chevron-down"></i></button>
+<form name="create_answer_form" ng-submit="createAnswer()" novalidate>
+    <div class="row">
+        <input type="hidden" ng-value="formAnswer.question_id">
+        <div class="form-group col-xs-12">
+            <input type="text" id="title" class="form-control" value="{{questionDetail.title}}" ng-disabled="true">
+        </div>
+    </div>
+    <div class="row" style="margin-bottom: 10px;">
+        <div class="col-md-6 col-sm-12">
+            <h4 class="preview-title">Khung soạn thảo câu trả lời <span class="pull-right" data-toggle="modal" data-target="#myModal" style="cursor: pointer; color: #1d9977"><i class="fa fa-question"></i> Hướng dẫn</span></h4>
+            <textarea class="form-control" rows="12" ng-model="formAnswer.content" required="required" style="resize:none"></textarea>
+        </div>
+        <div class="col-md-6  hidden-sm hidden-xs">
+            <h4 class="preview-title">Chế độ xem trước</h4>
+            <div class="preview">
                 <div class="preview-content" marked="formAnswer.content" ng-bind="formAnswer.content"></div>
-              </div>
             </div>
-          </div>
-          <button class="btn btn-primary" type="button" ng-click="upload()"><i class="fa fa-cloud-upload"></i> Upload ảnh</button>
-          <button class="btn btn-submit" type="submit"  ng-disabled="!create_answer_form.$dirty || (form.$dirty && create_answer_form.$invalid)"><i class="fa fa-edit" ng-show="!Proccess"></i><i class="fa fa-spinner fa-spin" ng-show="Proccess" ></i> Trả lời</button>
-          <span class="btn btn-danger" ng-click="closeForm()"><i class="fa fa-times"></i> Hủy bỏ</span><br>
-          <div class="term-texts">
-            <p>Bạn nên đọc kỹ <a href="#">chính sách và quy định</a> của website trước khi đăng bài. Bạn phải chịu hoàn toàn trách nhiệm về nội dung đăng tải trên website.</p>
-          </div>
-        </form>
-      </div>
-
-      <!-- Modal form Edit Question -->
-      <div class="show-form edit_question_form"  ng-controller="QuestionController">
-        <form name="edit_question_form" ng-submit="editQuestion()" novalidate>
-          <div class="row">
-            <div class="form-group col-xs-12">
-              <input type="hidden" ng-model="questionData._id">
-              <input type="text" id="title" class="form-control" ng-model="questionData.title" ng-disabled="true">
-            </div>
-            <div class="form-group col-xs-12" ng-controller="AutocompleteTagController">
+        </div>
+    </div>
+    <button class="btn btn-primary" type="button" ng-click="upload()"><i class="fa fa-cloud-upload"></i> Upload ảnh</button>
+    <button class="btn btn-submit" type="submit"  ng-disabled="!create_answer_form.$dirty || (form.$dirty && create_answer_form.$invalid)"><i class="fa fa-edit" ng-show="!Proccess"></i><i class="fa fa-spinner fa-spin" ng-show="Proccess" ></i> Trả lời</button>
+    <span class="btn btn-danger" ng-click="closeForm()"><i class="fa fa-times"></i> Hủy bỏ</span><br>
+    <div class="term-texts">
+        <p>Bạn nên đọc kỹ <a href="#">chính sách và quy định</a> của website trước khi đăng bài. Bạn phải chịu hoàn toàn trách nhiệm về nội dung đăng tải trên website.</p>
+    </div>
+</form>
+</div>
+<!-- Modal form Edit Question -->
+<div class="show-form edit_question_form"  ng-controller="QuestionController">
+<form name="edit_question_form" ng-submit="editQuestion()" novalidate>
+    <div class="row">
+        <div class="form-group col-xs-12">
+            <input type="hidden" ng-model="questionData._id">
+            <input type="text" id="title" class="form-control" ng-model="questionData.title" ng-disabled="true">
+        </div>
+        <div class="form-group col-xs-12" ng-controller="AutocompleteTagController">
             <label for="#">Tags hiện tại: <span ng-bind="oldTag"></span> (Nhập lại các tag nếu bạn muốn sửa)</label>
-              <tags-input ng-model="questionData.tag" display-property="tagName" max-tags="3" placeholder="{{placeholder}}" add-from-autocomplete-only="true" replace-spaces-with-dashes="false" min-length="1" enforce-max-tags>
-                  <auto-complete source="loadItems($query)" min-length="1" debounce-delay="0"></auto-complete>
-              </tags-input>
-            </div>
-          </div>
-          <div class="row" style="margin-bottom: 10px;">
-            <div class="col-md-6 col-sm-12">
-              <h4 class="preview-title">Sửa câu hỏi <span class="pull-right" data-toggle="modal" data-target="#myModal" style="cursor: pointer; color: #1d9977"><i class="fa fa-question"></i> Hướng dẫn</span></h4>
-                <textarea class="form-control" rows="12" ng-model="questionData.content" required="required" style="resize:none">
-                </textarea>
-            </div>
-            <div class="col-md-6  hidden-sm hidden-xs">
-              <h4 class="preview-title">Chế độ xem trước</h4>
-              <div class="preview">
-                <div class="preview-content" marked="questionData.content" ng-bind="questionData.content"></div>
-              </div>
-            </div>
-          </div>
-          <button class="btn btn-primary" type="button" ng-click="upload()"><i class="fa fa-cloud-upload"></i> Upload ảnh</button>
-          <button class="btn btn-submit" type="submit"  ng-disabled="!edit_question_form.$dirty || (edit_question_form.$dirty && edit_question_form.$invalid)"><i class="fa fa-edit" ng-show="!Proccess"></i><i class="fa fa-spinner fa-spin" ng-show="Proccess" ></i> Cập nhật</button>
-          <span class="btn btn-danger" ng-click="closeForm()"><i class="fa fa-times"></i> Hủy bỏ</span><br>
-          <div class="term-texts">
-            <p>Bạn nên đọc kỹ <a href="#">chính sách và quy định</a> của website trước khi đăng bài. Bạn phải chịu hoàn toàn trách nhiệm về nội dung đăng tải trên website.</p>
-          </div>
-        </form>
-      </div>
-      <!-- / modal edit -->
+            <tags-input ng-model="questionData.tag" display-property="tagName" max-tags="3" placeholder="{{placeholder}}" add-from-autocomplete-only="true" replace-spaces-with-dashes="false" min-length="1" enforce-max-tags>
+        <auto-complete source="loadItems($query)" min-length="1" debounce-delay="0"></auto-complete>
+        </tags-input>
+    </div>
+</div>
+<div class="row" style="margin-bottom: 10px;">
+    <div class="col-md-6 col-sm-12">
+        <h4 class="preview-title">Sửa câu hỏi <span class="pull-right" data-toggle="modal" data-target="#myModal" style="cursor: pointer; color: #1d9977"><i class="fa fa-question"></i> Hướng dẫn</span></h4>
+        <textarea class="form-control" rows="12" ng-model="questionData.content" required="required" style="resize:none">
+        </textarea>
+    </div>
+    <div class="col-md-6  hidden-sm hidden-xs">
+        <h4 class="preview-title">Chế độ xem trước</h4>
+        <div class="preview">
+            <div class="preview-content" marked="questionData.content" ng-bind="questionData.content"></div>
+        </div>
+    </div>
+</div>
+<button class="btn btn-primary" type="button" ng-click="upload()"><i class="fa fa-cloud-upload"></i> Upload ảnh</button>
+<button class="btn btn-submit" type="submit"  ng-disabled="!edit_question_form.$dirty || (edit_question_form.$dirty && edit_question_form.$invalid)"><i class="fa fa-edit" ng-show="!Proccess"></i><i class="fa fa-spinner fa-spin" ng-show="Proccess" ></i> Cập nhật</button>
+<span class="btn btn-danger" ng-click="closeForm()"><i class="fa fa-times"></i> Hủy bỏ</span><br>
+<div class="term-texts">
+    <p>Bạn nên đọc kỹ <a href="#">chính sách và quy định</a> của website trước khi đăng bài. Bạn phải chịu hoàn toàn trách nhiệm về nội dung đăng tải trên website.</p>
+</div>
+</form>
+</div>
+<!-- / modal edit -->

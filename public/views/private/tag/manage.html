@@ -1,86 +1,85 @@
 <div class="background-main-content">
-<div class="row select-category">
-      <div class="col-xs-6 pull-left current-category">
-         <span><i class="fa fa-tags"></i> Quản lý Tags</span>
-      </div>
-      <div class="pull-right">
-        <a ui-sref="system" class="btn btn-submit btn-return"><i class="fa fa-mail-reply"></i> Quay lại Bảng điều khiển</a>
-      </div>
-      <div class="clearfix"></div>
-   <!-- END SELECT-CATEGORY -->
-   <div class="main-tag-list" ng-controller="TagController">
-         <form id="system-form">
-
-         <div class="col-xs-12">
-             <div class="form-group">
-                         <!-- Single button -->
-                 <button type="button" class="btn btn-submit" data-toggle="modal" data-target=".add-tag-box"><small><i class="fa fa-plus"></i></small> Thêm mới</button>
-             <br>
-             </div>
-             <table class="table table-bordered table-hover">
-                 <thead>
-                     <tr>
-                         <th>STT</th>
-                         <th>Tên</th>
-                         <th>Sử dụng</th>
-                         <th>Ngày thêm</th>
-                         <th>Cập nhật lần cuối</th>
-                         <th>Xóa</th>
-                     </tr>
-                 </thead>
-                 <tbody>
-                     <tr ng-repeat="tag in allTag | orderBy: '-creationDate'|startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit">
-                      <td>{{$index+1}}</td>
-                      <td><a ui-sref="system-tag-edit({id: tag._id})" style="text-transform: lowercase;">{{tag.tagName}}</a></td>
-                      <td ng-bind="tag.count"></td>
-                      <td ng-bind="tag.creationDate| toDate | date:'dd/MM/yyyy'"></td>
-                      <td ng-bind="tag.lastEditDate| toDate | date:'dd/MM/yyyy'"></td>
-                      <td><button type="button" ng-click="deleteTag(tag._id)" class="btn btn-danger"><i class="fa fa-trash-o"></i> Xóa</button></td>
-                     </tr>
-                 </tbody>
-             </table>
-             <pagination total-items="totalItems" ng-model="currentPage" max-size="itemsPerPage" class="pagination-sm" boundary-links="false" rotate="false" num-pages="numPages" previous-text="←" next-text="→"></pagination>
-              <!-- / pagination -->
-         </div>
-         </form>
-      </div>
-   <!-- END MAIN-TAGS-LIST -->
-        <div class="modal fade add-tag-box" tabindex="-1" role="dialog" aria-hidden="true" ng-controller="ListTagController">
-         <div class="modal-dialog">
-            <div class="modal-content" style="margin-top: 150px;">
-            <form name="form" class="form-horizontal" novalidate>
-              <div>
-                 <button type="button" class="close" style="margin-right: 11px;" data-dismiss="modal" aria-hidden="true">×</button>
-                 <h4 class="text-center" style="color: #16775c;">THÊM TAG MỚI</h4>
-              </div>
-               <div class="modal-body">
-                     <div class="form-group">
-                         <label for="name" class="col-sm-2 control-label required">Tên</label>
-                         <div class="col-sm-10">
-                             <input name="name" type="text" ng-model="formData.name" class="form-control" id="name" placeholder="Tên tag" required="" maxlength="255">
-                         </div>
-                     </div>
-                     <div class="form-group">
-                         <label for="description" class="col-sm-2 control-label required">Mô tả</label>
-                         <div class="col-sm-10">
-                             <textarea name="description" class="form-control" id="description" placeholder="Mô tả" ng-model="formData.description"></textarea>
-                         </div>
-                     </div>
-               </div>
-               <div class="modal-footer">
-                 <button type="button" ng-click="createTag()"  class="btn btn-submit"><small><span ng-show="!Proccess"><i class="fa fa-plus"></i></span><span ng-show="Proccess" ><i class="fa fa-spinner fa-spin"></i></span></small> Thêm mới</button>
-                 <button  type="button" data-dismiss="modal" aria-hidden="true" class="btn btn-default">Hủy bỏ</button>
-               </div>
-             </form>
+    <div class="row select-category">
+        <div class="col-xs-6 pull-left current-category">
+            <span><i class="fa fa-tags"></i> Quản lý Tags</span>
+        </div>
+        <div class="pull-right">
+            <a ui-sref="system" class="btn btn-submit btn-return"><i class="fa fa-mail-reply"></i> Quay lại Bảng điều khiển</a>
+        </div>
+        <div class="clearfix"></div>
+        <!-- END SELECT-CATEGORY -->
+        <div class="main-tag-list" ng-controller="TagController">
+            <form id="system-form">
+                <div class="col-xs-12">
+                    <div class="form-group">
+                        <!-- Single button -->
+                        <button type="button" class="btn btn-submit" data-toggle="modal" data-target=".add-tag-box"><small><i class="fa fa-plus"></i></small> Thêm mới</button>
+                        <br>
+                    </div>
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>STT</th>
+                                <th>Tên</th>
+                                <th>Sử dụng</th>
+                                <th>Ngày thêm</th>
+                                <th>Cập nhật lần cuối</th>
+                                <th>Xóa</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="tag in allTag | orderBy: '-creationDate'|startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit">
+                                <td>{{$index+1}}</td>
+                                <td><a ui-sref="system-tag-edit({id: tag._id})" style="text-transform: lowercase;">{{tag.tagName}}</a></td>
+                                <td ng-bind="tag.count"></td>
+                                <td ng-bind="tag.creationDate| toDate | date:'dd/MM/yyyy'"></td>
+                                <td ng-bind="tag.lastEditDate| toDate | date:'dd/MM/yyyy'"></td>
+                                <td><button type="button" ng-click="deleteTag(tag._id)" class="btn btn-danger"><i class="fa fa-trash-o"></i> Xóa</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                <pagination total-items="totalItems" ng-model="currentPage" max-size="itemsPerPage" class="pagination-sm" boundary-links="false" rotate="false" num-pages="numPages" previous-text="←" next-text="→"></pagination>
+                <!-- / pagination -->
             </div>
-         </div>
-   </div>
- </div>
+        </form>
+    </div>
+    <!-- END MAIN-TAGS-LIST -->
+    <div class="modal fade add-tag-box" tabindex="-1" role="dialog" aria-hidden="true" ng-controller="ListTagController">
+        <div class="modal-dialog">
+            <div class="modal-content" style="margin-top: 150px;">
+                <form name="form" class="form-horizontal" novalidate>
+                    <div>
+                        <button type="button" class="close" style="margin-right: 11px;" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="text-center" style="color: #16775c;">THÊM TAG MỚI</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="name" class="col-sm-2 control-label required">Tên</label>
+                            <div class="col-sm-10">
+                                <input name="name" type="text" ng-model="formData.name" class="form-control" id="name" placeholder="Tên tag" required="" maxlength="255">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="description" class="col-sm-2 control-label required">Mô tả</label>
+                            <div class="col-sm-10">
+                                <textarea name="description" class="form-control" id="description" placeholder="Mô tả" ng-model="formData.description"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" ng-click="createTag()"  class="btn btn-submit"><small><span ng-show="!Proccess"><i class="fa fa-plus"></i></span><span ng-show="Proccess" ><i class="fa fa-spinner fa-spin"></i></span></small> Thêm mới</button>
+                        <button  type="button" data-dismiss="modal" aria-hidden="true" class="btn btn-default">Hủy bỏ</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 </div>
 <style>
-    .table th:nth-child(6),
+.table th:nth-child(6),
 .table td:nth-child(6) {
- text-align: center;
- width: 5em;
+text-align: center;
+width: 5em;
 }
 </style>

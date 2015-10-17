@@ -1,43 +1,42 @@
 <div class="background-main-content">
-  <div class="row select-category">
+    <div class="row select-category">
         <div class="pull-left col-md-6 current-category">
-           <span><i class="fa fa-question"></i> Quản lý cấu hình hệ thống</span>
+            <span><i class="fa fa-question"></i> Quản lý cấu hình hệ thống</span>
         </div>
         <div class="pull-right">
-          <a ui-sref="system" class="btn btn-submit btn-return"><i class="fa fa-mail-reply"></i> Quay lại Bảng điều khiển</a>
+            <a ui-sref="system" class="btn btn-submit btn-return"><i class="fa fa-mail-reply"></i> Quay lại Bảng điều khiển</a>
         </div>
         <div class="clearfix"></div>
-      </div>
-       <!-- END SELECT-CATEGORY -->
-      <div class="col-md-12">
+    </div>
+    <!-- END SELECT-CATEGORY -->
+    <div class="col-md-12">
         <h4 class="text-center">Chỉnh sửa hướng dẫn</h4>
-           <form name="form" ng-submit="editSystemSetting()" novalidate>
-           <input type="hidden" ng-model="systemData._id">
+        <form name="form" ng-submit="editSystemSetting()" novalidate>
+            <input type="hidden" ng-model="systemData._id">
             <div class="form-group">
-            <h4 class="preview-title">Khung soạn thảo<span class="pull-right"><span  data-toggle="modal" data-target=".preview-modal-box" style="cursor: pointer;">Xem trước</span><span data-toggle="modal" data-target="#myModal" style="cursor: pointer; color: #1d9977; padding-left:15px;"><i class="fa fa-question"></i> Hướng dẫn</span></span></h4>
-              <textarea class="form-control" rows="12" ng-model="systemData.help" required="required" style="resize:none"></textarea>
+                <h4 class="preview-title">Khung soạn thảo<span class="pull-right"><span  data-toggle="modal" data-target=".preview-modal-box" style="cursor: pointer;">Xem trước</span><span data-toggle="modal" data-target="#myModal" style="cursor: pointer; color: #1d9977; padding-left:15px;"><i class="fa fa-question"></i> Hướng dẫn</span></span></h4>
+                <textarea class="form-control" rows="12" ng-model="systemData.help" required="required" style="resize:none"></textarea>
             </div>
-          <button class="btn btn-submit" type="submit"  ng-disabled="!form.$dirty || (form.$dirty && form.$invalid)"><i class="fa fa-edit" ng-show="!Proccess"></i><i class="fa fa-spinner fa-spin" ng-show="Proccess" ></i> Cập nhật</button>
-          <a class="btn btn-warning" ui-sref="system-setting"><i class="fa fa-times"></i> Hủy bỏ</a><br>
+            <button class="btn btn-submit" type="submit"  ng-disabled="!form.$dirty || (form.$dirty && form.$invalid)"><i class="fa fa-edit" ng-show="!Proccess"></i><i class="fa fa-spinner fa-spin" ng-show="Proccess" ></i> Cập nhật</button>
+            <a class="btn btn-warning" ui-sref="system-setting"><i class="fa fa-times"></i> Hủy bỏ</a><br>
         </form>
         <div class="modal fade preview-modal-box" tabindex="-1" role="dialog" aria-hidden="true">
-         <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-              <div>
-                 <button type="button" class="close" style="margin-right: 11px;" data-dismiss="modal" aria-hidden="true">×</button>
-                 <h4 class="text-center" style="color: #16775c;">Xem trước</h4>
-              </div>
-               <div class="modal-body"   style="max-height: 400px; overflow-y: scroll">
-                   <div class="preview">
-                <div class="preview-content" marked="systemData.help" ng-bind="systemData.help"></div>
-              </div>
-               </div>
-               <div class="modal-footer">
-                 <button  type="button" data-dismiss="modal" aria-hidden="true" class="btn btn-submit">Đóng</button>
-               </div>
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div>
+                        <button type="button" class="close" style="margin-right: 11px;" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="text-center" style="color: #16775c;">Xem trước</h4>
+                    </div>
+                    <div class="modal-body"   style="max-height: 400px; overflow-y: scroll">
+                        <div class="preview">
+                            <div class="preview-content" marked="systemData.help" ng-bind="systemData.help"></div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button  type="button" data-dismiss="modal" aria-hidden="true" class="btn btn-submit">Đóng</button>
+                    </div>
+                </div>
             </div>
-         </div>
-         </div>
-  </div>
+        </div>
+    </div>
 </div>
-

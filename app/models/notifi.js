@@ -1,7 +1,6 @@
 var mongoose = require('mongoose');
 var ObjectId = mongoose.Schema.Types.ObjectId;
 
-
 // tạo cấu trúc db
 var schema = mongoose.Schema({
    userRecive:      {type: ObjectId, ref: 'User' },
