@@ -1,28 +1,28 @@
 <div class="background-main-content" ng-controller="UserController">
-<div class="row user-statistic" style="padding-top: 20px; padding-bottom: 60px;">
-   <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-      <h3 class="text-center">Nhập email tài khoản của bạn</h3>
-      <div>
-         <form class="form-horizontal" name="form" ng-submit="resetPass()" style="margin-top: 40px;">
-            <div class="control-group">
-               <div class="controls col-sm-10">
-                  <md-input-container>
-                       <label>Email</label>
-                       <input type="email" required name="email" ng-model="userData.email" autocomplete="off">
-                       <div ng-messages="form.email.$error" ng-if="form.email.$dirty">
-                         <div ng-message="required">Email không được bỏ trống</div>
-                         <div ng-message="email">Email không hợp lệ</div>
-                       </div>
-                   </md-input-container>
-               </div>
-               <div class="col-sm-2">
-                  <md-button style="margin-top:20px;" class="md-raised md-primary" type="submit" ng-disabled="!form.$dirty || (form.$dirty && form.$invalid)"><i class="fa fa-spinner fa-spin" ng-show="Proccess" ></i> Gửi</md-button>
-               </div>
+    <div class="row user-statistic" style="padding-top: 20px; padding-bottom: 60px;">
+        <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+            <h3 class="text-center">Nhập email tài khoản của bạn</h3>
+            <div>
+                <form class="form-horizontal" name="form" ng-submit="resetPass()" style="margin-top: 40px;">
+                    <div class="control-group">
+                        <div class="controls col-sm-10">
+                            <md-input-container>
+                            <label>Email</label>
+                            <input type="email" required name="email" ng-model="userData.email" autocomplete="off">
+                            <div ng-messages="form.email.$error" ng-if="form.email.$dirty">
+                                <div ng-message="required">Email không được bỏ trống</div>
+                                <div ng-message="email">Email không hợp lệ</div>
+                            </div>
+                            </md-input-container>
+                        </div>
+                        <div class="col-sm-2">
+                            <md-button style="margin-top:20px;" class="md-raised md-primary" type="submit" ng-disabled="!form.$dirty || (form.$dirty && form.$invalid)"><i class="fa fa-spinner fa-spin" ng-show="Proccess" ></i> Gửi</md-button>
+                        </div>
+                    </div>
+                </form>
             </div>
-         </form>
-      </div>
-      <hr class="visible-xs visible-sm">
-   </div>
-</div>
-<!-- END USER-STATISTIC -->
+            <hr class="visible-xs visible-sm">
+        </div>
+    </div>
+    <!-- END USER-STATISTIC -->
 </div>

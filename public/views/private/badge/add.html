@@ -1,49 +1,49 @@
-  <div class="background-main-content">
-<div class="row select-category">
-      <div class="pull-left col-md-6 current-category">
-         <span><i class="fa fa-question"></i> Quản lý danh hiệu</span>
-      </div>
-      <div class="pull-right">
-        <a ui-sref="system" class="btn btn-submit btn-return"><i class="fa fa-mail-reply"></i> Quay lại Bảng điều khiển</a>
-      </div>
-      <div class="clearfix"></div>
+<div class="background-main-content">
+    <div class="row select-category">
+        <div class="pull-left col-md-6 current-category">
+            <span><i class="fa fa-question"></i> Quản lý danh hiệu</span>
+        </div>
+        <div class="pull-right">
+            <a ui-sref="system" class="btn btn-submit btn-return"><i class="fa fa-mail-reply"></i> Quay lại Bảng điều khiển</a>
+        </div>
+        <div class="clearfix"></div>
     </div>
-   <!-- END SELECT-CATEGORY -->
-   <div ng-controller="BadgeController">
-         <div class="col-xs-6 col-xs-offset-3">
-          <h4 class="text-center">Thêm danh hiệu mới</h4>
-           <form name="form" class="form-horizontal" method="post" novalidate>
-             <div class="form-group">
-                 <label for="name" class="col-sm-3 control-label required">Tên</label>
-                 <div class="col-sm-9">
-                     <input name="name" type="text" ng-model="formData.name" class="form-control" id="name" placeholder="Tên danh hiệu" required maxlength="255">
-                 </div>
-             </div>
-             <div class="form-group">
-                 <label for="score" class="col-sm-3 control-label required">Điểm</label>
-                 <div class="col-sm-9">
-                     <input type="number" class="form-control" ng-model="formData.score" id="score" placeholder="Số điểm yêu cầu">
-                 </div>
-             </div>
-             <div class="form-group">
-                 <label for="score" class="col-sm-3 control-label">Mô tả</label>
-                 <div class="col-sm-9">
-                   <textarea class="form-control" ng-model="formData.description" id="description" placeholder="Mô tả"></textarea>
-                 </div>
-             </div>
-             <div class="form-group">
-                 <label for="color" class="col-sm-3 control-label required">Màu sắc</label>
-                 <div class="col-sm-9">
-                     <input type="color" class="form-control" ng-model="formData.color" id="color" placeholder="Màu sắc">
-                 </div>
-             </div>
-             <div class="form-group">
-                <label class="col-sm-3 control-label">&nbsp;</label>
-                <div class="col-sm-9">
-                 <button type="submit" ng-click="createBadge()" class="btn btn-submit"><small><span ng-show="!Proccess"><i class="fa fa-plus"></i></span><span ng-show="Proccess" ><i class="fa fa-spinner fa-spin"></i></span></small> Thêm mới</button>
-               </div>
-             </div>
-         </form>
-         </div>
-   </div>
+    <!-- END SELECT-CATEGORY -->
+    <div ng-controller="BadgeController">
+        <div class="col-xs-6 col-xs-offset-3">
+            <h4 class="text-center">Thêm danh hiệu mới</h4>
+            <form name="form" class="form-horizontal" method="post" novalidate>
+                <div class="form-group">
+                    <label for="name" class="col-sm-3 control-label required">Tên</label>
+                    <div class="col-sm-9">
+                        <input name="name" type="text" ng-model="formData.name" class="form-control" id="name" placeholder="Tên danh hiệu" required maxlength="255">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="score" class="col-sm-3 control-label required">Điểm</label>
+                    <div class="col-sm-9">
+                        <input type="number" class="form-control" ng-model="formData.score" id="score" placeholder="Số điểm yêu cầu">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="score" class="col-sm-3 control-label">Mô tả</label>
+                    <div class="col-sm-9">
+                        <textarea class="form-control" ng-model="formData.description" id="description" placeholder="Mô tả"></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="color" class="col-sm-3 control-label required">Màu sắc</label>
+                    <div class="col-sm-9">
+                        <input type="color" class="form-control" ng-model="formData.color" id="color" placeholder="Màu sắc">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">&nbsp;</label>
+                    <div class="col-sm-9">
+                        <button type="submit" ng-click="createBadge()" class="btn btn-submit"><small><span ng-show="!Proccess"><i class="fa fa-plus"></i></span><span ng-show="Proccess" ><i class="fa fa-spinner fa-spin"></i></span></small> Thêm mới</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>

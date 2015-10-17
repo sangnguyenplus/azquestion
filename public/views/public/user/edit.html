@@ -1,102 +1,102 @@
 <div class="background-main-content" ng-controller="UserController">
-<div class="row select-category">
-   <div class="col-md-6 col-xs-6 current-category">
-      <span><i class="fa fa-user"></i> Chỉnh sửa thông tin</span>
-   </div>
-   <div class="col-md-6 col-xs-6 user-controls">
-      <ul>
-         <li>
-            <a href="javascript:void(0)" ng-click="logout()"><i class="fa fa-power-off"></i> Đăng xuất</a>
-         </li>
-      </ul>
-   </div>
-</div> 
-<!-- END SELECT-CATEGORY -->
-<div class="row user-statistic" style="padding-top: 20px; padding-bottom: 60px;">
-   <div class="col-md-2 col-sm-2 col-xs-12" style="text-align: center; margin-bottom:20px;">
-      <div class="account-picture-block text-center">
-         <img id="user-current-picture" class="user-profile-picture img-thumbnail" ng-src="{{userAvatar}}" style="margin-top: 10px;"><br><br>
-         <button ng-click="uploadImage()" class="btn btn-submit"><i class="fa fa-edit"></i> Sửa</button>
-         <br><br>
-      </div>
-   </div>
-   <div class="col-md-5 col-sm-5 col-xs-12">
-      <div>
-         <form class="form-horizontal" ng-submit="updateUser()">
-            <div class="control-group">
-               <label class="control-label" for="inputUsername">Tên hiển thị</label>
-               <div class="controls">
-                  <input type="hidden" ng-model="formData._id">
-                  <input class="form-control" type="text" id="inputUsername" placeholder="Tên hiển thị" ng-model="formData.displayName">
-               </div>
+    <div class="row select-category">
+        <div class="col-md-6 col-xs-6 current-category">
+            <span><i class="fa fa-user"></i> Chỉnh sửa thông tin</span>
+        </div>
+        <div class="col-md-6 col-xs-6 user-controls">
+            <ul>
+                <li>
+                    <a href="javascript:void(0)" ng-click="logout()"><i class="fa fa-power-off"></i> Đăng xuất</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- END SELECT-CATEGORY -->
+    <div class="row user-statistic" style="padding-top: 20px; padding-bottom: 60px;">
+        <div class="col-md-2 col-sm-2 col-xs-12" style="text-align: center; margin-bottom:20px;">
+            <div class="account-picture-block text-center">
+                <img id="user-current-picture" class="user-profile-picture img-thumbnail" ng-src="{{userAvatar}}" style="margin-top: 10px;"><br><br>
+                <button ng-click="uploadImage()" class="btn btn-submit"><i class="fa fa-edit"></i> Sửa</button>
+                <br><br>
             </div>
-            <div class="control-group">
-               <label class="control-label" for="inputEmail">Email</label>
-               <div class="controls">
-                  <input class="form-control" type="text" id="inputEmail" ng-disabled="true" placeholder="Email" ng-model="formData.email">
-               </div>
+        </div>
+        <div class="col-md-5 col-sm-5 col-xs-12">
+            <div>
+                <form class="form-horizontal" ng-submit="updateUser()">
+                    <div class="control-group">
+                        <label class="control-label" for="inputUsername">Tên hiển thị</label>
+                        <div class="controls">
+                            <input type="hidden" ng-model="formData._id">
+                            <input class="form-control" type="text" id="inputUsername" placeholder="Tên hiển thị" ng-model="formData.displayName">
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="inputEmail">Email</label>
+                        <div class="controls">
+                            <input class="form-control" type="text" id="inputEmail" ng-disabled="true" placeholder="Email" ng-model="formData.email">
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="inputWebsite">Website</label>
+                        <div class="controls">
+                            <input class="form-control" type="text" ng-model="formData.website" id="inputWebsite" placeholder="http://...">
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="inputLocation">Nơi ở</label>
+                        <div class="controls">
+                            <input class="form-control" type="text" ng-model="formData.location" id="inputLocation" placeholder="Chỗ ở hiện tại">
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="inputBirthday">Ngày sinh</label>
+                        <div class="controls">
+                            <input class="form-control" type="date" ng-model="formData.birthday" id="inputBirthday" placeholder="dd/MM/yyyy">
+                        </div>
+                    </div>
+                    <br>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-submit"><i class="fa fa-edit"></i> Lưu thay đổi</button>
+                    </div>
+                </form>
             </div>
-            <div class="control-group">
-               <label class="control-label" for="inputWebsite">Website</label>
-               <div class="controls">
-                  <input class="form-control" type="text" ng-model="formData.website" id="inputWebsite" placeholder="http://...">
-               </div>
+            <hr class="visible-xs visible-sm">
+        </div>
+        <div class="col-md-5 col-sm-5 col-xs-12">
+            <div style="vertical-align:top;">
+                <form name="form" class="form-horizontal">
+                    <div class="control-group">
+                        <label class="control-label" for="CurrentPassword">Mật khẩu hiện tại</label>
+                        <div class="controls">
+                            <input type="hidden" ng-model="formData._id">
+                            <input class="form-control" type="password" id="CurrentPassword" ng-model="formData.CurrentPassword" placeholder="Mật khẩu hiện tại">
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="NewPassword">Mật khẩu mới</label>
+                        <div class="input-group">
+                            <input class="form-control" type="password" id="NewPassword" ng-model="formData.NewPassword" placeholder="Mật khẩu mới">
+                            <span class="input-group-addon">
+                                <span id="password-notify"><i class="fa fa-circle-o"></i></span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="NewPasswordAgain">Xác nhận mật khẩu</label>
+                        <div class="input-group">
+                            <input class="form-control" type="password" id="NewPasswordAgain" name="re_password" password-match="formData.NewPassword" ng-model="formData.NewPasswordAgain" placeholder="Xác nhận mật khẩu">
+                            <span class="input-group-addon">
+                                <span id="password-notify"><i class="fa fa-circle-o"></i></span>
+                            </span>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="form-actions">
+                        <button type="submit" id="changePasswordBtn" ng-click="changePassword()" class="btn btn-submit" ng-disabled="!form.$dirty || (form.$dirty && form.$invalid)"><i class="fa fa-spinner fa-spin" ng-show="Proccess" ></i> Đổi mật khẩu</button>
+                    </div>
+                </form>
             </div>
-            <div class="control-group">
-               <label class="control-label" for="inputLocation">Nơi ở</label>
-               <div class="controls">
-                  <input class="form-control" type="text" ng-model="formData.location" id="inputLocation" placeholder="Chỗ ở hiện tại">
-               </div>
-            </div>
-            <div class="control-group">
-               <label class="control-label" for="inputBirthday">Ngày sinh</label>
-               <div class="controls">
-                  <input class="form-control" type="date" ng-model="formData.birthday" id="inputBirthday" placeholder="dd/MM/yyyy">
-               </div>
-            </div>
-            <br>
-            <div class="form-actions">
-            <button type="submit" class="btn btn-submit"><i class="fa fa-edit"></i> Lưu thay đổi</button>
-            </div>
-         </form>
-      </div>
-      <hr class="visible-xs visible-sm">
-   </div>
-   <div class="col-md-5 col-sm-5 col-xs-12">
-      <div style="vertical-align:top;">
-         <form name="form" class="form-horizontal">
-            <div class="control-group">
-               <label class="control-label" for="CurrentPassword">Mật khẩu hiện tại</label>
-               <div class="controls">
-                  <input type="hidden" ng-model="formData._id">
-                  <input class="form-control" type="password" id="CurrentPassword" ng-model="formData.CurrentPassword" placeholder="Mật khẩu hiện tại">
-               </div>
-            </div>
-            <div class="control-group">
-               <label class="control-label" for="NewPassword">Mật khẩu mới</label>
-               <div class="input-group">
-                  <input class="form-control" type="password" id="NewPassword" ng-model="formData.NewPassword" placeholder="Mật khẩu mới">
-                  <span class="input-group-addon">
-                  <span id="password-notify"><i class="fa fa-circle-o"></i></span>
-                  </span>
-               </div>
-            </div>
-            <div class="control-group">
-               <label class="control-label" for="NewPasswordAgain">Xác nhận mật khẩu</label>
-               <div class="input-group">
-                  <input class="form-control" type="password" id="NewPasswordAgain" name="re_password" password-match="formData.NewPassword" ng-model="formData.NewPasswordAgain" placeholder="Xác nhận mật khẩu">
-                  <span class="input-group-addon">
-                  <span id="password-notify"><i class="fa fa-circle-o"></i></span>
-                  </span>
-               </div>
-            </div>
-            <br>
-            <div class="form-actions">
-            <button type="submit" id="changePasswordBtn" ng-click="changePassword()" class="btn btn-submit" ng-disabled="!form.$dirty || (form.$dirty && form.$invalid)"><i class="fa fa-spinner fa-spin" ng-show="Proccess" ></i> Đổi mật khẩu</button>
-            </div>
-         </form>
-      </div>
-   </div>
-</div>
-<!-- END USER-STATISTIC -->
+        </div>
+    </div>
+    <!-- END USER-STATISTIC -->
 </div>

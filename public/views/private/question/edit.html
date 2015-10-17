@@ -1,59 +1,58 @@
-  <div class="background-main-content">
-<div class="row select-category">
-      <div class="pull-left col-md-6 current-category">
-         <span><i class="fa fa-question"></i> Quản lý câu hỏi</span>
-      </div>
-      <div class="pull-right">
-        <a ui-sref="system" class="btn btn-submit btn-return"><i class="fa fa-mail-reply"></i> Quay lại Bảng điều khiển</a>
-      </div>
-      <div class="clearfix"></div>
+<div class="background-main-content">
+    <div class="row select-category">
+        <div class="pull-left col-md-6 current-category">
+            <span><i class="fa fa-question"></i> Quản lý câu hỏi</span>
+        </div>
+        <div class="pull-right">
+            <a ui-sref="system" class="btn btn-submit btn-return"><i class="fa fa-mail-reply"></i> Quay lại Bảng điều khiển</a>
+        </div>
+        <div class="clearfix"></div>
     </div>
-   <!-- END SELECT-CATEGORY -->
-  <div class="col-md-12" ng-controller="QuestionDetail">
-          <h4 class="text-center">Chỉnh sửa câu hỏi</h4>
-           <form name="form" ng-submit="editQuestion()" novalidate>
+    <!-- END SELECT-CATEGORY -->
+    <div class="col-md-12" ng-controller="QuestionDetail">
+        <h4 class="text-center">Chỉnh sửa câu hỏi</h4>
+        <form name="form" ng-submit="editQuestion()" novalidate>
             <div class="form-group">
-              <input type="hidden" ng-model="formData._id">
-              <input type="text" id="title" class="form-control" ng-model="formData.title" placeholder="Tiêu đề câu hỏi" required="required"  name="title" ng-maxlength="120">
+                <input type="hidden" ng-model="formData._id">
+                <input type="text" id="title" class="form-control" ng-model="formData.title" placeholder="Tiêu đề câu hỏi" required="required"  name="title" ng-maxlength="120">
             </div>
             <div class="form-group">
-              <label for="#">Tags hiện tại: <span ng-bind="oldTag"></span></label>
+                <label for="#">Tags hiện tại: <span ng-bind="oldTag"></span></label>
             </div>
             <div class="form-group" ng-controller="AutocompleteTagController">
-            <label for="#">Sửa toàn bộ tag:</label>
-              <tags-input ng-model="formData.tag" display-property="tagName" max-tags="3" placeholder="{{placeholder}}" add-from-autocomplete-only="true" replace-spaces-with-dashes="false" min-length="1" enforce-max-tags>
-                  <auto-complete source="loadItems($query)" min-length="1" debounce-delay="0"></auto-complete>
-              </tags-input>
-            </div>
-            <div class="form-group">
+                <label for="#">Sửa toàn bộ tag:</label>
+                <tags-input ng-model="formData.tag" display-property="tagName" max-tags="3" placeholder="{{placeholder}}" add-from-autocomplete-only="true" replace-spaces-with-dashes="false" min-length="1" enforce-max-tags>
+            <auto-complete source="loadItems($query)" min-length="1" debounce-delay="0"></auto-complete>
+            </tags-input>
+        </div>
+        <div class="form-group">
             <h4 class="preview-title">Khung soạn thảo câu hỏi <span class="pull-right"><span  data-toggle="modal" data-target=".preview-modal-box" style="cursor: pointer;">Xem trước</span><span data-toggle="modal" data-target="#myModal" style="cursor: pointer; color: #1d9977; padding-left:15px;"><i class="fa fa-question"></i> Hướng dẫn</span></span></h4>
-              <textarea class="form-control" rows="12" ng-model="formData.content" required="required" style="resize:none"></textarea>
-            </div>
-            <div class="form-group" ng-show="formData.status==false">
-              <p class="text-warning">Câu hỏi này chưa được xét duyệt nên chưa được hiển thị lên trang web. Nếu câu hỏi hợp lệ, vui lòng xét duyệt cho câu hỏi này!</p>
-            </div>
-            <button class="btn btn-submit" type="button" ng-show="formData.status==false" ng-click="approve(formData._id)"><i class="fa fa-check"></i> Xét duyệt</button>
-          <button class="btn btn-submit" type="submit"  ng-disabled="!form.$dirty || (form.$dirty && form.$invalid)"><i class="fa fa-edit" ng-show="!Proccess"></i><i class="fa fa-spinner fa-spin" ng-show="Proccess" ></i> Cập nhật</button>
-          <a class="btn btn-warning" ui-sref="system-question"><i class="fa fa-times"></i> Hủy bỏ</a><br>
-        </form>
-        <div class="modal fade preview-modal-box" tabindex="-1" role="dialog" aria-hidden="true">
-         <div class="modal-dialog modal-lg">
+            <textarea class="form-control" rows="12" ng-model="formData.content" required="required" style="resize:none"></textarea>
+        </div>
+        <div class="form-group" ng-show="formData.status==false">
+            <p class="text-warning">Câu hỏi này chưa được xét duyệt nên chưa được hiển thị lên trang web. Nếu câu hỏi hợp lệ, vui lòng xét duyệt cho câu hỏi này!</p>
+        </div>
+        <button class="btn btn-submit" type="button" ng-show="formData.status==false" ng-click="approve(formData._id)"><i class="fa fa-check"></i> Xét duyệt</button>
+        <button class="btn btn-submit" type="submit"  ng-disabled="!form.$dirty || (form.$dirty && form.$invalid)"><i class="fa fa-edit" ng-show="!Proccess"></i><i class="fa fa-spinner fa-spin" ng-show="Proccess" ></i> Cập nhật</button>
+        <a class="btn btn-warning" ui-sref="system-question"><i class="fa fa-times"></i> Hủy bỏ</a><br>
+    </form>
+    <div class="modal fade preview-modal-box" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
-              <div>
-                 <button type="button" class="close" style="margin-right: 11px;" data-dismiss="modal" aria-hidden="true">×</button>
-                 <h4 class="text-center" style="color: #16775c;">Xem trước</h4>
-              </div>
-               <div class="modal-body"   style="max-height: 400px; overflow-y: scroll">
-                   <div class="preview">
-                <div class="preview-content" marked="formData.content" ng-bind="formData.content"></div>
-              </div>
-               </div>
-               <div class="modal-footer">
-                 <button  type="button" data-dismiss="modal" aria-hidden="true" class="btn btn-submit">Đóng</button>
-               </div>
+                <div>
+                    <button type="button" class="close" style="margin-right: 11px;" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="text-center" style="color: #16775c;">Xem trước</h4>
+                </div>
+                <div class="modal-body"   style="max-height: 400px; overflow-y: scroll">
+                    <div class="preview">
+                        <div class="preview-content" marked="formData.content" ng-bind="formData.content"></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button  type="button" data-dismiss="modal" aria-hidden="true" class="btn btn-submit">Đóng</button>
+                </div>
             </div>
-         </div>
-   </div>
- </div>
+        </div>
+    </div>
 </div>
-
+</div>

@@ -1,57 +1,55 @@
 <div class="background-main-content">
-<div class="row select-category">
-      <div class="col-xs-6 pull-left current-category">
-         <span><i class="fa fa-flag"></i> Quản lý Vi phạm</span>
-      </div>
-      <div class="pull-right">
-        <a ui-sref="system" class="btn btn-submit btn-return"><i class="fa fa-mail-reply"></i> Quay lại Bảng điều khiển</a>
-      </div>
-      <div class="clearfix"></div>
+    <div class="row select-category">
+        <div class="col-xs-6 pull-left current-category">
+            <span><i class="fa fa-flag"></i> Quản lý Vi phạm</span>
+        </div>
+        <div class="pull-right">
+            <a ui-sref="system" class="btn btn-submit btn-return"><i class="fa fa-mail-reply"></i> Quay lại Bảng điều khiển</a>
+        </div>
+        <div class="clearfix"></div>
     </div>
-   <!-- END SELECT-CATEGORY -->
-         <form id="system-form">
-
-         <div class="col-xs-12">
-             <table class="table table-bordered table-hover">
-                 <thead>
-                     <tr>
-                         <th>STT</th>
-                         <th>Nội dung vi phạm</th>
-                         <th>Người vi phạm</th>
-                         <th>Ngày tạo</th>
-                         <th>Xóa</th>
-                     </tr>
-                 </thead>
-                 <tbody>
-                     <tr ng-repeat="item in listReport | orderBy: '-creationDate'|startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit">
-                      <td>{{$index+1}}</td>
-                      <td ng-bind="item.content" class="hidden-xs"></td>
-                      <td><a ui-sref="profile({id:item.userId._id})" target="_blank" ng-bind="item.userId.displayName"></a></td>
-                      <td ng-bind="item.creationDate| toDate | date:'dd/MM/yyyy'"></td>
-                      <td><button type="button" ng-click="deleteReport(a._id,'system/reports')" class="btn btn-danger"><i class="fa fa-trash-o"></i> Xóa</button></td>
-                     </tr>
-                 </tbody>
-             </table>
-         </div>
-
-         </form>
+    <!-- END SELECT-CATEGORY -->
+    <form id="system-form">
+        <div class="col-xs-12">
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>STT</th>
+                        <th>Nội dung vi phạm</th>
+                        <th>Người vi phạm</th>
+                        <th>Ngày tạo</th>
+                        <th>Xóa</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="item in listReport | orderBy: '-creationDate'|startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit">
+                        <td>{{$index+1}}</td>
+                        <td ng-bind="item.content" class="hidden-xs"></td>
+                        <td><a ui-sref="profile({id:item.userId._id})" target="_blank" ng-bind="item.userId.displayName"></a></td>
+                        <td ng-bind="item.creationDate| toDate | date:'dd/MM/yyyy'"></td>
+                        <td><button type="button" ng-click="deleteReport(a._id,'system/reports')" class="btn btn-danger"><i class="fa fa-trash-o"></i> Xóa</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </form>
 </div>
 <pagination total-items="totalItems" ng-model="currentPage" max-size="itemsPerPage" class="pagination-sm" boundary-links="false" rotate="false" num-pages="numPages" previous-text="←" next-text="→"></pagination>
-              <!-- / pagination -->
+<!-- / pagination -->
 <style>
-  .table th:nth-child(6),
+.table th:nth-child(6),
 .table td:nth-child(6) {
- text-align: center;
- width: 5em;
+text-align: center;
+width: 5em;
 }
 .table td:nth-child(2),
 .table td:nth-child(3){
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  max-width: 200px;
+overflow: hidden;
+text-overflow: ellipsis;
+white-space: nowrap;
+max-width: 200px;
 }
 .table td:nth-child(3){
-  max-width: 10em;
+max-width: 10em;
 }
 </style>

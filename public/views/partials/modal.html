@@ -1,87 +1,86 @@
 <div class="show-form create_question_form" ng-controller="QuestionController">
-  <div class="showContent" ng-click="toogleContent()"><p>Câu hỏi đang được soạn. Nhấn vào để tiếp tục</p></div>
-  <button class="toogleContent" ng-click="toogleContent()"><i class="fa fa-chevron-down"></i></button>
-  <form class="createForm" name="form" ng-submit="showSuggest()" novalidate>
-    <div class="row">
-      <div class="form-group col-md-6">
-        <input type="text" id="title" class="form-control" ng-model="formData.title" placeholder="Tiêu đề câu hỏi" required="required"  name="title" ng-maxlength="120">
-      </div>
-      <div class="form-group col-md-6" ng-controller="AutocompleteTagController">
-        <tags-input ng-model="formData.tag" display-property="tagName" max-tags="3" placeholder="{{placeholder}}" add-from-autocomplete-only="true" replace-spaces-with-dashes="false" min-length="1" enforce-max-tags>
+    <div class="showContent" ng-click="toogleContent()"><p>Câu hỏi đang được soạn. Nhấn vào để tiếp tục</p></div>
+    <button class="toogleContent" ng-click="toogleContent()"><i class="fa fa-chevron-down"></i></button>
+    <form class="createForm" name="form" ng-submit="showSuggest()" novalidate>
+        <div class="row">
+            <div class="form-group col-md-6">
+                <input type="text" id="title" class="form-control" ng-model="formData.title" placeholder="Tiêu đề câu hỏi" required="required"  name="title" ng-maxlength="120">
+            </div>
+            <div class="form-group col-md-6" ng-controller="AutocompleteTagController">
+                <tags-input ng-model="formData.tag" display-property="tagName" max-tags="3" placeholder="{{placeholder}}" add-from-autocomplete-only="true" replace-spaces-with-dashes="false" min-length="1" enforce-max-tags>
             <auto-complete source="loadItems($query)" min-length="1" debounce-delay="0"></auto-complete>
-        </tags-input>
-      </div>
+            </tags-input>
+        </div>
     </div>
     <div class="row" style="margin-bottom: 10px;">
-      <div class="col-md-6 col-sm-12">
-        <h4 class="preview-title">Khung soạn thảo câu hỏi <span class="pull-right" data-toggle="modal" data-target="#myModal" style="cursor: pointer; color: #1d9977"><i class="fa fa-question"></i> Hướng dẫn</span></h4>
-        <textarea class="form-control" rows="12" ng-model="formData.content" required="required" id="mirror" style="resize:none"></textarea>
-      </div>
-      <div class="col-md-6  hidden-sm hidden-xs">
-        <h4 class="preview-title">Chế độ xem trước</h4>
-        <div class="preview">
-          <div class="preview-content" marked="formData.content" ng-bind="formData.content"></div>
+        <div class="col-md-6 col-sm-12">
+            <h4 class="preview-title">Khung soạn thảo câu hỏi <span class="pull-right" data-toggle="modal" data-target="#myModal" style="cursor: pointer; color: #1d9977"><i class="fa fa-question"></i> Hướng dẫn</span></h4>
+            <textarea class="form-control" rows="12" ng-model="formData.content" required="required" id="mirror" style="resize:none"></textarea>
         </div>
-      </div>
+        <div class="col-md-6  hidden-sm hidden-xs">
+            <h4 class="preview-title">Chế độ xem trước</h4>
+            <div class="preview">
+                <div class="preview-content" marked="formData.content" ng-bind="formData.content"></div>
+            </div>
+        </div>
     </div>
     <button class="btn btn-primary" type="button" ng-click="upload()"><i class="fa fa-cloud-upload"></i> Upload ảnh</button>
     <button class="btn btn-submit" type="submit"  ng-disabled="!form.$dirty || (form.$dirty && form.$invalid)"><i class="fa fa-edit" ng-show="!Proccess"></i><i class="fa fa-spinner fa-spin" ng-show="Proccess" ></i> Đăng câu hỏi</button>
     <span class="btn btn-danger" ng-click="closeForm()"><i class="fa fa-times"></i> Hủy bỏ</span><br>
     <div class="term-texts">
-      <p>Bạn nên đọc kỹ <a ui-sref="policy" target="_blank">Quy định & Nội quy</a> của website trước khi đăng bài. Bạn phải chịu hoàn toàn trách nhiệm về nội dung đăng tải trên website.</p>
+        <p>Bạn nên đọc kỹ <a ui-sref="policy" target="_blank">Quy định & Nội quy</a> của website trước khi đăng bài. Bạn phải chịu hoàn toàn trách nhiệm về nội dung đăng tải trên website.</p>
     </div>
-  </form>
-  <!-- Suggest -->
-  <div class="loading suggest">
-   <md-progress-circular class="md-hue-2" md-mode="indeterminate"></md-progress-circular>
- <p>Hệ thống đang xử lý</p>
-  </div>
-  <form class="suggestForm" ng-submit="createQuestion()" novalidate ng-show="suggestTitle!=null">
+</form>
+<!-- Suggest -->
+<div class="loading suggest">
+    <md-progress-circular class="md-hue-2" md-mode="indeterminate"></md-progress-circular>
+    <p>Hệ thống đang xử lý</p>
+</div>
+<form class="suggestForm" ng-submit="createQuestion()" novalidate ng-show="suggestTitle!=null">
     <div class="row">
         <div class="col-md-6 col-sm-12 col-xs-12">
-        <div>
-          <h3 class="title" ng-bind="suggestTitle"></h3>
-          <div marked="suggestContent" ng-bind="suggestContent" class="suggestContent"></div>
-          <ul class="question-tags" ng-repeat="tag in suggestTag">
-           <li><a class="q-tag" style="font-size:13px;"><i class="fa fa-tags"></i> <span ng-bind="tag.tagName"></span></a></li>
-        </ul>
-        </div>
+            <div>
+                <h3 class="title" ng-bind="suggestTitle"></h3>
+                <div marked="suggestContent" ng-bind="suggestContent" class="suggestContent"></div>
+                <ul class="question-tags" ng-repeat="tag in suggestTag">
+                    <li><a class="q-tag" style="font-size:13px;"><i class="fa fa-tags"></i> <span ng-bind="tag.tagName"></span></a></li>
+                </ul>
+            </div>
         </div>
         <div class="col-md-6 col-sm-12 col-xs-12">
-        <div class="suggestQuestion">
-          <h3 class="title">Câu hỏi liên quan hiện có trong hệ thống</h3>
-          <ul ng-repeat="value in listSuggest | limitTo:5" ng-if="value.title!=null">
-            <li><a ui-sref="question-detail({id:value._id,slug:'success'})" target="_blank" ng-bind="value.title"></a></li>
-          </ul> 
-          </div>
+            <div class="suggestQuestion">
+                <h3 class="title">Câu hỏi liên quan hiện có trong hệ thống</h3>
+                <ul ng-repeat="value in listSuggest | limitTo:5" ng-if="value.title!=null">
+                    <li><a ui-sref="question-detail({id:value._id,slug:'success'})" target="_blank" ng-bind="value.title"></a></li>
+                </ul>
+            </div>
         </div>
         <div class="clearfix"></div>
         <div class="term-texts col-xs-12">
-          <p>Bạn hãy chắc chắn rằng câu hỏi của bạn là duy nhất.</p>
+            <p>Bạn hãy chắc chắn rằng câu hỏi của bạn là duy nhất.</p>
         </div>
         <div class="suggestButton col-xs-12">
-          <button class="btn btn-submit" type="submit"><i class="fa fa-check"></i> Tiếp tục đăng câu hỏi</button>
-          <span class="btn btn-danger" ng-click="closeForm()"><i class="fa fa-times"></i> Hủy bỏ</span>
+            <button class="btn btn-submit" type="submit"><i class="fa fa-check"></i> Tiếp tục đăng câu hỏi</button>
+            <span class="btn btn-danger" ng-click="closeForm()"><i class="fa fa-times"></i> Hủy bỏ</span>
         </div>
     </div>
-  </form>
+</form>
 </div>
 <!-- / add-question-->
-
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
+<div class="modal-dialog">
+    <div class="modal-content">
         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Đóng</span></button>
-          <h4 class="modal-title" id="myModalLabel">Hướng dẫn sử dụng chức năng soạn thảo câu hỏi</h4>
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Đóng</span></button>
+            <h4 class="modal-title" id="myModalLabel">Hướng dẫn sử dụng chức năng soạn thảo câu hỏi</h4>
         </div>
         <div class="modal-body" style="max-height: 400px; overflow-y:scroll;" ng-controller="SystemController">
-          <div marked="systemData.help" ng-bind="systemData.help"></div>
+            <div marked="systemData.help" ng-bind="systemData.help"></div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-submit" data-dismiss="modal">OK</button>
+            <button type="button" class="btn btn-submit" data-dismiss="modal">OK</button>
         </div>
-      </div>
     </div>
-  </div>
-  <!-- / Modal help -->
+</div>
+</div>
+<!-- / Modal help -->

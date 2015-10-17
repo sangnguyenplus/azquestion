@@ -3,22 +3,22 @@ var bcrypt   = require('bcrypt-nodejs');
 
 // tạo cấu trúc db
 var schema = mongoose.Schema({
-    displayName:   {type: 'String', required: true},
-    email:         {type: 'String', required: true},
-    password:      {type: 'String', default: null},
-    avatar:        {type: 'String', default: null},
-    location:      {type: 'String', default: null},
-    website:       {type: 'String', default: null},
-    birthday:      {type: 'String', default: null},
-    reputation:    {type: 'Number', default: 0},
-    status:        {type: 'Number', default: 0},
-    role:          {type: 'String',required:true},
-    activeToken :  {type: 'String', default: null},
-    resetPasswordToken: {type: 'String', default: null},
+    displayName:          {type: 'String', required: true},
+    email:                {type: 'String', required: true},
+    password:             {type: 'String', default: null},
+    avatar:               {type: 'String', default: null},
+    location:             {type: 'String', default: null},
+    website:              {type: 'String', default: null},
+    birthday:             {type: 'String', default: null},
+    reputation:           {type: 'Number', default: 0},
+    status:               {type: 'Number', default: 0},
+    role:                 {type: 'String', required:true},
+    activeToken :         {type: 'String', default: null},
+    resetPasswordToken:   {type: 'String', default: null},
     resetPasswordExpires: {type: 'String', default: Date.now},
-    creationDate:  {type: 'Date', default: Date.now},
-    lastEditDate:  {type: 'Date', default: Date.now},
-    lastAccessDate:{type: 'Date', default: Date.now}
+    creationDate:         {type: 'Date', default: Date.now},
+    lastEditDate:         {type: 'Date', default: Date.now},
+    lastAccessDate:       {type: 'Date', default: Date.now}
 
 });
 

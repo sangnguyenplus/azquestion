@@ -1,16 +1,16 @@
 <div class="text-center" style="padding-top: 80px; min-height: 700px; background-color: #fff;" ng-show="loading">
-<md-progress-circular class="md-hue-2" md-mode="indeterminate"></md-progress-circular>
-<p>Đang tải dữ liệu</p>
+    <md-progress-circular class="md-hue-2" md-mode="indeterminate"></md-progress-circular>
+    <p>Đang tải dữ liệu</p>
 </div>
 <div class="background-main-content" ng-hide="loading">
-  <div class="row select-category">
-    <div class="col-md-12 current-category">
-       <span>Quy định &amp; Nội quy</span>
-    </div>
+    <div class="row select-category">
+        <div class="col-md-12 current-category">
+            <span>Quy định &amp; Nội quy</span>
+        </div>
     </div>
     <!-- END SELECT-CATEGORY -->
     <div class="col-md-12" style="font-size: 14px;">
-       <div marked = "systemData.policy" ng-bind="systemData.policy"></div>
-     </div>
-<div class="clearfix"></div>
+        <div marked = "systemData.policy" ng-bind="systemData.policy"></div>
+    </div>
+    <div class="clearfix"></div>
 </div>

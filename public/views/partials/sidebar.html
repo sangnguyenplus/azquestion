@@ -1,68 +1,68 @@
 <div class="panel panel-default statics">
-  <ul>
-    <li>
-      <p class="statics-count"  ng-controller="CountQuestionController"><i class="fa fa-question-circle"></i> <span ng-bind="countQuestion"></span></p>
-      <p>Câu hỏi</p>
-    </li>
-    <li>
-      <p class="statics-count"  ng-controller="CountAnswerController"><i class="fa fa-comments-o"></i> <span ng-bind="countAnswer"></span></p>
-      <p>Trả lời</p>
-    </li>
-    <li>
-      <p class="statics-count"  ng-controller="CountTagController"><i class="fa fa-tags"></i> <span ng-bind="countTag"></span></p>
-      <p>Tag</p>
-    </li>
-    <li>
-      <p class="statics-count"  ng-controller="CountUserController"><i class="fa fa-users"></i> <span ng-bind="countUser"></span></p>
-      <p>Thành viên</p>
-    </li>
-  </ul>
-  <div class="clearfix"></div>
+    <ul>
+        <li>
+            <p class="statics-count"  ng-controller="CountQuestionController"><i class="fa fa-question-circle"></i> <span ng-bind="countQuestion"></span></p>
+            <p>Câu hỏi</p>
+        </li>
+        <li>
+            <p class="statics-count"  ng-controller="CountAnswerController"><i class="fa fa-comments-o"></i> <span ng-bind="countAnswer"></span></p>
+            <p>Trả lời</p>
+        </li>
+        <li>
+            <p class="statics-count"  ng-controller="CountTagController"><i class="fa fa-tags"></i> <span ng-bind="countTag"></span></p>
+            <p>Tag</p>
+        </li>
+        <li>
+            <p class="statics-count"  ng-controller="CountUserController"><i class="fa fa-users"></i> <span ng-bind="countUser"></span></p>
+            <p>Thành viên</p>
+        </li>
+    </ul>
+    <div class="clearfix"></div>
 </div>
 <style>
-  .statics li{display: block; list-style: none; width: 50%; height: 80px; float: left; text-align: center; font-size: 15px; color: #fff;}
-  .statics li:nth-child(1){background-color: #1abc9c;}
-  .statics li:nth-child(2){background-color: #2ecc71;}
-  .statics li:nth-child(3){background-color: #f1c40f;}
-  .statics li:nth-child(4){background-color: #e67e22;}
-  .statics .statics-count{font-size: 34px; font-family: 'RobotoBold'; margin-bottom: 0;}
-  .statics .statics-count .fa{font-size: 28px; opacity: 0.3;}
-  .statics li:hover .fa{opacity: 1;}
+.statics li{display: block; list-style: none; width: 50%; height: 80px; float: left; text-align: center; font-size: 15px; color: #fff;}
+.statics li:nth-child(1){background-color: #1abc9c;}
+.statics li:nth-child(2){background-color: #2ecc71;}
+.statics li:nth-child(3){background-color: #f1c40f;}
+.statics li:nth-child(4){background-color: #e67e22;}
+.statics .statics-count{font-size: 34px; font-family: 'RobotoBold'; margin-bottom: 0;}
+.statics .statics-count .fa{font-size: 28px; opacity: 0.3;}
+.statics li:hover .fa{opacity: 1;}
 </style>
 <!-- / widget-statistic -->
 <div class="panel panel-default" ng-controller="PopularQuestionController">
-  <div class="panel-heading">
-    <h3 class="panel-title"><!-- <i class="fa fa-fw fa-fire"></i>  -->Câu hỏi nổi bật trong tuần</h3>
-  </div>
-  <div class="panel-body">
-    <div class=" widget-hot-questions">
-      <ul>
-        <li ng-repeat="q in popularQuestion | limitTo:5">
-          <a ui-sref="question-detail({ id:q._id, slug: (q.title | friendlyUrl)+'.html'})">
-            <span class="topic-avatar">
-            <img src="{{q.userId.avatar}}" class="avatar" alt="{{q.userId.displayName}}"></span>
-            <span class="topic-title" ng-bind="q.title"></span>
-          </a>
-          <p class="time"><i class="fa fa-comment"></i> <span ng-bind="q.creationDate| fromNow"></span></p>
-        </li>
-      </ul>
+    <div class="panel-heading">
+        <h3 class="panel-title"><!-- <i class="fa fa-fw fa-fire"></i>  -->Câu hỏi nổi bật trong tuần</h3>
     </div>
-  </div>
+    <div class="panel-body">
+        <div class=" widget-hot-questions">
+            <ul>
+                <li ng-repeat="q in popularQuestion | limitTo:5">
+                    <a ui-sref="question-detail({ id:q._id, slug: (q.title | friendlyUrl)+'.html'})">
+                        <span class="topic-avatar">
+                        <img src="{{q.userId.avatar}}" class="avatar" alt="{{q.userId.displayName}}"></span>
+                        <span class="topic-title" ng-bind="q.title"></span>
+                    </a>
+                    <p class="time"><i class="fa fa-comment"></i> <span ng-bind="q.creationDate| fromNow"></span></p>
+                </li>
+            </ul>
+        </div>
+    </div>
 </div>
 <!-- / widget-hot-questions -->
 <div class="panel panel-default" ng-controller="PopularTagController">
-  <div class="panel-heading">
-    <h3 class="panel-title"><!-- <i class="fa fa-tags"></i>  -->Tags</h3>
-  </div>
-  <div class="panel-body">
-    <div class="list-tags-widget">
-      <ul>
-        <li ng-repeat="t in popularTag">
-          <a ui-sref="questions_tag({ id:t._id, slug: (t.tagName | friendlyUrl)+'.html'})" style="text-transform: lowercase;"><i class="fa fa-tags"></i><span  ng-bind="t.tagName"></span></a>
-        </li>
-      </ul>
+    <div class="panel-heading">
+        <h3 class="panel-title"><!-- <i class="fa fa-tags"></i>  -->Tags</h3>
     </div>
-  </div>
+    <div class="panel-body">
+        <div class="list-tags-widget">
+            <ul>
+                <li ng-repeat="t in popularTag">
+                    <a ui-sref="questions_tag({ id:t._id, slug: (t.tagName | friendlyUrl)+'.html'})" style="text-transform: lowercase;"><i class="fa fa-tags"></i><span  ng-bind="t.tagName"></span></a>
+                </li>
+            </ul>
+        </div>
+    </div>
 </div>
 <!-- / widget-related-tags -->
 <div class="fb-page" data-href="https://www.facebook.com/toiyeulaptrinhfanpage" data-hide-cover="false" data-show-facepile="true" data-show-posts="false"><div class="fb-xfbml-parse-ignore"><blockquote cite="https://www.facebook.com/toiyeulaptrinhfanpage"><a href="https://www.facebook.com/toiyeulaptrinhfanpage">Tôi Yêu Lập Trình</a></blockquote></div></div>

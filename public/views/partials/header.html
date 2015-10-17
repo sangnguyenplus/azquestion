@@ -1,235 +1,235 @@
 <header id="header">
-          <div class="container">
-            <div class="row">
-              <a ui-sref="home" class="pull-left col-xs-4 visible-xs"><img src="images/logo_mobile.png" style="max-height: 30px; width:auto ;margin-top: 10px; margin-bottom: 5px;"></a>
-              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#menu-mobile">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-              </button> 
-              <div class="clearfix"></div>
-              <ul id="main-nav" class="nav navbar-nav hidden-xs">
+    <div class="container">
+        <div class="row">
+            <a ui-sref="home" class="pull-left col-xs-4 visible-xs"><img src="images/logo_mobile.png" style="max-height: 30px; width:auto ;margin-top: 10px; margin-bottom: 5px;"></a>
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#menu-mobile">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            </button>
+            <div class="clearfix"></div>
+            <ul id="main-nav" class="nav navbar-nav hidden-xs">
                 <li ng-class="getClass('/gioi-thieu.html')"><a ui-sref="about">Giới thiệu</a></li>
                 <li ng-class="getClass('/quy-dinh-va-noi-quy.html')"><a ui-sref="policy">Quy định &amp; Nội quy</a></li>
                 <li ng-class="getClass('/huong-dan.html')"><a ui-sref="help">Hướng dẫn</a></li>
-              </ul>
-              <!-- logo -->
-              <ul class="nav navbar-nav pull-right hidden-xs" ng-if="!currentUser">
-                  <li ng-class="getClass('/dang-nhap.html')"><a ui-sref="login">Đăng nhập</a></li>
-                  <li ng-class="getClass('/dang-ky.html')"><a ui-sref="register">Đăng ký</a></li>
-              </ul>
-              <ul class="nav navbar-nav pull-right hidden-xs notify-menu" ng-controller="UserController"  ng-if="currentUser" style="max-height: 40px;">
-                  <li class="notifications dropdown" ng-controller="NotifiController" ng-if="currentUser">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)" ng-click="updatecount()"><i class="fa fa-fw fa-bell-o"></i> Thông báo <sup class='badge' ng-bind="sfc"></sup></a>
-                        <ul class="dropdown-menu">
-                          <li ng-hide="listNotifi">
+            </ul>
+            <!-- logo -->
+            <ul class="nav navbar-nav pull-right hidden-xs" ng-if="!currentUser">
+                <li ng-class="getClass('/dang-nhap.html')"><a ui-sref="login">Đăng nhập</a></li>
+                <li ng-class="getClass('/dang-ky.html')"><a ui-sref="register">Đăng ký</a></li>
+            </ul>
+            <ul class="nav navbar-nav pull-right hidden-xs notify-menu" ng-controller="UserController"  ng-if="currentUser" style="max-height: 40px;">
+                <li class="notifications dropdown" ng-controller="NotifiController" ng-if="currentUser">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)" ng-click="updatecount()"><i class="fa fa-fw fa-bell-o"></i> Thông báo <sup class='badge' ng-bind="sfc"></sup></a>
+                    <ul class="dropdown-menu">
+                        <li ng-hide="listNotifi">
                             <a href="javascript:void(0)">Chưa có thông báo nào cả.</a>
-                          </li>
-                          <li ng-show="listNotifi" ng-repeat="list in listNotifi|orderBy:['-creationDate']">
+                        </li>
+                        <li ng-show="listNotifi" ng-repeat="list in listNotifi|orderBy:['-creationDate']">
                             <a ui-sref="question-detail({id:list.questionId, slug:''})"><img src="{{list.userSend.avatar}}" alt="{{list.userSend.displayName}}" class="userSend">{{list.content}}</a>
-                          </li>
-                        </ul>
-                      </li>
-                      <li class="chats dropdown" ng-controller="ChatController" ng-if="currentUser">
-                        <a class="dropdown-toggle" data-toggle="dropdown" ng-click="updateCount()" href="javascript:void(0)"><i class="fa fa-comment-o fa-fw" ></i> <span>Chat</span> <sup class='badge' ng-bind="unread"></sup></a>
-                        <ul class="dropdown-menu">
-                          <li ng-hide="listChat">
+                        </li>
+                    </ul>
+                </li>
+                <li class="chats dropdown" ng-controller="ChatController" ng-if="currentUser">
+                    <a class="dropdown-toggle" data-toggle="dropdown" ng-click="updateCount()" href="javascript:void(0)"><i class="fa fa-comment-o fa-fw" ></i> <span>Chat</span> <sup class='badge' ng-bind="unread"></sup></a>
+                    <ul class="dropdown-menu">
+                        <li ng-hide="listChat">
                             <a href="javascript:void(0)">Chưa có tin nhắn nào cả.</a>
-                          </li>
-                          <li ng-show="listChat" ng-repeat="item in listChat|orderBy:['-creationDate']">
-                              <a ng-if="item.userSend._id!==currentUser._id" ng-click="chat({_id:item.userSend._id, username: item.userSend.displayName})" style="cursor: pointer;">
+                        </li>
+                        <li ng-show="listChat" ng-repeat="item in listChat|orderBy:['-creationDate']">
+                            <a ng-if="item.userSend._id!==currentUser._id" ng-click="chat({_id:item.userSend._id, username: item.userSend.displayName})" style="cursor: pointer;">
                                 <div class="chatLeft"><img src="{{item.userSend.avatar}}" alt="{{item.userSend.displayName}}" class="userSend"></div><div class="chatRight">{{item.userSend.displayName}} <br><small><i class="fa fa-check" ng-show="item.status"></i> {{item.msg}}</small></div>
                                 <span class="clearfix"></span>
-                              </a>
-                              <a ng-if="item.userSend._id===currentUser._id" ng-click="chat({_id:item.userRecive._id, username: item.userRecive.displayName})" style="cursor: pointer;">
+                            </a>
+                            <a ng-if="item.userSend._id===currentUser._id" ng-click="chat({_id:item.userRecive._id, username: item.userRecive.displayName})" style="cursor: pointer;">
                                 <div class="chatLeft"><img src="{{item.userRecive.avatar}}" alt="{{item.userRecive.displayName}}" class="userSend"></div><div class="chatRight">{{item.userRecive.displayName}} <br><small><i class="fa fa-check" ng-show="item.status && item.userSend._id!==currentUser._id"></i> {{item.msg}}</small></div>
                                 <span class="clearfix"></span>
-                              </a>
-                          </li>
-                        </ul>
-                      </li>
-                  <li><a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)" >
-                          <img ng-src="{{currentUser.avatar}}" class="img-thumbnail" alt="{{currentUser.displayName}}">
-                          <span ng-bind="currentUser.displayName"></span>
-                  </a>
-                    <ul id="user-control-list" class="dropdown-menu">
-                          <li>
-                            <a id="user-profile-link" ui-sref="profile({ id:currentUser._id })"><i class="fa fa-circle status online"></i> <span id="user-header-name" ng-bind="currentUser.displayName"></span></a>
-                          </li>
-                          <li ng-show="{{currentUser.role=='admin'}}"><a ui-sref="system"><i class="fa fa-cogs"></i> Quản lý hệ thống</a></li>
-                          <li id="logout-link">
-                            <a href="javascript:void(0)" ng-click="logout()"><i class="fa fa-power-off"></i> Đăng xuất</a>
-                          </li>
-                        </ul>
-                  </li>
-              </ul>
-            </div>
-            </div>
-          </header>
-          <!-- END HEADER -->
-          <div id="main-header" class="hidden-xs">
-            <div class="container">
-                <div id="logo">
-                  <a ui-sref="home">
-                    <img src="images/logo.png" alt="Logo">
-                  </a>
-                </div>
-                <div class="header-navigation" way-points id="main-menu">
-                  <ul>
-                    <li ng-class="getClass('/')"><a ui-sref="home" ><i class="fa fa-question-circle"></i> Câu hỏi</a></li>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li><a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)" >
+                    <img ng-src="{{currentUser.avatar}}" class="img-thumbnail" alt="{{currentUser.displayName}}">
+                    <span ng-bind="currentUser.displayName"></span>
+                </a>
+                <ul id="user-control-list" class="dropdown-menu">
+                    <li>
+                        <a id="user-profile-link" ui-sref="profile({ id:currentUser._id })"><i class="fa fa-circle status online"></i> <span id="user-header-name" ng-bind="currentUser.displayName"></span></a>
+                    </li>
+                    <li ng-show="{{currentUser.role=='admin'}}"><a ui-sref="system"><i class="fa fa-cogs"></i> Quản lý hệ thống</a></li>
+                    <li id="logout-link">
+                        <a href="javascript:void(0)" ng-click="logout()"><i class="fa fa-power-off"></i> Đăng xuất</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div>
+</header>
+<!-- END HEADER -->
+<div id="main-header" class="hidden-xs">
+<div class="container">
+    <div id="logo">
+        <a ui-sref="home">
+            <img src="images/logo.png" alt="Logo">
+        </a>
+    </div>
+    <div class="header-navigation" way-points id="main-menu">
+        <ul>
+            <li ng-class="getClass('/')"><a ui-sref="home" ><i class="fa fa-question-circle"></i> Câu hỏi</a></li>
+            <li ng-class="getClass('/tags.html')"><a ui-sref="tags"><i class="fa fa-tags"></i> Tags</a></li>
+            <li ng-class="getClass('/danh-hieu.html')"><a ui-sref="badges"><i class="fa fa-trophy"></i> Danh hiệu</a></li>
+            <li ng-class="getClass('/thanh-vien.html')"><a ui-sref="users" ><i class="fa fa-users"></i> Thành viên</a></li>
+            <li>
+                <a href="#" ng-click="showForm('create_question_form')">
+                <i class="fa fa-plus"></i> Đăng câu hỏi</a>
+            </li>
+        </ul>
+        <div class="clearfix"></div>
+    </div>
+    <!-- / header-navigation -->
+</div>
+<!-- / container -->
+</div>
+<!-- / Main header -->
+<div class="container">
+<div class="row">
+    <!-- Menu mobile -->
+    <div class="collapse navbar-collapse" id="menu-mobile" >
+        <div class="visible-xs" style="border-top: 1px solid #eee; width: 100%;">
+            <div class="col-xs-4">
+                <ul class="nav navbar-nav">
+                    <li><a href="#" ng-click="showForm('create_question_form')" class="question-form"><i class="fa fa-plus"></i> Đăng câu hỏi</a></li>
+                    <li ng-class="getClass('/')"><a ui-sref="home"><i class="fa fa-question-circle"></i> Câu hỏi</a></li>
                     <li ng-class="getClass('/tags.html')"><a ui-sref="tags"><i class="fa fa-tags"></i> Tags</a></li>
                     <li ng-class="getClass('/danh-hieu.html')"><a ui-sref="badges"><i class="fa fa-trophy"></i> Danh hiệu</a></li>
-                    <li ng-class="getClass('/thanh-vien.html')"><a ui-sref="users" ><i class="fa fa-users"></i> Thành viên</a></li>
-                    <li>
-                     <a href="#" ng-click="showForm('create_question_form')">
-                     <i class="fa fa-plus"></i> Đăng câu hỏi</a>
-                    </li>
-                  </ul>
-                  <div class="clearfix"></div>
-                </div>
-                <!-- / header-navigation -->
+                    <li ng-class="getClass('/thanh-vien.html')"><a ui-sref="users"><i class="fa fa-users"></i> Thành viên</a></li>
+                </ul>
             </div>
-            <!-- / container -->
-          </div>
-          <!-- / Main header -->
-          <div class="container">
-            <div class="row">
-               <!-- Menu mobile -->
-            <div class="collapse navbar-collapse" id="menu-mobile" >
-              <div class="visible-xs" style="border-top: 1px solid #eee; width: 100%;">
-                  <div class="col-xs-4">
-                    <ul class="nav navbar-nav">
-                      <li><a href="#" ng-click="showForm('create_question_form')" class="question-form"><i class="fa fa-plus"></i> Đăng câu hỏi</a></li>
-                      <li ng-class="getClass('/')"><a ui-sref="home"><i class="fa fa-question-circle"></i> Câu hỏi</a></li>
-                      <li ng-class="getClass('/tags.html')"><a ui-sref="tags"><i class="fa fa-tags"></i> Tags</a></li>
-                      <li ng-class="getClass('/danh-hieu.html')"><a ui-sref="badges"><i class="fa fa-trophy"></i> Danh hiệu</a></li>
-                      <li ng-class="getClass('/thanh-vien.html')"><a ui-sref="users"><i class="fa fa-users"></i> Thành viên</a></li>
-                    </ul>
-                  </div>
-                  <div class="col-xs-8 pull-right menu-xs  notify-menu" style="margin-top: 0">
-                    <ul class="nav navbar-nav navbar-right pull-right">
-                      <li ng-if="!currentUser">
+            <div class="col-xs-8 pull-right menu-xs  notify-menu" style="margin-top: 0">
+                <ul class="nav navbar-nav navbar-right pull-right">
+                    <li ng-if="!currentUser">
                         <a ui-sref="login" style="font-weight: bold;">
-                          <i class="fa fa-sign-in visible-xs-inline"></i>
-                          <span>Đăng nhập</span>
+                            <i class="fa fa-sign-in visible-xs-inline"></i>
+                            <span>Đăng nhập</span>
                         </a>
-                      </li>
-                      <li id="user_label" class="dropdown" ng-controller="UserController"  ng-if="currentUser">
+                    </li>
+                    <li id="user_label" class="dropdown" ng-controller="UserController"  ng-if="currentUser">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)" >
-                          <img ng-src="{{currentUser.avatar}}" alt="{{currentUser.displayName}}"> {{currentUser.displayName}}
+                            <img ng-src="{{currentUser.avatar}}" alt="{{currentUser.displayName}}"> {{currentUser.displayName}}
                         </a>
                         <ul id="user-control-list" class="dropdown-menu">
-                          <li>
-                            <a id="user-profile-link" ui-sref="profile({ id:currentUser._id })"><i class="fa fa-circle status online"></i> <span id="user-header-name" ng-bind="currentUser.displayName"></span></a>
-                          </li>
-                          <li ng-show="{{currentUser.role=='admin'}}"><a ui-sref="system"><i class="fa fa-cogs"></i> Quản lý hệ thống</a></li>
-                          <li id="logout-link">
-                            <a href="javascript:void(0)" ng-click="logout()"><i class="fa fa-power-off"></i> Đăng xuất</a>
-                          </li>
+                            <li>
+                                <a id="user-profile-link" ui-sref="profile({ id:currentUser._id })"><i class="fa fa-circle status online"></i> <span id="user-header-name" ng-bind="currentUser.displayName"></span></a>
+                            </li>
+                            <li ng-show="{{currentUser.role=='admin'}}"><a ui-sref="system"><i class="fa fa-cogs"></i> Quản lý hệ thống</a></li>
+                            <li id="logout-link">
+                                <a href="javascript:void(0)" ng-click="logout()"><i class="fa fa-power-off"></i> Đăng xuất</a>
+                            </li>
                         </ul>
-                      </li>
-                      <li class="notifications dropdown" ng-controller="NotifiController" ng-if="currentUser">
+                    </li>
+                    <li class="notifications dropdown" ng-controller="NotifiController" ng-if="currentUser">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)" ng-click="updatecount()"><i class="fa fa-fw fa-bell-o"></i> Thông báo <sup class='badge' ng-bind="sfc"></sup></a>
                         <ul class="dropdown-menu">
-                          <li ng-hide="listNotifi">
-                            <a href="javascript:void(0)">Chưa có thông báo nào cả.</a>
-                          </li>
-                          <li ng-show="listNotifi" ng-repeat="list in listNotifi|orderBy:['-creationDate']">
-                            <a ui-sref="question-detail({id:list.questionId, slug:''})"><img src="{{list.userSend.avatar}}" alt="{{list.userSend.displayName}}" class="userSend">{{list.content}}</a>
-                          </li>
+                            <li ng-hide="listNotifi">
+                                <a href="javascript:void(0)">Chưa có thông báo nào cả.</a>
+                            </li>
+                            <li ng-show="listNotifi" ng-repeat="list in listNotifi|orderBy:['-creationDate']">
+                                <a ui-sref="question-detail({id:list.questionId, slug:''})"><img src="{{list.userSend.avatar}}" alt="{{list.userSend.displayName}}" class="userSend">{{list.content}}</a>
+                            </li>
                         </ul>
-                      </li>
-                      <li class="chats dropdown" ng-controller="ChatController" ng-if="currentUser">
+                    </li>
+                    <li class="chats dropdown" ng-controller="ChatController" ng-if="currentUser">
                         <a class="dropdown-toggle" data-toggle="dropdown" ng-click="updateCount()" href="javascript:void(0)"><i class="fa fa-comment-o fa-fw" ></i> <span>Chat</span> <sup class='badge' ng-bind="unread"></sup></a>
                         <ul class="dropdown-menu">
-                          <li ng-hide="listChat">
-                            <a href="javascript:void(0)">Chưa có tin nhắn nào cả.</a>
-                          </li>
-                          <li ng-show="listChat" ng-repeat="item in listChat|orderBy:['-creationDate']">
-                              <a ng-if="item.userSend._id!==currentUser._id" ng-click="chat({_id:item.userSend._id, username: item.userSend.displayName})" style="cursor: pointer;">
-                                <div class="chatLeft"><img src="{{item.userSend.avatar}}" alt="{{item.userSend.displayName}}" class="userSend"></div><div class="chatRight">{{item.userSend.displayName}} <br><small><i class="fa fa-check" ng-show="item.status"></i> {{item.msg}}</small></div>
-                                <span class="clearfix"></span>
-                              </a>
-                              <a ng-if="item.userSend._id===currentUser._id" ng-click="chat({_id:item.userRecive._id, username: item.userRecive.displayName})" style="cursor: pointer;">
-                                <div class="chatLeft"><img src="{{item.userRecive.avatar}}" alt="{{item.userRecive.displayName}}" class="userSend"></div><div class="chatRight">{{item.userRecive.displayName}} <br><small><i class="fa fa-check" ng-show="item.status && item.userSend._id!==currentUser._id"></i> {{item.msg}}</small></div>
-                                <span class="clearfix"></span>
-                              </a>
-                          </li>
+                            <li ng-hide="listChat">
+                                <a href="javascript:void(0)">Chưa có tin nhắn nào cả.</a>
+                            </li>
+                            <li ng-show="listChat" ng-repeat="item in listChat|orderBy:['-creationDate']">
+                                <a ng-if="item.userSend._id!==currentUser._id" ng-click="chat({_id:item.userSend._id, username: item.userSend.displayName})" style="cursor: pointer;">
+                                    <div class="chatLeft"><img src="{{item.userSend.avatar}}" alt="{{item.userSend.displayName}}" class="userSend"></div><div class="chatRight">{{item.userSend.displayName}} <br><small><i class="fa fa-check" ng-show="item.status"></i> {{item.msg}}</small></div>
+                                    <span class="clearfix"></span>
+                                </a>
+                                <a ng-if="item.userSend._id===currentUser._id" ng-click="chat({_id:item.userRecive._id, username: item.userRecive.displayName})" style="cursor: pointer;">
+                                    <div class="chatLeft"><img src="{{item.userRecive.avatar}}" alt="{{item.userRecive.displayName}}" class="userSend"></div><div class="chatRight">{{item.userRecive.displayName}} <br><small><i class="fa fa-check" ng-show="item.status && item.userSend._id!==currentUser._id"></i> {{item.msg}}</small></div>
+                                    <span class="clearfix"></span>
+                                </a>
+                            </li>
                         </ul>
-                      </li>
-                    </ul>
-                  </div>
-              </div>
-              </div><!-- /.navbar-collapse -->
+                    </li>
+                </ul>
             </div>
         </div>
-        <!-- / Main-menu -->
-        <div class="fixed-menu">
-          <nav class="navbar navbar-inverse hidden-xs" role="navigation">
-              <div class="container">
-                  <div class="row">
-                      <ul class="nav navbar-nav left-navbar">
-                          <li ng-class="getClass('/')"><a ui-sref="home"><i class="fa fa-question-circle"></i> Câu hỏi</a></li>
-                          <li ng-class="getClass('/tags.html')"><a ui-sref="tags"><i class="fa fa-tags"></i> Tags</a></li>
-                          <li ng-class="getClass('/danh-hieu.html')"><a ui-sref="badges"><i class="fa fa-trophy"></i> Danh hiệu</a></li>
-                          <li ng-class="getClass('/thanh-vien.html')"><a ui-sref="users"><i class="fa fa-users"></i> Thành viên</a></li>
-                          <li>
-                           <a href="#" ng-click="showForm('create_question_form')">
-                           <i class="fa fa-plus"></i> Đăng câu hỏi</a>
-                          </li>
-                      </ul>
-                       <ul class="nav navbar-nav pull-right" ng-if="!currentUser">
-                          <li ng-class="getClass('/dang-nhap.html')"><a ui-sref="login">Đăng nhập</a></li>
-                          <li ng-class="getClass('/dang-ky.html')"><a ui-sref="register">Đăng ký</a></li>
-                      </ul>
-                      <ul class="nav navbar-nav pull-right hidden-xs notify-menu" ng-controller="UserController"  ng-if="currentUser" style="max-height: 46px;">
-                      <li class="notifications dropdown" ng-controller="NotifiController" ng-if="currentUser">
+        </div><!-- /.navbar-collapse -->
+    </div>
+</div>
+<!-- / Main-menu -->
+<div class="fixed-menu">
+    <nav class="navbar navbar-inverse hidden-xs" role="navigation">
+        <div class="container">
+            <div class="row">
+                <ul class="nav navbar-nav left-navbar">
+                    <li ng-class="getClass('/')"><a ui-sref="home"><i class="fa fa-question-circle"></i> Câu hỏi</a></li>
+                    <li ng-class="getClass('/tags.html')"><a ui-sref="tags"><i class="fa fa-tags"></i> Tags</a></li>
+                    <li ng-class="getClass('/danh-hieu.html')"><a ui-sref="badges"><i class="fa fa-trophy"></i> Danh hiệu</a></li>
+                    <li ng-class="getClass('/thanh-vien.html')"><a ui-sref="users"><i class="fa fa-users"></i> Thành viên</a></li>
+                    <li>
+                        <a href="#" ng-click="showForm('create_question_form')">
+                        <i class="fa fa-plus"></i> Đăng câu hỏi</a>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav pull-right" ng-if="!currentUser">
+                    <li ng-class="getClass('/dang-nhap.html')"><a ui-sref="login">Đăng nhập</a></li>
+                    <li ng-class="getClass('/dang-ky.html')"><a ui-sref="register">Đăng ký</a></li>
+                </ul>
+                <ul class="nav navbar-nav pull-right hidden-xs notify-menu" ng-controller="UserController"  ng-if="currentUser" style="max-height: 46px;">
+                    <li class="notifications dropdown" ng-controller="NotifiController" ng-if="currentUser">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)" ng-dblclick="updatecount()"><i class="fa fa-fw fa-bell-o"></i> Thông báo <sup class='badge' ng-bind="sfc"></sup></a>
                         <ul class="dropdown-menu">
-                          <li ng-hide="listNotifi">
-                            <a href="javascript:void(0)">Chưa có thông báo nào cả.</a>
-                          </li>
-                          <li ng-show="listNotifi" ng-repeat="list in listNotifi|orderBy:['-creationDate']">
-                            <a href=""><img src="{{list.userSend.avatar}}" alt="{{list.userSend.displayName}}" class="userSend"> {{list.content}}</a>
-                          </li>
+                            <li ng-hide="listNotifi">
+                                <a href="javascript:void(0)">Chưa có thông báo nào cả.</a>
+                            </li>
+                            <li ng-show="listNotifi" ng-repeat="list in listNotifi|orderBy:['-creationDate']">
+                                <a href=""><img src="{{list.userSend.avatar}}" alt="{{list.userSend.displayName}}" class="userSend"> {{list.content}}</a>
+                            </li>
                         </ul>
-                      </li>
-                      <li class="chats dropdown" ng-controller="ChatController" ng-if="currentUser">
+                    </li>
+                    <li class="chats dropdown" ng-controller="ChatController" ng-if="currentUser">
                         <a class="dropdown-toggle" data-toggle="dropdown" ng-click="updateCount()" href="javascript:void(0)"><i class="fa fa-comment-o fa-fw" ></i> <span>Chat</span> <sup class='badge' ng-bind="unread"></sup></a>
                         <ul class="dropdown-menu">
-                          <li ng-hide="listChat">
-                            <a href="javascript:void(0)">Chưa có tin nhắn nào cả.</a>
-                          </li>
-                          <li ng-show="listChat" ng-repeat="item in listChat|orderBy:['-creationDate']">
-                              <a ng-if="item.userSend._id!==currentUser._id" ng-click="chat({_id:item.userSend._id, username: item.userSend.displayName})" style="cursor: pointer;">
-                                <div class="chatLeft"><img src="{{item.userSend.avatar}}" alt="{{item.userSend.displayName}}" class="userSend"></div><div class="chatRight">{{item.userSend.displayName}} <br><small><i class="fa fa-check" ng-show="item.status"></i> {{item.msg}}</small></div>
-                                <span class="clearfix"></span>
-                              </a>
-                              <a ng-if="item.userSend._id===currentUser._id" ng-click="chat({_id:item.userRecive._id, username: item.userRecive.displayName})" style="cursor: pointer;">
-                                <div class="chatLeft"><img src="{{item.userRecive.avatar}}" alt="{{item.userRecive.displayName}}" class="userSend"></div><div class="chatRight">{{item.userRecive.displayName}} <br><small><i class="fa fa-check" ng-show="item.status && item.userSend._id!==currentUser._id"></i> {{item.msg}}</small></div>
-                                <span class="clearfix"></span>
-                              </a>
-                          </li>
+                            <li ng-hide="listChat">
+                                <a href="javascript:void(0)">Chưa có tin nhắn nào cả.</a>
+                            </li>
+                            <li ng-show="listChat" ng-repeat="item in listChat|orderBy:['-creationDate']">
+                                <a ng-if="item.userSend._id!==currentUser._id" ng-click="chat({_id:item.userSend._id, username: item.userSend.displayName})" style="cursor: pointer;">
+                                    <div class="chatLeft"><img src="{{item.userSend.avatar}}" alt="{{item.userSend.displayName}}" class="userSend"></div><div class="chatRight">{{item.userSend.displayName}} <br><small><i class="fa fa-check" ng-show="item.status"></i> {{item.msg}}</small></div>
+                                    <span class="clearfix"></span>
+                                </a>
+                                <a ng-if="item.userSend._id===currentUser._id" ng-click="chat({_id:item.userRecive._id, username: item.userRecive.displayName})" style="cursor: pointer;">
+                                    <div class="chatLeft"><img src="{{item.userRecive.avatar}}" alt="{{item.userRecive.displayName}}" class="userSend"></div><div class="chatRight">{{item.userRecive.displayName}} <br><small><i class="fa fa-check" ng-show="item.status && item.userSend._id!==currentUser._id"></i> {{item.msg}}</small></div>
+                                    <span class="clearfix"></span>
+                                </a>
+                            </li>
                         </ul>
-                      </li>
-                      <li><a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)"  id="user_dropdown" style="padding: 12px 5px" >
-                              <img ng-src="{{currentUser.avatar}}" alt="{{currentUser.displayName}}">
-                              <span ng-bind="currentUser.displayName"></span>
-                      </a>
-                        <ul id="user-control-list" class="dropdown-menu" >
-                              <li>
-                                <a id="user-profile-link" ui-sref="profile({ id:currentUser._id })" ><i class="fa fa-circle status online"></i> <span id="user-header-name" ng-bind="currentUser.displayName"></span></a>
-                              </li>
-                              <li ng-show="{{currentUser.role=='admin'}}"><a ui-sref="system"><i class="fa fa-cogs"></i> Quản lý hệ thống</a></li>
-                              <li id="logout-link">
-                                <a href="javascript:void(0)" ng-click="logout()"><i class="fa fa-power-off"></i> Đăng xuất</a>
-                              </li>
-                            </ul>
-                      </li>
-                  </ul>
-                  </div>
-              </div>
-          </nav>
-      </div>
-      <!-- / Fixed menu -->
+                    </li>
+                    <li><a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)"  id="user_dropdown" style="padding: 12px 5px" >
+                        <img ng-src="{{currentUser.avatar}}" alt="{{currentUser.displayName}}">
+                        <span ng-bind="currentUser.displayName"></span>
+                    </a>
+                    <ul id="user-control-list" class="dropdown-menu" >
+                        <li>
+                            <a id="user-profile-link" ui-sref="profile({ id:currentUser._id })" ><i class="fa fa-circle status online"></i> <span id="user-header-name" ng-bind="currentUser.displayName"></span></a>
+                        </li>
+                        <li ng-show="{{currentUser.role=='admin'}}"><a ui-sref="system"><i class="fa fa-cogs"></i> Quản lý hệ thống</a></li>
+                        <li id="logout-link">
+                            <a href="javascript:void(0)" ng-click="logout()"><i class="fa fa-power-off"></i> Đăng xuất</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+</div>
+<!-- / Fixed menu -->

@@ -1,10 +1,10 @@
 <div class="background-main-content" ng-controller="ActiveAccount">
-<div class="home-content" style="min-height: 400px; padding: 50px;">
-    <div class="alert alert-danger" ng-show="successMsg==false">
-        <p ng-bind="Message"></p>
+    <div class="home-content" style="min-height: 400px; padding: 50px;">
+        <div class="alert alert-danger" ng-show="successMsg==false">
+            <p ng-bind="Message"></p>
+        </div>
+        <div class="alert alert-success"  ng-show="successMsg==true">
+            <p ng-bind="Message"></p>
+        </div>
     </div>
-    <div class="alert alert-success"  ng-show="successMsg==true">
-        <p ng-bind="Message"></p>
-    </div>
-</div>
 </div>

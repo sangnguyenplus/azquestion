@@ -1,72 +1,70 @@
 <div class="background-main-content">
-<div class="intro-content-wrapper">
-    <div class="form-signup-wrapper">
-        <div id="register" class="animate ">
-        <h3 class="title">Đăng ký thành viên</h3>
-            <form id="sign_up" class="form-horizontal" name="form" ng-submit="signup()" novalidate>
-                <div class="form-group">
+    <div class="intro-content-wrapper">
+        <div class="form-signup-wrapper">
+            <div id="register" class="animate ">
+                <h3 class="title">Đăng ký thành viên</h3>
+                <form id="sign_up" class="form-horizontal" name="form" ng-submit="signup()" novalidate>
+                    <div class="form-group">
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                        <md-input-container>
+                            <md-input-container>
                             <label>Email</label>
                             <input type="email" required name="email" ng-model="userData.email" autocomplete="off">
                             <div ng-messages="form.email.$error" ng-if="form.email.$dirty">
-                              <div ng-message="required">Email không được bỏ trống</div>
-                              <div ng-message="email">Email không hợp lệ</div>
+                                <div ng-message="required">Email không được bỏ trống</div>
+                                <div ng-message="email">Email không hợp lệ</div>
                             </div>
-                        </md-input-container>
-
+                            </md-input-container>
                         </div>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                        <md-input-container>
+                            <md-input-container>
                             <label>Tên hiển thị</label>
                             <input required name="username" ng-model="userData.displayName" autocomplete="off">
                             <div ng-messages="form.username.$error" ng-if="form.username.$dirty"  md-maxlength="25" minlength="8">
-                              <div ng-message="required">Tên không được bỏ trống.</div>
-                              <div ng-message="minlength">Tên phải dài hơn 8 ký tự</div>
-                              <div ng-message="md-maxlength">Tên phải ngắn hơn 25 ký tự</div>
+                                <div ng-message="required">Tên không được bỏ trống.</div>
+                                <div ng-message="minlength">Tên phải dài hơn 8 ký tự</div>
+                                <div ng-message="md-maxlength">Tên phải ngắn hơn 25 ký tự</div>
                             </div>
-                        </md-input-container>
+                            </md-input-container>
                         </div>
                     </div>
                     <div class="form-group">
-
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                        <md-input-container>
+                            <md-input-container>
                             <label>Mật khẩu</label>
                             <input type="password" required name="password" ng-model="userData.password"  md-maxlength="25" minlength="8">
                             <div ng-messages="form.password.$error" ng-if="form.password.$dirty">
-                              <div ng-message="required">Mật khẩu không được bỏ trống.</div>
-                              <div ng-message="minlength">Mật khẩu phải dài hơn 8 ký tự</div>
-                              <div ng-message="md-maxlength">Mật khẩu phải ngắn hơn 25 ký tự</div>
+                                <div ng-message="required">Mật khẩu không được bỏ trống.</div>
+                                <div ng-message="minlength">Mật khẩu phải dài hơn 8 ký tự</div>
+                                <div ng-message="md-maxlength">Mật khẩu phải ngắn hơn 25 ký tự</div>
                             </div>
-                        </md-input-container>
+                            </md-input-container>
                         </div>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                        <md-input-container>
+                            <md-input-container>
                             <label>Xác nhận mật khẩu</label>
                             <input type="password" required name="re_password" ng-model="userData.repassword" password-match="userData.password">
                             <div ng-messages="form.re_password.$error" ng-if="form.re_password.$dirty">
-                              <div ng-message="unique">Password không trùng khớp</div>
+                                <div ng-message="unique">Password không trùng khớp</div>
                             </div>
-                        </md-input-container>
+                            </md-input-container>
                         </div>
                     </div>
-                <div class="form-group" style="padding:0 10px">
-                    <p class="terms-intro">
-                    Bạn cần đọc và đồng ý với các <a target="_blank"  href="#">Chính sách và Quy định</a> của website trước khi đăng ký.
-                    </p>
+                    <div class="form-group" style="padding:0 10px">
+                        <p class="terms-intro">
+                            Bạn cần đọc và đồng ý với các <a target="_blank"  href="#">Chính sách và Quy định</a> của website trước khi đăng ký.
+                        </p>
+                    </div>
+                    <div class="form-group" style="padding:0 10px">
+                        <md-button class="md-raised md-primary" type="submit" ng-disabled="!form.$dirty || (form.$dirty && form.$invalid)"><i class="fa fa-spinner fa-spin" ng-show="Proccess" ></i> Đăng ký</md-button> <a ui-sref="login">Đăng nhập nếu đã là thành viên</a>
+                    </div>
+                    <div class="form-group" style="padding:0 10px">
+                        <h4 class="title">Đăng ký thông qua mạng xã hội</h4>
+                        <md-button class="md-raised md-primary" href="/auth/facebook" target='_self'><i class="fa fa-facebook" ></i> Tài khoản Facebook</md-button>
+                        <md-button class="md-warn md-raised md-hue-2" href="/auth/google" target='_self'><i class="fa fa-google-plus"></i> Tài khoản Google</md-button>
+                    </div>
                 </div>
-                <div class="form-group" style="padding:0 10px">
-                    <md-button class="md-raised md-primary" type="submit" ng-disabled="!form.$dirty || (form.$dirty && form.$invalid)"><i class="fa fa-spinner fa-spin" ng-show="Proccess" ></i> Đăng ký</md-button> <a ui-sref="login">Đăng nhập nếu đã là thành viên</a>
-                </div>
-                <div class="form-group" style="padding:0 10px">
-                    <h4 class="title">Đăng ký thông qua mạng xã hội</h4>
-                    <md-button class="md-raised md-primary" href="/auth/facebook" target='_self'><i class="fa fa-facebook" ></i> Tài khoản Facebook</md-button>
-                    <md-button class="md-warn md-raised md-hue-2" href="/auth/google" target='_self'><i class="fa fa-google-plus"></i> Tài khoản Google</md-button>
-                </div>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
-</div>
-<!-- END FORM -->
+    <!-- END FORM -->
 </div>
