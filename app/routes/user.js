@@ -12,14 +12,7 @@ var async       = require('async');
 var crypto      = require('crypto');
 var fs          = require('fs');
 
-// Tạo đối tượng tái sử dụng transporter dùng SMTP transport
-var transporter = nodemailer.createTransport({
-    service: 'Gmail',
-    auth: {
-        user: 'azquestion.com@gmail.com',
-        pass: 'fit@dhcn123!@#'
-    }
-});
+var configMail = require('../../config/mail');
 
 module.exports = function (app, passport) {
 
@@ -356,17 +349,27 @@ module.exports = function (app, passport) {
                 var domain = req.headers.host || "azquestion.com";
                 var mailOptions = {
                     to      : user.email,
-                    from    : 'Mạng xã hội hỏi đáp <azquestion.com@gmail.com>',
+                    from    : 'Mạng xã hội hỏi đáp <'+ configMail.gmail.user +'>',
                     subject : 'Email khôi phục mật khẩu',
                     text    : 'Bạn nhận được email này là vì bạn (hoặc ai đó) đã yêu cầu thay đổi mật khẩu tài khoản của bạn.\n\n' +
                         'Hãy click vào đường link dưới hoặc chép và dán vào khung nhập địa chỉ của trình duyệt để hoàn tất xử lý:\n\n' +
                         'http://' + domain + '/users/reset-password/' + token + '\n\n' +
                         'Nếu không phải bạn yêu cầu thay đổi tài khoản thì chỉ đơn giản bỏ qua email này.\n' +
                         'Lưu ý, email này chỉ có giá trị trong vòng 1 giờ đồng hồ kể từ lúc yêu cầu xử lý.'
-              };
-              transporter.sendMail(mailOptions, function(err) {
-                  return done(err, 'done');
-              });
+               };
+
+               // Tạo đối tượng transporter dùng SMTP transport
+                var transporter = nodemailer.createTransport({
+                    service: configMail.gmail.service,
+                    auth: {
+                        user: configMail.gmail.user,
+                        pass: configMail.gmail.pass
+                    }
+                });
+
+                transporter.sendMail(mailOptions, function(err) {
+                    return done(err, 'done');
+                });
             }
           ], function(err) {
             if (err) {
@@ -389,10 +392,19 @@ module.exports = function (app, passport) {
                 user.save(function(err) {
                     var mailOptions = {
                         to      : user.email,
-                        from    : 'Mạng xã hội hỏi đáp <azquestion.com@gmail.com>',
+                        from    : 'Mạng xã hội hỏi đáp <'+ configMail.gmail.user +'>',
                         subject : 'Mật khẩu đã được thay đổi',
                         text : 'Đây là email xác nhận mật khẩu tài khoản ' + user.displayName + ' đã được thay đổi.'
                     };
+
+                    // Tạo đối tượng transporter dùng SMTP transport
+                    var transporter = nodemailer.createTransport({
+                        service: configMail.gmail.service,
+                        auth: {
+                            user: configMail.gmail.user,
+                            pass: configMail.gmail.pass
+                        }
+                    });
 
                     transporter.sendMail(mailOptions, function(err, info) {
                         if (err) {
