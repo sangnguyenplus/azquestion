@@ -1,5 +1,3 @@
-[![Build Status](https://travis-ci.org/sangnguyenplus/azquestion.svg?branch=master)](https://travis-ci.org/sangnguyenplus/azquestion)
-
 See demo here : <https://azquestion-sangnguyenplus.c9users.io>
 
 Admin: minhsang2603@gmail.com - 159357
