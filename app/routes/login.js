@@ -1,14 +1,7 @@
 var User       = require('../models/user');
 var nodemailer = require('nodemailer');
 
-// create reusable transporter object using SMTP transport
-var transporter = nodemailer.createTransport({
-    service: 'Gmail',
-    auth: {
-        user: 'azquestion.com@gmail.com',
-        pass: 'fit@dhcn123!@#'
-    }
-});
+var configMail = require('../../config/mail');
 
 module.exports = function (app, passport) {
     //Quản lý thành viên
@@ -27,12 +20,20 @@ module.exports = function (app, passport) {
         // Thiết lập nội dung thư
         var domain = req.headers.host || 'azquestion.com';
         var mailOptions = {
-            from    : 'Mạng xã hội hỏi đáp <azquestion.com@gmail.com>', // Địa chỉ người gửi
+            from    : 'Mạng xã hội hỏi đáp <' + configMail.gmail.user + '>', // Địa chỉ người gửi
             to      : req.user.email, //Danh sách người nhận, ngăn cách nhau bằng dấu phẩy
             subject : 'Email kích hoạt tài khoản', // Tiêu đề thư
             html    : '<strong>Chúc mừng ' + req.user.displayName + ' đã đăng ký thành công tài khoản tại AZQuestion. </strong><br><p>Thông tin đăng ký</p><ul><li>Email: ' + req.user.email + '</li><li>Tên hiển thị: ' + req.user.displayName + '</li><li>Mật khẩu: ******</li></ul><br /><p>Vui lòng kích hoạt tài khoản bằng cách nhấn &nbsp;<a href="http://' + domain + '/users/active/' + req.user._id + '/' + req.user.activeToken + '"target="_blank">vào đây</a>' // Nội dung dạng html
         };
 
+        // Tạo đối tượng transporter dùng SMTP transport
+        var transporter = nodemailer.createTransport({
+            service: configMail.gmail.service,
+            auth: {
+                user: configMail.gmail.user,
+                pass: configMail.gmail.pass
+            }
+        });
         // gửi mail với đối tượng transporter đã được khai báo
         transporter.sendMail(mailOptions, function(error, info) {
             if (error) {

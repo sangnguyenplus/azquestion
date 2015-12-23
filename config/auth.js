@@ -1,5 +1,4 @@
 module.exports = {
-
     'facebookAuth' : {
         'clientID'      : '762868437069360', // your App ID
         'clientSecret'  : '55f4bc8240f580d07d36517faf04913a', // your App Secret

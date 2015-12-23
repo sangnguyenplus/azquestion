@@ -9,14 +9,8 @@ var Report      = require('../models/report');
 var nodemailer  = require('nodemailer');
 var randtoken   = require('rand-token');
 
-// Tạo đối tượng tái sử dụng transporter dùng SMTP transport
-var transporter = nodemailer.createTransport({
-    service: 'Gmail',
-    auth: {
-        user: 'azquestion.com@gmail.com',
-        pass: 'fit@dhcn123!@#'
-    }
-});
+var configMail = require('../../config/mail');
+
 
 module.exports = function (app, passport) {
     //Lấy toàn bộ câu hỏi
@@ -107,12 +101,21 @@ module.exports = function (app, passport) {
                     }
                     var domain = req.headers.host || 'azquestion.com';
                     var mailOptions = {
-                        from     : 'Mạng xã hội hỏi đáp <azquestion.com@gmail.com>', // Địa chỉ người gửi
+                        from     : 'Mạng xã hội hỏi đáp <' + configMail.gmail.user +'>', // Địa chỉ người gửi
                         to       : user, //Danh sách người nhận, ngăn cách nhau bằng dấu phẩy
                         subject  : 'Bài viết mới được đăng', // Tiêu đề thư
                         html     : '<p><strong>Chào quản trị viên.</strong></p> <p>Có một bài viết với tiêu đề "<strong>' + question.title + '</strong>" mới được đăng trên &nbsp;azquestion.com bởi <strong>' + req.user.displayName + '</strong> (thành viên mới đăng ký).'
                         + ' Vui lòng truy cập http://' + domain + '/system/questions để kiểm tra và xét duyệt bài đăng này.</p>' // Nội dung dạng html
                     };
+
+                    // Tạo đối tượng transporter dùng SMTP transport
+                    var transporter = nodemailer.createTransport({
+                        service: configMail.gmail.service,
+                        auth: {
+                            user: configMail.gmail.user,
+                            pass: configMail.gmail.pass
+                        }
+                    });
 
                     // gửi mail với đối tượng transporter đã được khai báo
                     transporter.sendMail(mailOptions, function(error, info) {
@@ -575,11 +578,20 @@ module.exports = function (app, passport) {
                     return res.send(err);
                 }
                 var mailOptions = {
-                    from    : 'Mạng xã hội hỏi đáp <azquestion.com@gmail.com>', // Địa chỉ người gửi
+                    from    : 'Mạng xã hội hỏi đáp <' + configMail.gmail.user +'>', // Địa chỉ người gửi
                     to      : question.userId.email, //Danh sách người nhận, ngăn cách nhau bằng dấu phẩy
                     subject : 'Bài viết đã được xét duyệt', // Tiêu đề thư
                     html    : '<p><strong>Chào ' + question.userId.displayName + '.</strong></p> <p>Câu hỏi "<strong>' + question.title + '</strong>" của bạn đã được đăng. Hãy bắt đầu thảo luận về chủ đề bạn thắc mắc nhé.</p>' // Nội dung dạng html
                 };
+
+                // Tạo đối tượng transporter dùng SMTP transport
+                var transporter = nodemailer.createTransport({
+                    service: configMail.gmail.service,
+                    auth: {
+                        user: configMail.gmail.user,
+                        pass: configMail.gmail.pass
+                    }
+                });
 
                 // gửi mail với đối tượng transporter đã được khai báo
                 transporter.sendMail(mailOptions, function(error, info) {
