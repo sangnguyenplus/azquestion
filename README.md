@@ -6,11 +6,7 @@ User: sangit7b@gmail.com - 123456789
 
 **Required**: Please install them before install azquestion
 - NodeJS: > 10.0.x.
-- Npm.
-- Bower.
-```
-npm install -g bower
-```
+- Bower (run `npm install -g bower` after install NodeJS).
 - MongoDB.
 
 **Installation**:
