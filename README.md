@@ -7,13 +7,12 @@ User: sangit7b@gmail.com - 123456789
 - NodeJS: > 10.0.x.
 - Npm.
 - Bower.
-
-**Installation**:
-
 ```
 npm install -g bower
 ```
 - MongoDB.
+
+**Installation**:
 
 Run command below to get NodeJS libraries.
 
