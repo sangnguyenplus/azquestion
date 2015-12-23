@@ -1,15 +1,15 @@
 See demo here : <https://azquestion-sangnguyenplus.c9users.io>
 
 Admin: minhsang2603@gmail.com - 159357
-
 User: sangit7b@gmail.com - 123456789
-
-**Installation**:
 
 **Required**: Please install them before install azquestion
 - NodeJS: > 10.0.x.
 - Npm.
 - Bower.
+
+**Installation**:
+
 ```
 npm install -g bower
 ```
