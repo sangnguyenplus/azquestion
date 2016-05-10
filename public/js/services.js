@@ -5,17 +5,20 @@ angular.module('appServices', [])
 
     this.loadTag = function(name) {
         $http.get('/api/tag').success(function(data) {
-            files[name]  = data.map(function(item) {
+            files[name] = data.map(function(item) {
                 return item.tagName;
             });
         });
     };
 
     this.searchTag = function(name, query) {
-        var items, deferred = $q.defer();
+        var items,
+            deferred = $q.defer();
 
         items = _.chain(files[name])
-            .filter(function(x) { return x.toLowerCase().indexOf(query.toLowerCase()) > -1; })
+            .filter(function(x) {
+                return x.toLowerCase().indexOf(query.toLowerCase()) > -1;
+            })
             .take(10)
             .value();
 
@@ -30,20 +33,20 @@ angular.module('appServices', [])
         var modalInstance = $modal.open({
             templateUrl: '/views/modal/alert.html',
             controller: 'modal.alert',
-            backdrop:'static',
+            backdrop: 'static',
             resolve: {
-                data: function () {
+                data: function() {
                     return data;
                 }
             }
         });
 
-        modalInstance.result.then(function () {
+        modalInstance.result.then(function() {
             // do something
-        }, function () {
+        }, function() {
             // do something
         });
-        /*end modal*/
+    /*end modal*/
     };
 
     this.confirm = function(data, callback) {
@@ -51,37 +54,37 @@ angular.module('appServices', [])
         var modalInstance = $modal.open({
             templateUrl: '/views/modal/confirm.html',
             controller: 'modal.confirm',
-            backdrop:'static',
+            backdrop: 'static',
             resolve: {
-                data: function () {
+                data: function() {
                     return data;
                 }
             }
         });
 
-        modalInstance.result.then(function () {
+        modalInstance.result.then(function() {
             return callback(true);
-        }, function () {
+        }, function() {
             return callback(false);
         });
         /*end modal*/
     };
-    this.report = function(data,callback) {
+    this.report = function(data, callback) {
         /*begin modal*/
         var modalInstance = $modal.open({
             templateUrl: '/views/modal/report.html',
             controller: 'modal.report',
-            backdrop:'static',
+            backdrop: 'static',
             resolve: {
-                data: function () {
+                data: function() {
                     return data;
                 }
             }
         });
 
-        modalInstance.result.then(function () {
+        modalInstance.result.then(function() {
             return callback(true);
-        }, function () {
+        }, function() {
             return callback(false);
         });
         /*end modal*/

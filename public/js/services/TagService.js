@@ -11,7 +11,7 @@ angular.module('TagService', [])
         delete: function(id) {
             return $http.delete('/api/tag/detete/' + id);
         },
-        popularTag: function(){
+        popularTag: function() {
             return $http.get('api/tag/popular-home');
         },
         edit: function(formData) {

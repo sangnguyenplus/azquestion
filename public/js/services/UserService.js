@@ -8,7 +8,7 @@ angular.module('UserService', [])
         login: function(userData) {
             return $http.post('/login', userData);
         },
-        signup:function(userData) {
+        signup: function(userData) {
             return $http.post('/signup', userData);
         },
         logout: function() {
@@ -32,7 +32,7 @@ angular.module('UserService', [])
         activeAccount: function() {
             return $http.get('api/user/active/' + $stateParams.user_id + '/' + $stateParams.token);
         },
-        getUserbyEmail:function(userData) {
+        getUserbyEmail: function(userData) {
             return $http.post('api/user/getUserbyEmail', userData);
         },
         edit: function(userData) {
@@ -59,9 +59,9 @@ angular.module('UserService', [])
     };
     return auth;
 })
-.factory('TokenInterceptor',['$q', '$window', '$location', 'AuthenticationService', function ($q, $window, $location, AuthenticationService) {
+.factory('TokenInterceptor', ['$q', '$window', '$location', 'AuthenticationService', function($q, $window, $location, AuthenticationService) {
     return {
-        request: function (config) {
+        request: function(config) {
             config.headers = config.headers || {};
             if ($window.sessionStorage.token) {
                 config.headers.Authorization = 'Bearer ' + $window.sessionStorage.token;
@@ -74,7 +74,7 @@ angular.module('UserService', [])
         },
 
         /* Set Authentication.isAuthenticated to true if 200 received */
-        response: function (response) {
+        response: function(response) {
             if (response !== null && response.status == 200 && $window.sessionStorage.token && !AuthenticationService.isAuthenticated) {
                 AuthenticationService.isAuthenticated = true;
             }

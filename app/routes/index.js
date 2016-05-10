@@ -1,17 +1,17 @@
 var question = require('./question');
-var user     = require('./user');
-var answer   = require('./answer');
-var login    = require('./login');
-var tag      = require('./tag');
-var badge    = require('./badge');
-var system   = require('./system');
-var chat     = require('./chat');
-var notifi   = require('./notifi');
-var report   = require('./report');
+var user = require('./user');
+var answer = require('./answer');
+var login = require('./login');
+var tag = require('./tag');
+var badge = require('./badge');
+var system = require('./system');
+var chat = require('./chat');
+var notifi = require('./notifi');
+var report = require('./report');
 
 var mongoose = require('mongoose');
 
-module.exports = function (app, passport) {
+module.exports = function(app, passport) {
 
     // Quản lý câu hỏi
     question(app);

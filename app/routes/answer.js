@@ -1,20 +1,20 @@
-var Answer     = require('../models/answer');
-var User       = require('../models/user');
-var Question   = require('../models/question');
-var Vote       = require('../models/vote');
-var Report     = require('../models/report');
-var Favorite   = require('../models/favorite');
+var Answer = require('../models/answer');
+var User = require('../models/user');
+var Question = require('../models/question');
+var Vote = require('../models/vote');
+var Report = require('../models/report');
+var Favorite = require('../models/favorite');
 var nodemailer = require('nodemailer');
 
 var configMail = require('../../config/mail');
 
-module.exports = function (app, passport) {
+module.exports = function(app, passport) {
     app.post('/api/answer/create', function(req, res) {
 
-        var newAnswer          = new Answer();
-        newAnswer.userId       = req.user._id;
-        newAnswer.questionId   = req.body.question_id;
-        newAnswer.content      = req.body.content;
+        var newAnswer = new Answer();
+        newAnswer.userId = req.user._id;
+        newAnswer.questionId = req.body.question_id;
+        newAnswer.content = req.body.content;
         newAnswer.creationDate = new Date();
         newAnswer.save(function(err) {
             if (err) {
@@ -46,14 +46,15 @@ module.exports = function (app, passport) {
                     transporter.sendMail(mailOptions, function(error, info) {
                         if (error) {
                             console.log(error);
-                        }
-                        else {
+                        } else {
                             console.log('Message sent: ' + info.response);
                         }
                     });
                 }
             });
-            Favorite.find({ questionId: req.body.question_id }).populate('userId', 'email').populate('questionId').exec(function(err, list) {
+            Favorite.find({
+                questionId: req.body.question_id
+            }).populate('userId', 'email').populate('questionId').exec(function(err, list) {
                 if (err) {
                     res.send(err);
                 }
@@ -66,9 +67,9 @@ module.exports = function (app, passport) {
                             subject: 'Trả lời mới trong câu hỏi bạn quan tâm', // Tiêu đề thư
                             //text: 'Hello world', // Nội dung thư dạng thường
                             html: '<p><strong>Chào bạn, </strong></p> <p><strong>' + req.user.displayName +
-                            '</strong> vừa mới trả lời trong bài viết "<strong>' + item.questionId.title + '</strong>" mà bạn đang theo dõi.</p>' +
-                            '<p>Bạn có thể xem chi tiết câu trả lời &nbsp;<a href="http://' + domain +
-                             '/cau-hoi/chi-tiet/' + item.questionId._id + '/?email=true">tại đây</a></p>' // Nội dung dạng html
+                                '</strong> vừa mới trả lời trong bài viết "<strong>' + item.questionId.title + '</strong>" mà bạn đang theo dõi.</p>' +
+                                '<p>Bạn có thể xem chi tiết câu trả lời &nbsp;<a href="http://' + domain +
+                                '/cau-hoi/chi-tiet/' + item.questionId._id + '/?email=true">tại đây</a></p>' // Nội dung dạng html
                         };
 
                         // Tạo đối tượng tái sử dụng transporter dùng SMTP transport
@@ -82,17 +83,18 @@ module.exports = function (app, passport) {
 
                         // gửi mail với đối tượng transporter đã được khai báo
                         transporter.sendMail(mailOptions, function(error, info) {
-                            if(error) {
+                            if (error) {
                                 console.log(error);
-                            }
-                            else {
+                            } else {
                                 console.log('Message sent: ' + info.response);
                             }
                         });
                     }
                 });
             });
-            Answer.find({ questionId: req.body.question_id }).populate('userId').exec(function(err, answers) {
+            Answer.find({
+                questionId: req.body.question_id
+            }).populate('userId').exec(function(err, answers) {
                 if (err) {
                     return res.send(err)
                 }
@@ -102,7 +104,9 @@ module.exports = function (app, passport) {
     });
     app.delete('/api/answer/detete/:answer_id', function(req, res) {
         var id = req.params.answer_id;
-        Answer.remove({ _id : id }, function(err, answers) {
+        Answer.remove({
+            _id: id
+        }, function(err, answers) {
             if (err) {
                 return res.send(err);
             }
@@ -118,7 +122,9 @@ module.exports = function (app, passport) {
         });
     });
     app.get('/api/answer/count/:question_id', function(req, res) {
-        Answer.count({ questionId: req.params.question_id }, function(err, c) {
+        Answer.count({
+            questionId: req.params.question_id
+        }, function(err, c) {
             if (err) {
                 return res.send(err);
             }
@@ -135,7 +141,7 @@ module.exports = function (app, passport) {
     });
     app.get('/api/answer/detail/:answer_id', function(req, res) {
         Answer.findById(req.params.answer_id).populate('userId questionId').exec(function(err, answer) {
-            if(err) {
+            if (err) {
                 return res.send(err);
             }
             return res.json(answer);
@@ -145,7 +151,7 @@ module.exports = function (app, passport) {
         Answer.findById(req.params.answer_id, function(err, a) {
             a.isAcepted = true;
             a.save(function(err, answer) {
-                if(err) {
+                if (err) {
                     return res.send(err);
                 }
                 User.findById(a.userId, function(err, user) {
@@ -167,7 +173,9 @@ module.exports = function (app, passport) {
                         }
                     });
                 });
-                Answer.find({ questionId: a.questionId }).populate('userId').exec(function(err, qa) {
+                Answer.find({
+                    questionId: a.questionId
+                }).populate('userId').exec(function(err, qa) {
                     if (err) {
                         return res.send(err);
                     }
@@ -178,7 +186,9 @@ module.exports = function (app, passport) {
         });
     });
     app.get('/api/answer/getAnswerByUser/:user_id', function(req, res) {
-        Answer.find({ userId: req.params.user_id }).populate('questionId').exec(function(err, list) {
+        Answer.find({
+            userId: req.params.user_id
+        }).populate('questionId').exec(function(err, list) {
             if (err) {
                 return res.send(err);
             }
@@ -189,42 +199,22 @@ module.exports = function (app, passport) {
     // Thích câu trả lời
     app.get('/api/answer/vote_up/:answer_id', function(req, res) {
         var id = req.params.answer_id;
-        Vote.findOne({ $and: [{ answerId: id }, { userId: req.user._id }] })
-        .exec(function(err, data) {
-            if (err) {
-                return res.send(err);
-            }
-            if (data != null) {
-                if (data.type == true) {
-                    Vote.remove({ _id: data._id }, function(err, d) {
-                        if (err) {
-                            return res.send(err);
-                        }
-                        Answer.findById(id, function(err, answer) {
-                            if (err) {
-                                return res.send(err);
-                            }
-                            answer.score -= 1;
-                            answer.save(function(err, a) {
-                                if (err) {
-                                    return res.send(err);
-                                }
-                            });
-                        });
-                        return res.json(d);
-                    });
+        Vote.findOne({
+            $and: [{
+                answerId: id
+            }, {
+                userId: req.user._id
+            }]
+        })
+            .exec(function(err, data) {
+                if (err) {
+                    return res.send(err);
                 }
-                else {
-                    Vote.remove({ _id: data._id }, function(err, d) {
-                        if (err) {
-                            return res.send(err);
-                        }
-                        var vote          = new Vote();
-                        vote.answerId     = id;
-                        vote.userId       = req.user._id;
-                        vote.type         = true;
-                        vote.creationDate = new Date();
-                        vote.save(function(err, v) {
+                if (data != null) {
+                    if (data.type == true) {
+                        Vote.remove({
+                            _id: data._id
+                        }, function(err, d) {
                             if (err) {
                                 return res.send(err);
                             }
@@ -232,55 +222,53 @@ module.exports = function (app, passport) {
                                 if (err) {
                                     return res.send(err);
                                 }
-                                answer.score += 2;
+                                answer.score -= 1;
                                 answer.save(function(err, a) {
                                     if (err) {
                                         return res.send(err);
                                     }
-                                    return res.json(a);
                                 });
                             });
+                            return res.json(d);
                         });
-                    });
-                }
-            }
-            else {
-                var vote          = new Vote();
-                vote.answerId     = id;
-                vote.userId       = req.user._id;
-                vote.type         = true;
-                vote.creationDate = new Date();
-                vote.save(function(err, v) {
-                    if (err) {
-                        return res.send(err);
-                    }
-                    Answer.findById(id, function(err, answer) {
-                        if (err) {
-                            return res.send(err);
-                        }
-                        answer.score += 1;
-                        answer.save(function(err, a) {
+                    } else {
+                        Vote.remove({
+                            _id: data._id
+                        }, function(err, d) {
                             if (err) {
                                 return res.send(err);
                             }
-                            return res.json(a);
+                            var vote = new Vote();
+                            vote.answerId = id;
+                            vote.userId = req.user._id;
+                            vote.type = true;
+                            vote.creationDate = new Date();
+                            vote.save(function(err, v) {
+                                if (err) {
+                                    return res.send(err);
+                                }
+                                Answer.findById(id, function(err, answer) {
+                                    if (err) {
+                                        return res.send(err);
+                                    }
+                                    answer.score += 2;
+                                    answer.save(function(err, a) {
+                                        if (err) {
+                                            return res.send(err);
+                                        }
+                                        return res.json(a);
+                                    });
+                                });
+                            });
                         });
-                    });
-                });
-            }
-        });
-    });
-    // Bỏ thích hoặc không thích câu trả lời
-    app.get('/api/answer/vote_down/:answer_id', function(req, res) {
-        var id = req.params.answer_id;
-        Vote.findOne({ $and: [{ answerId: id }, { userId: req.user._id }] })
-        .exec(function(err,data) {
-            if (err) {
-                return res.send(err);
-            }
-            if (data != null) {
-                if (data.type == false) {
-                    Vote.remove({ _id: data._id }, function(err, d) {
+                    }
+                } else {
+                    var vote = new Vote();
+                    vote.answerId = id;
+                    vote.userId = req.user._id;
+                    vote.type = true;
+                    vote.creationDate = new Date();
+                    vote.save(function(err, v) {
                         if (err) {
                             return res.send(err);
                         }
@@ -293,22 +281,32 @@ module.exports = function (app, passport) {
                                 if (err) {
                                     return res.send(err);
                                 }
+                                return res.json(a);
                             });
                         });
-                        return res.json(d);
                     });
                 }
-                else {
-                    Vote.remove({ _id: data._id }, function(err, d) {
-                        if (err) {
-                            return res.send(err);
-                        }
-                        var vote          = new Vote();
-                        vote.answerId     = id;
-                        vote.userId       = req.user._id;
-                        vote.type         = false;
-                        vote.creationDate = new Date();
-                        vote.save(function(err, v) {
+            });
+    });
+    // Bỏ thích hoặc không thích câu trả lời
+    app.get('/api/answer/vote_down/:answer_id', function(req, res) {
+        var id = req.params.answer_id;
+        Vote.findOne({
+            $and: [{
+                answerId: id
+            }, {
+                userId: req.user._id
+            }]
+        })
+            .exec(function(err, data) {
+                if (err) {
+                    return res.send(err);
+                }
+                if (data != null) {
+                    if (data.type == false) {
+                        Vote.remove({
+                            _id: data._id
+                        }, function(err, d) {
                             if (err) {
                                 return res.send(err);
                             }
@@ -316,52 +314,88 @@ module.exports = function (app, passport) {
                                 if (err) {
                                     return res.send(err);
                                 }
-                                answer.score -= 2;
+                                answer.score += 1;
                                 answer.save(function(err, a) {
                                     if (err) {
                                         return res.send(err);
                                     }
-                                    return res.json(a);
                                 });
+                            });
+                            return res.json(d);
+                        });
+                    } else {
+                        Vote.remove({
+                            _id: data._id
+                        }, function(err, d) {
+                            if (err) {
+                                return res.send(err);
+                            }
+                            var vote = new Vote();
+                            vote.answerId = id;
+                            vote.userId = req.user._id;
+                            vote.type = false;
+                            vote.creationDate = new Date();
+                            vote.save(function(err, v) {
+                                if (err) {
+                                    return res.send(err);
+                                }
+                                Answer.findById(id, function(err, answer) {
+                                    if (err) {
+                                        return res.send(err);
+                                    }
+                                    answer.score -= 2;
+                                    answer.save(function(err, a) {
+                                        if (err) {
+                                            return res.send(err);
+                                        }
+                                        return res.json(a);
+                                    });
+                                });
+                            });
+                        });
+                    }
+                } else {
+                    var vote = new Vote();
+                    vote.answerId = id;
+                    vote.userId = req.user._id;
+                    vote.type = false;
+                    vote.creationDate = new Date();
+                    vote.save(function(err, v) {
+                        if (err) {
+                            return res.send(err);
+                        }
+                        Answer.findById(id, function(err, answer) {
+                            if (err) {
+                                return res.send(err);
+                            }
+                            answer.score -= 1;
+                            answer.save(function(err, a) {
+                                if (err) {
+                                    return res.send(err);
+                                }
+                                return res.json(a);
                             });
                         });
                     });
                 }
-            }
-            else {
-                var vote          = new Vote();
-                vote.answerId     = id;
-                vote.userId       = req.user._id;
-                vote.type         = false;
-                vote.creationDate = new Date();
-                vote.save(function(err, v) {
-                    if (err) {
-                        return res.send(err);
-                    }
-                    Answer.findById(id, function(err, answer) {
-                        if (err) {
-                            return res.send(err);
-                        }
-                        answer.score -= 1;
-                        answer.save(function(err, a) {
-                            if (err) {
-                                return res.send(err);
-                            }
-                            return res.json(a);
-                        });
-                    });
-                });
-            }
-        });
+            });
     });
     app.get('/api/answer/report/:answer_id', function(req, res, done) {
         var id = req.params.answer_id;
-        Report.findOne({ $and: [{ answerId: id }, { userReported: req.user._id }] }).exec(function(err, data) {
+        Report.findOne({
+            $and: [{
+                answerId: id
+            }, {
+                userReported: req.user._id
+            }]
+        }).exec(function(err, data) {
             if (err) {
                 return res.send(err);
             }
             if (data == null) {
-                Report.findOne({ 'answerId': id }, function(err, existReport) {
+                Report.findOne({
+                    'answerId': id
+                }, function(err, existReport) {
                     // nếu có lỗi thì trả về lỗi.
                     if (err) {
                         return done(err);
@@ -375,12 +409,11 @@ module.exports = function (app, passport) {
                             }
                             return res.json(report);
                         });
-                    }
-                    else {
+                    } else {
                         Report.create({
-                            userReported : req.user._id,
-                            answerId     : id,
-                            type         : 'answer',
+                            userReported: req.user._id,
+                            answerId: id,
+                            type: 'answer',
                             creationDate: new Date(),
                         }, function(err, report) {
                             if (err) {
@@ -390,9 +423,10 @@ module.exports = function (app, passport) {
                         });
                     }
                 });
-            }
-            else {
-                return res.send({reported: 'true'});
+            } else {
+                return res.send({
+                    reported: 'true'
+                });
             }
         });
 
@@ -404,5 +438,5 @@ module.exports = function (app, passport) {
             }
             return res.json(answer);
         });
-     });
+    });
 }

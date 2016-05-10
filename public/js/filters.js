@@ -1,14 +1,14 @@
 angular.module('appFilters', [])
 
 /*Filter để bind dữ liệu , dùng ng-bind-html="variable | unsafe" <=> ng-bind-html-unsafe*/
-.filter('unsafe',['$sce', function($sce) {
-	return function(val) {
-	    return $sce.trustAsHtml(val);
-	};
+.filter('unsafe', ['$sce', function($sce) {
+    return function(val) {
+        return $sce.trustAsHtml(val);
+    };
 }])
 
-.filter('toDate', function () {
-    return function (input) {
+.filter('toDate', function() {
+    return function(input) {
         return new Date(input);
     };
 })
@@ -29,8 +29,8 @@ angular.module('appFilters', [])
     };
 })
 
-.filter('getBadge', function () {
-    return function (items, score) {
+.filter('getBadge', function() {
+    return function(items, score) {
         var filtered = [];
         if (items) {
             for (var i = 0; i < items.length; i++) {
@@ -45,11 +45,11 @@ angular.module('appFilters', [])
     };
 })
 
-.filter('checkOnline', function () {
-    return function (items, user) {
+.filter('checkOnline', function() {
+    return function(items, user) {
         if (items) {
-            for(var i = 0; i < items.length; i++){
-                if(items[i] == user) {
+            for (var i = 0; i < items.length; i++) {
+                if (items[i] == user) {
                     return true;
                 }
             }
@@ -59,8 +59,8 @@ angular.module('appFilters', [])
     };
 })
 
-.filter('checkFavorite', function () {
-    return function (items, question) {
+.filter('checkFavorite', function() {
+    return function(items, question) {
         for (var i = 0; i < items.length; i++) {
             var item = items[i];
             if (item.questionId == question) {
@@ -71,8 +71,8 @@ angular.module('appFilters', [])
     };
 })
 
-.filter('checkVoteUp', function () {
-    return function (items, question) {
+.filter('checkVoteUp', function() {
+    return function(items, question) {
         for (var i = 0; i < items.length; i++) {
             var item = items[i];
             if (item.questionId == question && item.type === true) {
@@ -83,8 +83,8 @@ angular.module('appFilters', [])
     };
 })
 
-.filter('checkAnswerVoteUp', function () {
-    return function (items, answer) {
+.filter('checkAnswerVoteUp', function() {
+    return function(items, answer) {
         for (var i = 0; i < items.length; i++) {
             var item = items[i];
             if (item.answerId == answer && item.type === true) {
@@ -95,8 +95,8 @@ angular.module('appFilters', [])
     };
 })
 
-.filter('countByQuestion', function () {
-    return function (items, question) {
+.filter('countByQuestion', function() {
+    return function(items, question) {
         var number = 0;
         if (items) {
             for (var i = 0; i < items.length; i++) {
@@ -110,8 +110,8 @@ angular.module('appFilters', [])
     };
 })
 
-.filter('checkVoteDown', function () {
-    return function (items, question) {
+.filter('checkVoteDown', function() {
+    return function(items, question) {
         for (var i = 0; i < items.length; i++) {
             var item = items[i];
             if (item.questionId == question && item.type === false) {
@@ -122,8 +122,8 @@ angular.module('appFilters', [])
     };
 })
 
-.filter('checkAnswerVoteDown', function () {
-    return function (items, answer) {
+.filter('checkAnswerVoteDown', function() {
+    return function(items, answer) {
         for (var i = 0; i < items.length; i++) {
             var item = items[i];
             if (item.answerId == answer && item.type === false) {
@@ -134,8 +134,8 @@ angular.module('appFilters', [])
     };
 })
 
-.filter('checkHaveAcepted', function () {
-    return function (items) {
+.filter('checkHaveAcepted', function() {
+    return function(items) {
         for (var i = 0; i < items.length; i++) {
             var item = items[i];
             if (item.isAcepted === true) {
@@ -146,10 +146,10 @@ angular.module('appFilters', [])
     };
 })
 
-.filter('friendlyUrl', function () {
-    return function (item) {
+.filter('friendlyUrl', function() {
+    return function(item) {
         if (item) {
-            var  str = item.replace(/(à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ)/g, 'a');
+            var str = item.replace(/(à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ)/g, 'a');
             str = str.replace(/(è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ)/g, 'e');
             str = str.replace(/(ì|í|ị|ỉ|ĩ)/g, 'i');
             str = str.replace(/(ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ)/g, 'o');
@@ -167,7 +167,7 @@ angular.module('appFilters', [])
             str = str.replace(/\s+/g, ' ');
             str = str.trim();
             str = str.toLowerCase();
-            str = str.replace(/\s/g,'-');
+            str = str.replace(/\s/g, '-');
             return str;
         }
     };

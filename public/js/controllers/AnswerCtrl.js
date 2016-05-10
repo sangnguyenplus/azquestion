@@ -1,11 +1,10 @@
 angular.module('AnswerCtrl', [])
 
-.controller('AnswerController', ['$scope', '$rootScope', '$cookieStore', '$location', '$http', 'flash', '$modal', 'appAlert', 'Answer', 'Notifi', 'socket',
-    function($scope, $rootScope, $cookieStore, $location, $http, flash, $modal, appAlert, Answer, Notifi, socket) {
+.controller('AnswerController', ['$scope', '$rootScope', '$cookieStore', '$location', '$http', 'flash', '$modal', 'appAlert', 'Answer', 'Notifi', 'socket', function($scope, $rootScope, $cookieStore, $location, $http, flash, $modal, appAlert, Answer, Notifi, socket) {
 
     $scope.currentPage = 1;
-    $scope.maxSize     = 5;
-    $scope.entryLimit  = 10;
+    $scope.maxSize = 5;
+    $scope.entryLimit = 10;
     $http.get('api/answer/getAll')
         .success(function(list) {
             $rootScope.listAnswer = list;
@@ -15,7 +14,10 @@ angular.module('AnswerCtrl', [])
         });
 
     $scope.deleteAnswer = function(id, path) {
-        appAlert.confirm({title:'Xóa',message:'Bạn chắc chắn muốn xóa câu trả lời này ?'}, function(isOk) {
+        appAlert.confirm({
+            title: 'Xóa',
+            message: 'Bạn chắc chắn muốn xóa câu trả lời này ?'
+        }, function(isOk) {
             if (isOk) {
                 Answer.delete(id)
                     /*Nếu xóa thành công thì load lại dữ liệu*/
@@ -29,16 +31,19 @@ angular.module('AnswerCtrl', [])
                             .error(function() {
                                 console.log('error');
                             });
-                            socket.emit('total answer');
-                            socket.emit('new answer');
+                        socket.emit('total answer');
+                        socket.emit('new answer');
                     });
-                }
-            });
-        };
+            }
+        });
+    };
 
     $scope.acepted = function(id) {
-        appAlert.confirm({title: 'Xác nhận', message: 'Bạn có chắc chắn muốn đánh dấu câu trả lời này là đúng?' +
-            'Bạn chỉ được đánh dấu trả lời đúng 1 lần và không thể sửa.'}, function(isOk) {
+        appAlert.confirm({
+            title: 'Xác nhận',
+            message: 'Bạn có chắc chắn muốn đánh dấu câu trả lời này là đúng?' +
+                'Bạn chỉ được đánh dấu trả lời đúng 1 lần và không thể sửa.'
+        }, function(isOk) {
             if (isOk) {
                 $http.get('api/answer/acept/' + id)
                     .success(function(data) {
@@ -72,20 +77,23 @@ angular.module('AnswerCtrl', [])
                     .success(function(data) {
                         if (parseInt(data) == 1) {
                             flash.success = 'Bạn đã BỎ thích câu trả lời này!';
-                        }
-                        else {
+                        } else {
                             $http.get('api/answer/detail/' + id)
-                                .success(function(data){
-                                    Notifi.create({userRecive:data.userId._id,
-                                        userSend:$cookieStore.get('currentUser')._id,
-                                        content:$cookieStore.get('currentUser').displayName+' đã thích câu trả lời cho câu hỏi '+data.questionId.title,
-                                        questionId:data.questionId._id});
-                                    socket.emit('voteup',{userSendName:$cookieStore.get('currentUser').displayName,
-                                        userReciveId:data.userId._id,
-                                        userTitle:data.questionId.title,
-                                        questionIds:data.questionId._id});
+                                .success(function(data) {
+                                    Notifi.create({
+                                        userRecive: data.userId._id,
+                                        userSend: $cookieStore.get('currentUser')._id,
+                                        content: $cookieStore.get('currentUser').displayName + ' đã thích câu trả lời cho câu hỏi ' + data.questionId.title,
+                                        questionId: data.questionId._id
+                                    });
+                                    socket.emit('voteup', {
+                                        userSendName: $cookieStore.get('currentUser').displayName,
+                                        userReciveId: data.userId._id,
+                                        userTitle: data.questionId.title,
+                                        questionIds: data.questionId._id
+                                    });
                                 })
-                                .error(function(){
+                                .error(function() {
                                     console.log('error');
                                 });
                             flash.success = 'Bạn đã thích câu trả lời này!';
@@ -118,8 +126,7 @@ angular.module('AnswerCtrl', [])
                     .error(function() {
                         console.log('error');
                     });
-            }
-            else {
+            } else {
                 flash.error = 'Bạn cần đăng nhập để bình chọn !';
             }
         });
@@ -132,8 +139,7 @@ angular.module('AnswerCtrl', [])
                     .success(function(data) {
                         if (parseInt(data) == 1) {
                             flash.success = 'Bạn đã BỎ không thích câu trả lời này!';
-                        }
-                        else {
+                        } else {
                             flash.success = 'Bạn Không thích câu trả lời này!';
                         }
 
@@ -141,7 +147,7 @@ angular.module('AnswerCtrl', [])
                             .success(function(data) {
                                 $scope.listAnswerQuestion = data;
                             })
-                            .error(function(){
+                            .error(function() {
                                 console.log("error");
                             });
 
@@ -164,8 +170,7 @@ angular.module('AnswerCtrl', [])
                     .error(function() {
                         flash.error = 'Có lỗi trong quá trình thực hiện bình chọn. Vui lòng thử lại sau!';
                     });
-            }
-            else {
+            } else {
                 flash.error = 'Bạn cần đăng nhập để bình chọn !';
             }
         });
@@ -174,14 +179,16 @@ angular.module('AnswerCtrl', [])
     $scope.reportAnswer = function(id) {
         $http.get('/loggedin').success(function(data) {
             if (data !== '0') {
-                appAlert.confirm({title: 'Xác nhận', message: 'Bạn chắc chắn muốn báo cáo câu trả lời này vi phạm?'}, function(isOk) {
+                appAlert.confirm({
+                    title: 'Xác nhận',
+                    message: 'Bạn chắc chắn muốn báo cáo câu trả lời này vi phạm?'
+                }, function(isOk) {
                     if (isOk) {
                         Answer.report(id)
                             .success(function(data) {
                                 if (data.reported) {
                                     flash.error = 'Bạn đã báo cáo câu trả lời này vi phạm rồi!';
-                                }
-                                else {
+                                } else {
                                     flash.success = 'Báo cáo vi phạm thành công!';
                                 }
                             })
@@ -190,14 +197,13 @@ angular.module('AnswerCtrl', [])
                             });
                     }
                 });
-            }
-            else {
+            } else {
                 flash.error = 'Bạn cần đăng nhập để báo cáo vi phạm';
             }
         });
     };
 }])
-.controller('AnswerDetail', ['$scope', '$http', '$stateParams', function ($scope, $http, $stateParams) {
+.controller('AnswerDetail', ['$scope', '$http', '$stateParams', function($scope, $http, $stateParams) {
     $http.get('api/answer/detail/' + $stateParams.id)
         .success(function(data) {
             $scope.answer = data;
@@ -206,7 +212,7 @@ angular.module('AnswerCtrl', [])
             console.log('error');
         });
 }])
-.controller('CountAnswerController',['$scope', 'socket', '$rootScope', '$http', 'Answer', function($scope, socket, $rootScope, $http, Answer) {
+.controller('CountAnswerController', ['$scope', 'socket', '$rootScope', '$http', 'Answer', function($scope, socket, $rootScope, $http, Answer) {
     /*Đếm số câu trả lời trong hệ thống*/
     $http.get('api/answer/count')
         .success(function(data) {
@@ -216,7 +222,7 @@ angular.module('AnswerCtrl', [])
             console.log('error');
         });
 
-    socket.on('total answer', function(){
+    socket.on('total answer', function() {
         $http.get('api/answer/count')
             .success(function(data) {
                 $rootScope.countAnswer = data;

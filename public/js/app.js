@@ -52,22 +52,24 @@ app.config(['markedProvider', function(markedProvider) {
         sanitize: true,
         smartLists: true,
         smartypants: false,
-        highlight: function (code) {
+        highlight: function(code) {
             return hljs.highlightAuto(code).value;
         }
     });
 }]);
 
 app.config(['tagsInputConfigProvider', function(tagsInputConfigProvider) {
-    tagsInputConfigProvider.setActiveInterpolation('tagsInput', { placeholder: true });
+    tagsInputConfigProvider.setActiveInterpolation('tagsInput', {
+        placeholder: true
+    });
 }]);
 
-app.config(['$httpProvider', function ($httpProvider) {
+app.config(['$httpProvider', function($httpProvider) {
     $httpProvider.interceptors.push('TokenInterceptor');
 }]);
 
 /*Cấu hình thông báo lỗi*/
-app.config(['flashProvider', function (flashProvider) {
+app.config(['flashProvider', function(flashProvider) {
 
     flashProvider.errorClassnames.push('alert-danger');
     flashProvider.warnClassnames.push('alert-warning');
@@ -78,45 +80,43 @@ app.config(['flashProvider', function (flashProvider) {
 
 /*Cập nhật tiêu đề trang*/
 app.run([
-    '$log', '$rootScope', '$timeout', '$window', '$state', '$location', 'ngProgress', 'AuthenticationService', 'flash',
-    function($log, $rootScope, $timeout, $window, $state, $location, ngProgress, AuthenticationService, flash) {
+    '$log', '$rootScope', '$timeout', '$window', '$state', '$location', 'ngProgress', 'AuthenticationService', 'flash', function($log, $rootScope, $timeout, $window, $state, $location, ngProgress, AuthenticationService, flash) {
 
-    $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
-        $rootScope.currentState = toState.name;
-        $rootScope.currentParam = toParams;
-        $rootScope.oldState     = fromState.name;
-        $rootScope.oldParam     = fromParams;
+        $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
+            $rootScope.currentState = toState.name;
+            $rootScope.currentParam = toParams;
+            $rootScope.oldState = fromState.name;
+            $rootScope.oldParam = fromParams;
 
-        ngProgress.start();
-        ngProgress.color('#d33');
-        ngProgress.height('4px');
+            ngProgress.start();
+            ngProgress.color('#d33');
+            ngProgress.height('4px');
 
-        if (toState.title) {
-            $rootScope.pageTitle = toState.title + ' | Mạng xã hội hỏi đáp Việt Nam';
-        }
-        else {
-            $rootScope.pageTitle = 'Mạng xã hội hỏi đáp Việt Nam';
-        }
-        /*Xác thực quyền thành viên khi truy cập vào trang cần đăng nhập*/
-        if (toState.access.requiredLogin && !AuthenticationService.isLogged) {
-            /*Nếu người dùng chưa đăng nhập*/
-            flash.error = 'Bạn cần đăng nhập để truy cập vào khu vực này!';
-            $state.transitionTo('login');
-            event.preventDefault();
-        }
-    });
+            if (toState.title) {
+                $rootScope.pageTitle = toState.title + ' | Mạng xã hội hỏi đáp Việt Nam';
+            } else {
+                $rootScope.pageTitle = 'Mạng xã hội hỏi đáp Việt Nam';
+            }
+            /*Xác thực quyền thành viên khi truy cập vào trang cần đăng nhập*/
+            if (toState.access.requiredLogin && !AuthenticationService.isLogged) {
+                /*Nếu người dùng chưa đăng nhập*/
+                flash.error = 'Bạn cần đăng nhập để truy cập vào khu vực này!';
+                $state.transitionTo('login');
+                event.preventDefault();
+            }
+        });
 
-    $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
-        /*Thực thi xử lý sau khi state thay đổi thành công*/
-        ngProgress.complete();
-        $timeout(function () {
-           $window.scrollTo(45,0);
-        }, 500);
-    });
-    $rootScope.$on('$stateChangeError', function(event, toState, toParams, fromState, fromParams) {
-        ngProgress.complete();
-    });
-}]);
+        $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
+            /*Thực thi xử lý sau khi state thay đổi thành công*/
+            ngProgress.complete();
+            $timeout(function() {
+                $window.scrollTo(45, 0);
+            }, 500);
+        });
+        $rootScope.$on('$stateChangeError', function(event, toState, toParams, fromState, fromParams) {
+            ngProgress.complete();
+        });
+    }]);
 
 app.run([
     '$rootScope', function($rootScope) {
@@ -124,7 +124,7 @@ app.run([
     }
 ]);
 
-app.factory('socket', function (socketFactory) {
+app.factory('socket', function(socketFactory) {
     return socketFactory();
 });
 
@@ -135,6 +135,8 @@ app.config(function($mdIconProvider) {
 .run(function($http, $templateCache) {
     var urls = ['images/icons/message.svg'];
     angular.forEach(urls, function(url) {
-        $http.get(url, {cache: $templateCache});
+        $http.get(url, {
+            cache: $templateCache
+        });
     });
 });

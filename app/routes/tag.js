@@ -1,11 +1,13 @@
-var Question    = require('../models/question');
-var Tag         = require('../models/tag');
+var Question = require('../models/question');
+var Tag = require('../models/tag');
 var QuestionTag = require('../models/questiontag');
 
-module.exports  = function (app, passport) {
+module.exports = function(app, passport) {
     //Quản lý tag
     app.post('/api/tag/create', function(req, res, done) {
-        Tag.findOne({ 'tagName': req.body.name}, function(err, existTag) {
+        Tag.findOne({
+            'tagName': req.body.name
+        }, function(err, existTag) {
             // nếu có lỗi thì trả về lỗi.
             if (err) {
                 return done(err);
@@ -18,16 +20,18 @@ module.exports  = function (app, passport) {
             else {
                 // Thêm câu hỏi mới
                 Tag.create({
-                    tagName      : req.body.name,
-                    description  : req.body.description,
-                    creationDate : new Date(),
+                    tagName: req.body.name,
+                    description: req.body.description,
+                    creationDate: new Date(),
                 }, function(err, tags) {
                     if (err) {
                         return res.send(err);
                     }
 
                     // Trả về danh sách tag mới.
-                    Tag.find({}).sort({creationDate: -1}).exec(function(err, tags) {
+                    Tag.find({}).sort({
+                        creationDate: -1
+                    }).exec(function(err, tags) {
                         if (err) {
                             return res.send(err)
                         }
@@ -40,7 +44,9 @@ module.exports  = function (app, passport) {
 
     app.get('/api/tag/getTagById/:tag_id', function(req, res) {
         var id = req.params.tag_id;
-        Tag.find({_id: id}).exec(function(err, tag) {
+        Tag.find({
+            _id: id
+        }).exec(function(err, tag) {
             if (err) {
                 return res.send(err);
             }
@@ -50,7 +56,9 @@ module.exports  = function (app, passport) {
 
     app.get('/api/tag/getTagByName/:tag_name', function(req, res) {
         var name = req.params.tag_name;
-        Tag.find({tagName: name}).exec(function(err, tag) {
+        Tag.find({
+            tagName: name
+        }).exec(function(err, tag) {
             if (err) {
                 return res.send(err);
             }
@@ -60,7 +68,9 @@ module.exports  = function (app, passport) {
 
     //Lấy toàn bộ tag
     app.get('/api/tag', function(req, res) {
-        Tag.find({}).sort({created_at: -1}).exec(function(err, tags) {
+        Tag.find({}).sort({
+            created_at: -1
+        }).exec(function(err, tags) {
             if (err) {
                 return res.send(err)
             }
@@ -79,7 +89,9 @@ module.exports  = function (app, passport) {
 
     //Lấy tag nổi bật - show ở trang chủ
     app.get('/api/tag/popular-home', function(req, res) {
-        Tag.aggregate({$limit : 10},function(err, tags) {
+        Tag.aggregate({
+            $limit: 10
+        }, function(err, tags) {
             if (err) {
                 return res.send(err)
             }
@@ -89,7 +101,9 @@ module.exports  = function (app, passport) {
 
     // Xóa tag
     app.delete('/api/tag/detete/:tag_id', function(req, res) {
-        Tag.remove({_id : req.params.tag_id}, function(err, tags) {
+        Tag.remove({
+            _id: req.params.tag_id
+        }, function(err, tags) {
             if (err) {
                 return res.send(err);
             }
@@ -125,7 +139,7 @@ module.exports  = function (app, passport) {
             if (err) {
                 return res.send(err);
             }
-            data.description  = req.body.description;
+            data.description = req.body.description;
             data.lastEditDate = new Date();
             data.save(function(err, t) {
                 if (err) {

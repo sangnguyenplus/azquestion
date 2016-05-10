@@ -1,24 +1,24 @@
-var express        = require('express');
-var app            = express();
-var server         = require('http').createServer(app);
-var io             = require('socket.io').listen(server);
-var port           = process.env.PORT || 3000;
-var mongoose       = require('mongoose');
-var passport       = require('passport');
-var flash          = require('connect-flash');
+var express = require('express');
+var app = express();
+var server = require('http').createServer(app);
+var io = require('socket.io').listen(server);
+var port = process.env.PORT || 3000;
+var mongoose = require('mongoose');
+var passport = require('passport');
+var flash = require('connect-flash');
 
-var morgan         = require('morgan');
-var bodyParser     = require('body-parser');
-var cookieParser   = require('cookie-parser');
-var cookieSession  = require('cookie-session');
-var session        = require('express-session');
+var morgan = require('morgan');
+var bodyParser = require('body-parser');
+var cookieParser = require('cookie-parser');
+var cookieSession = require('cookie-session');
+var session = require('express-session');
 var methodOverride = require('method-override');
-var path           = require('path');
+var path = require('path');
 
-var busboy         = require('connect-busboy');
-var async          = require('async');
-var crypto         = require('crypto');
-var csrf           = require('csurf');
+var busboy = require('connect-busboy');
+var async = require('async');
+var crypto = require('crypto');
+var csrf = require('csurf');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'public'));
@@ -33,15 +33,21 @@ require('./config/passport')(passport); // pass passport for configuration
 app.use(morgan('dev'));
 app.use(cookieParser()); // Đọc cookies
 app.use(bodyParser.json());
-app.use(bodyParser.json({type:'application/vnd.api+json'}));
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json({
+    type: 'application/vnd.api+json'
+}));
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
 app.use(methodOverride('X-HTTP-Method-Override'));
 app.use(express.static(__dirname + '/public'));
 app.use(busboy());
 app.enable('trust proxy');
 
 // required for passport
-app.use(session({ secret: 'sangplus' })); // session secret
+app.use(session({
+    secret: 'sangplus'
+})); // session secret
 
 var env = process.env.NODE_ENV || 'development';
 
@@ -50,7 +56,7 @@ app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
 
 var middleware = require('./app/middleware');
-var routes     = require('./app/routes');
+var routes = require('./app/routes');
 
 // Định tuyến ======================================================================
 middleware(app, passport);
@@ -66,7 +72,7 @@ exports = module.exports = app;
 // usernames which are currently connected to the chat
 var users = {};
 
-io.on('connection', function (socket) {
+io.on('connection', function(socket) {
     var addedUser = false;
 
     socket.broadcast.emit('new connection');
@@ -74,10 +80,10 @@ io.on('connection', function (socket) {
     // when the client emits 'add user', this listens and executes
     socket.on('add user', function(data) {
         if (!(data in users)) {
-            addedUser              = true;
-            socket.nickname        = data.username;
-            socket._id             = data._id;
-            socket.avatar          = data.avatar;
+            addedUser = true;
+            socket.nickname = data.username;
+            socket._id = data._id;
+            socket.avatar = data.avatar;
             users[socket.nickname] = socket;
             updateNicknames();
         }
@@ -92,42 +98,42 @@ io.on('connection', function (socket) {
     });
 
     // when the client emits 'new message', this listens and executes
-    socket.on('new message', function (data) {
+    socket.on('new message', function(data) {
         // we tell the client to execute 'new message'
-        if (data.username in users){
+        if (data.username in users) {
             users[data.username].emit('new message', {
-                _id      : socket._id,
-                username : socket.nickname,
-                avatar   : socket.avatar,
-                message  : data.message
+                _id: socket._id,
+                username: socket.nickname,
+                avatar: socket.avatar,
+                message: data.message
             });
         }
     });
 
     // when the client emits 'typing', we broadcast it to others
-    socket.on('typing', function (data) {
+    socket.on('typing', function(data) {
         if (data.username in users) {
             users[data.username].emit('typing', {
-                _id      : socket._id,
-                username : socket.nickname,
-                avatar   : socket.avatar
+                _id: socket._id,
+                username: socket.nickname,
+                avatar: socket.avatar
             });
         }
     });
 
     // when the client emits 'stop typing', we broadcast it to others
-    socket.on('stop typing', function (data) {
+    socket.on('stop typing', function(data) {
         if (data.username in users) {
             users[data.username].emit('stop typing', {
-                _id      : socket._id,
-                username : socket.nickname,
-                avatar   : socket.avatar
+                _id: socket._id,
+                username: socket.nickname,
+                avatar: socket.avatar
             });
         }
     });
 
     // when the user disconnects.. perform this
-    socket.on('disconnect', function () {
+    socket.on('disconnect', function() {
         // remove the username from global usernames list
         if (addedUser) {
             if (!socket.nickname) {
@@ -160,7 +166,7 @@ io.on('connection', function (socket) {
 
     // deleteQuestion
     socket.on('deleteQuestion', function(data) {
-        socket.broadcast.emit('deleteQuestion',data);
+        socket.broadcast.emit('deleteQuestion', data);
     });
 
     // createAnswer

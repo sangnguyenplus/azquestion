@@ -5,7 +5,7 @@ angular.module('SystemCtrl', [])
     System.get()
         .success(function(data) {
             $scope.systemData = data;
-            $scope.loading    = false;
+            $scope.loading = false;
         });
 
     $scope.editSystemSetting = function() {
@@ -13,12 +13,11 @@ angular.module('SystemCtrl', [])
             System.edit($scope.systemData)
                 .success(function(data) {
                     $scope.Proccess = false;
-                    flash.success   = 'Cập nhật thành công!';
+                    flash.success = 'Cập nhật thành công!';
                     $state.go('system-setting');
                 });
-        }
-        else {
-            flash.error     = 'Bạn phải điền đầy đủ nội dung.';
+        } else {
+            flash.error = 'Bạn phải điền đầy đủ nội dung.';
             $scope.Proccess = false;
         }
     };

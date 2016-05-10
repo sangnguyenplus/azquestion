@@ -6,17 +6,17 @@ angular.module('TagCtrl', [])
             $scope.totalItems = data;
         });
     $scope.currentPage = 1; /*//current page*/
-    $scope.maxSize     = 5; /*//pagination max size*/
-    $scope.entryLimit  = 8; /*//max rows for data table*/
+    $scope.maxSize = 5; /*//pagination max size*/
+    $scope.entryLimit = 8; /*//max rows for data table*/
 }])
 
 .controller('ListTagController', ['$scope', 'Tag', 'socket', 'flash', 'appAlert', function($scope, Tag, socket, flash, appAlert) {
     /*Lấy toàn bộ tag*/
     $scope.loading = true;
-    $scope.allTag  = [];
+    $scope.allTag = [];
     Tag.get()
         .success(function(data) {
-            $scope.allTag  = data;
+            $scope.allTag = data;
             $scope.loading = false;
         })
         .error(function() {
@@ -35,27 +35,29 @@ angular.module('TagCtrl', [])
             Tag.create($scope.formData)
                 /*nếu thêm mới thành công thì get lại dữ liệu mới*/
                 .success(function(data) {
-                        $scope.formData = {}; /*// Xóa form*/
-                        $scope.form.$setPristine();
-                        $scope.Proccess = false;
-                        $('.add-tag-box').modal('hide');
-                        flash.success   = 'Thêm mới thành công!';
-                        $scope.allTag   = data;
+                    $scope.formData = {}; /*// Xóa form*/
+                    $scope.form.$setPristine();
+                    $scope.Proccess = false;
+                    $('.add-tag-box').modal('hide');
+                    flash.success = 'Thêm mới thành công!';
+                    $scope.allTag = data;
                 })
                 .error(function() {
-                    flash.error     = 'Tag này đã được sử dụng.';
+                    flash.error = 'Tag này đã được sử dụng.';
                     $scope.Proccess = false;
                 });
             socket.emit('total tag');
-        }
-        else {
-            flash.error     = 'Bạn cần điền đầy đủ các mục.';
+        } else {
+            flash.error = 'Bạn cần điền đầy đủ các mục.';
             $scope.Proccess = false;
         }
     };
 
     $scope.deleteTag = function(id) {
-        appAlert.confirm({title: 'Xóa', message: 'Bạn chắc chắn muốn xóa tag này ?'}, function(isOk) {
+        appAlert.confirm({
+            title: 'Xóa',
+            message: 'Bạn chắc chắn muốn xóa tag này ?'
+        }, function(isOk) {
             if (isOk) {
                 Tag.delete(id)
                     /*Nếu xóa thành công thì load lại dữ liệu*/
@@ -74,18 +76,18 @@ angular.module('TagCtrl', [])
     $scope.popularTag = [];
     Tag.popularTag()
         .success(function(data) {
-          $scope.popularTag = data;
+            $scope.popularTag = data;
         })
         .error(function() {
-          console.log('error');
+            console.log('error');
         });
 }])
 
-.controller('getQuestionByTagController',['$scope', '$stateParams', '$http', function($scope, $stateParams, $http) {
+.controller('getQuestionByTagController', ['$scope', '$stateParams', '$http', function($scope, $stateParams, $http) {
     $scope.currentPage = 1;
-    $scope.maxSize     = 5;
-    $scope.entryLimit  = 10;
-    var tag_id         = $stateParams.id;
+    $scope.maxSize = 5;
+    $scope.entryLimit = 10;
+    var tag_id = $stateParams.id;
     $http.get('/api/getQuestionByTag/' + tag_id)
         .success(function(data) {
             $scope.listQuestion = data;
@@ -113,20 +115,18 @@ angular.module('TagCtrl', [])
 
     $scope.$watch('formData.tag.length', function(value) {
         if (value < maxTags) {
-          $scope.placeholder = 'Thêm tối đa ' + (maxTags - value) + ' tags';
-        }
-        else {
+            $scope.placeholder = 'Thêm tối đa ' + (maxTags - value) + ' tags';
+        } else {
             if (value > 0) {
                 $scope.placeholder = 'Sửa tag';
-            }
-            else {
+            } else {
                 $scope.placeholder = 'Thêm';
             }
         }
     });
 }])
 
-.controller('TagDetail', ['$scope', '$http', '$state', '$stateParams', 'flash', 'Tag', function ($scope, $http, $state, $stateParams, flash, Tag) {
+.controller('TagDetail', ['$scope', '$http', '$state', '$stateParams', 'flash', 'Tag', function($scope, $http, $state, $stateParams, flash, Tag) {
     $http.get('api/tag/detail/' + $stateParams.id)
         .success(function(data) {
             $scope.formData = data;
@@ -145,16 +145,15 @@ angular.module('TagCtrl', [])
                     $scope.formData = {};
                     $scope.form.$setPristine();
                     $scope.Proccess = false;
-                    flash.success   = 'Cập nhật thành công!';
+                    flash.success = 'Cập nhật thành công!';
                     $state.go('system-tag');
                 })
                 .error(function() {
-                    flash.error     = 'Tag này đã được sử dụng.';
+                    flash.error = 'Tag này đã được sử dụng.';
                     $scope.Proccess = false;
                 });
-        }
-        else {
-            flash.error     = 'Bạn cần điền đầy đủ các mục.';
+        } else {
+            flash.error = 'Bạn cần điền đầy đủ các mục.';
             $scope.Proccess = false;
         }
     };
@@ -171,7 +170,7 @@ angular.module('TagCtrl', [])
         });
     socket.on('total tag', function() {
         $http.get('api/tag/count')
-            .success(function(data){
+            .success(function(data) {
                 $rootScope.countTag = data;
             })
             .error(function() {

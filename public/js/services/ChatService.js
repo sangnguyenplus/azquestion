@@ -14,10 +14,10 @@ angular.module('ChatService', [])
         updateStatus: function(userRecive) {
             return $http.get('/api/chat/update/' + userRecive);
         },
-        create : function(msg) {
+        create: function(msg) {
             return $http.post('/api/chat/create/', msg);
         },
-        delete : function(id) {
+        delete: function(id) {
             return $http.delete('/api/chat/detete/' + id);
         }
     };

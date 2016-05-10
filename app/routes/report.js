@@ -1,9 +1,9 @@
-var Answer   = require('../models/answer');
-var User     = require('../models/user');
+var Answer = require('../models/answer');
+var User = require('../models/user');
 var Question = require('../models/question');
-var Report   = require('../models/report');
+var Report = require('../models/report');
 
-module.exports = function (app, passport) {
+module.exports = function(app, passport) {
     app.get('/api/report/getAll', function(req, res) {
         Report.find({}).populate('userId').populate('questionId').populate('answerId').exec(function(err, list) {
             if (err) {
@@ -18,7 +18,9 @@ module.exports = function (app, passport) {
             if (err) {
                 return res.send(err);
             }
-            return res.json({deleted: 'true'});
+            return res.json({
+                deleted: 'true'
+            });
         });
     });
 }

@@ -1,12 +1,12 @@
 angular.module('appDirectives', [])
 /*So sánh mật khẩu trùng khớp*/
-.directive('passwordMatch', [function () {
+.directive('passwordMatch', [function() {
     return {
         restrict: 'A',
-        scope:true,
+        scope: true,
         require: 'ngModel',
-        link: function (scope, elem , attrs,control) {
-            var checker = function () {
+        link: function(scope, elem, attrs, control) {
+            var checker = function() {
                 /*lấy giá trị của trường mật khẩu*/
                 var e1 = scope.$eval(attrs.ngModel);
 
@@ -14,7 +14,7 @@ angular.module('appDirectives', [])
                 var e2 = scope.$eval(attrs.passwordMatch);
                 return e1 == e2;
             };
-            scope.$watch(checker, function (n) {
+            scope.$watch(checker, function(n) {
                 /*thiết lập form control*/
                 control.$setValidity('unique', n);
             });
@@ -41,15 +41,16 @@ angular.module('appDirectives', [])
     return {
         restrict: 'A',
         link: function(scope, element, attrs) {
-            if ($(element).length > 0 ) {
+            if ($(element).length > 0) {
                 $(element).waypoint(function(direction) {
-                    if(direction == 'down') {
+                    if (direction == 'down') {
                         $('.fixed-menu').fadeIn();
-                    }
-                    else {
+                    } else {
                         $('.fixed-menu').fadeOut('fast');
                     }
-                }, { offset: 0 });
+                }, {
+                    offset: 0
+                });
             }
         }
     };

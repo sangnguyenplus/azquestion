@@ -1,12 +1,11 @@
 angular.module('NotifiCtrl', [])
 
-.controller('NotifiController', ['$scope', '$cookieStore', '$window', '$state', '$location', '$http', '$rootScope', 'appAlert', 'flash', 'AuthenticationService', 'socket', 'Notifi',
-  function($scope, $cookieStore, $window, $state, $location, $http, $rootScope, appAlert, flash, AuthenticationService, socket, Notifi) {
+.controller('NotifiController', ['$scope', '$cookieStore', '$window', '$state', '$location', '$http', '$rootScope', 'appAlert', 'flash', 'AuthenticationService', 'socket', 'Notifi', function($scope, $cookieStore, $window, $state, $location, $http, $rootScope, appAlert, flash, AuthenticationService, socket, Notifi) {
 
     $scope.updatecount = function() {
         $http.get('api/notifi/update')
             .success(function(data) {
-                $http.get('api/notifi/count/'+$cookieStore.get('currentUser')._id)
+                $http.get('api/notifi/count/' + $cookieStore.get('currentUser')._id)
                     .success(function(data) {
                         $scope.sfc = data;
                     });
@@ -57,13 +56,13 @@ angular.module('NotifiCtrl', [])
 
         $http.get('api/admin')
             .success(function(listAM) {
-                for(var i in listAM) {
+                for (var i in listAM) {
                     var item = listAM[i];
                     if (listAD.indexOf(item._id) == -1) {
                         listAD.push(item._id);
                     }
                 }
-                for(var i in listAD) {
+                for (var i in listAD) {
                     var item = listAD[i];
                     if ($cookieStore.get('currentUser')._id == item) {
                         flash.success = '<a href="cau-hoi/chi-tiet/' + data.questionIds + '/">' + data.userSendName + ' báo cáo vi phạm câu hỏi ' + data.userTitle + '</a>';
@@ -71,7 +70,7 @@ angular.module('NotifiCtrl', [])
                 }
             });
 
-        $http.get('api/notifi/detail/'+$cookieStore.get('currentUser')._id)
+        $http.get('api/notifi/detail/' + $cookieStore.get('currentUser')._id)
             .success(function(data) {
                 $scope.listNotifi = data;
             });
@@ -83,7 +82,7 @@ angular.module('NotifiCtrl', [])
     });
 
     // Duyệt câu hỏi
-    socket.on('approve',function(data) {
+    socket.on('approve', function(data) {
         if ($cookieStore.get('currentUser')._id == data.userReciveId) {
             flash.success = '<a href="cau-hoi/chi-tiet/' + data.questionIds + '/">Câu hỏi ' + data.userTitle + ' đã được quản trị đăng!</a>';
         }

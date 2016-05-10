@@ -14,13 +14,11 @@ module.exports = function(config) {
 
 
         // list of files / patterns to load in the browser
-        files: [
-        ],
+        files: [],
 
 
         // list of files to exclude
-        exclude: [
-        ],
+        exclude: [],
 
 
         // preprocess matching files before serving them to the browser
